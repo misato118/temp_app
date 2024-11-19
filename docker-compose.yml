@@ -1,0 +1,80 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    tty: true
+    stdin_open: true
+    ports:
+      - "4000:3000"
+    volumes:
+      - ./api:/usr/src/app
+    command: npm run start
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: test
+    ports:
+      - "6000:5000"
+    #shm_size: 128mb
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8000:7000"
+
+  tob:
+    build:
+      context: .
+      dockerfile: ./docker/toB/Dockerfile
+    #container_name: nest-docker-postgres
+    #environment:
+      #- PORT=${PORT}
+    ports:
+      - "5000:4000"
+    depends_on:
+      - db
+      - api
+    volumes:
+      - ./toB:/usr/src/app
+      - /usr/src/app/node_modules
+
+  #toc:
+    #build:
+      #context: .
+      #dockerfile: ./docker/toC/Dockerfile
+    #container_name: nest-docker-postgres
+    #environment:
+      #- PORT=${PORT}
+    #ports:
+      #- '5010:4010'
+    #depends_on:
+      #- db
+      #- api
+    #volumes:
+      #- ./toC:/app/toC/src
+
+  #tocs:
+    #build:
+      #context: .
+      #dockerfile: ./docker/toCS/Dockerfile
+    #container_name: nest-docker-postgres
+    #environment:
+      #- PORT=${PORT}
+    #ports:
+      #- '5020:4020'
+    #depends_on:
+      #- db
+      #- api
+    #volumes:
+      #- ./toCS:/app/toCS/src
