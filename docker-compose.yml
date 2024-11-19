@@ -42,21 +42,6 @@ services:
       - ./toB:/usr/src/app
       - /usr/src/app/node_modules
 
-  #toc:
-    #build:
-      #context: .
-      #dockerfile: ./docker/toC/Dockerfile
-    #container_name: nest-docker-postgres
-    #environment:
-      #- PORT=${PORT}
-    #ports:
-      #- '5010:4010'
-    #depends_on:
-      #- db
-      #- api
-    #volumes:
-      #- ./toC:/app/toC/src
-
   #tocs:
     #build:
       #context: .
