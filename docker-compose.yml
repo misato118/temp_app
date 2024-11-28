@@ -31,28 +31,37 @@ services:
     build:
       context: .
       dockerfile: ./docker/toB/Dockerfile
-    #environment:
-      #- PORT=${PORT}
     ports:
       - "5000:4000"
     depends_on:
       - db
       - api
     volumes:
-      - ./toB:/usr/src/app
+      - ./tob:/usr/src/app
       - /usr/src/app/node_modules
 
-  #tocs:
-    #build:
-      #context: .
-      #dockerfile: ./docker/toCS/Dockerfile
-    #container_name: nest-docker-postgres
-    #environment:
-      #- PORT=${PORT}
-    #ports:
-      #- '5020:4020'
-    #depends_on:
-      #- db
-      #- api
-    #volumes:
-      #- ./toCS:/app/toCS/src
+  toc:
+    build:
+      context: .
+      dockerfile: ./docker/toC/Dockerfile
+    ports:
+      - "8000:4000"
+    depends_on:
+      - db
+      - api
+    volumes:
+      - ./toc:/usr/src/app
+      - /usr/src/app/node_modules
+
+  tocs:
+    build:
+      context: .
+      dockerfile: ./docker/toCS/Dockerfile
+    ports:
+      - "3000:4000"
+    depends_on:
+      - db
+      - api
+    volumes:
+      - ./tocs:/usr/src/app
+      - /usr/src/app/node_modules
