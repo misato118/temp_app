@@ -33,17 +33,18 @@ services:
     tty: true
 
   tob:
+    container_name: tob
     build:
       context: .
       dockerfile: ./docker/toB/Dockerfile
     ports:
-      - "11001:4000"
+      - "11001:3000"
     depends_on:
       - api
     volumes:
       - ./tob:/usr/src/app
-      - /usr/src/app/node_modules
     tty: true
+    command: npm run dev
 
   # toc:
   #   build:

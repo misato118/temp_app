@@ -5,6 +5,3 @@ WORKDIR /usr/src/app
 
 RUN apt-get update && \
     apt-get install -y locales curl
-
-COPY ./tob/package.json /usr/src/app
-RUN npm install
