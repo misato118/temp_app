@@ -1,24 +1,10 @@
-# Use the official Node.js image as the base  
-#FROM node:14 AS base
-FROM node:20.0.0-slim
+FROM node:20.0.0-slim AS development
 
-# Set the working directory inside the container  
+# 作業ディレクトリを/usr/src/appに設定しています。
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the container  
-COPY package*.json ./
+RUN apt-get update && \
+    apt-get install -y locales curl
 
-# Install dependencies
+COPY ./tob/package.json /usr/src/app
 RUN npm install
-
-# Copy the app source code to the container  
-COPY ./toB .
-
-# Build the Next.js app  
-RUN npm run build
-
-# Expose the port the app will run on
-EXPOSE 3000
-
-# Start the app  
-CMD ["npm", "start"]  
