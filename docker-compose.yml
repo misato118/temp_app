@@ -31,23 +31,19 @@ services:
       - ./docker/database/entrypoint:/docker-entrypoint-initdb.d
       - db-store:/var/lib/postgresql/data
     tty: true
-    
 
-volumes:
-  db-store:
-
-  # tob:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/toB/Dockerfile
-  #   ports:
-  #     - "5000:4000"
-  #   depends_on:
-  #     - db
-  #     - api
-  #   volumes:
-  #     - ./tob:/usr/src/app
-  #     - /usr/src/app/node_modules
+  tob:
+    build:
+      context: .
+      dockerfile: ./docker/toB/Dockerfile
+    ports:
+      - "11001:4000"
+    depends_on:
+      - api
+    volumes:
+      - ./tob:/usr/src/app
+      - /usr/src/app/node_modules
+    tty: true
 
   # toc:
   #   build:
@@ -74,3 +70,6 @@ volumes:
   #   volumes:
   #     - ./tocs:/usr/src/app
   #     - /usr/src/app/node_modules
+
+volumes:
+  db-store:
