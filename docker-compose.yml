@@ -6,62 +6,71 @@ services:
     tty: true
     stdin_open: true
     ports:
-      - "4000:3000"
+      - "12000:3000"
     volumes:
       - ./api:/usr/src/app
+      - /app/node_modules
     command: npm run start
+    depends_on:
+      - db
 
   db:
+    build:
+      context: .
+      dockerfile: ./docker/database/Dockerfile
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: test
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    command: postgres -c log_destination=stderr -c log_statement=all -c log_min_duration_statement=0
     ports:
-      - "6000:5000"
-    #shm_size: 128mb
+      - "5432:5432"
     volumes:
-      - ./database:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
-      interval: 1s
-      timeout: 5s
-      retries: 10
+      - ./docker/database/entrypoint:/docker-entrypoint-initdb.d
+      - db-store:/var/lib/postgresql/data
+    tty: true
+    
 
-  tob:
-    build:
-      context: .
-      dockerfile: ./docker/toB/Dockerfile
-    ports:
-      - "5000:4000"
-    depends_on:
-      - db
-      - api
-    volumes:
-      - ./tob:/usr/src/app
-      - /usr/src/app/node_modules
+volumes:
+  db-store:
 
-  toc:
-    build:
-      context: .
-      dockerfile: ./docker/toC/Dockerfile
-    ports:
-      - "8000:4000"
-    depends_on:
-      - db
-      - api
-    volumes:
-      - ./toc:/usr/src/app
-      - /usr/src/app/node_modules
+  # tob:
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/toB/Dockerfile
+  #   ports:
+  #     - "5000:4000"
+  #   depends_on:
+  #     - db
+  #     - api
+  #   volumes:
+  #     - ./tob:/usr/src/app
+  #     - /usr/src/app/node_modules
 
-  tocs:
-    build:
-      context: .
-      dockerfile: ./docker/toCS/Dockerfile
-    ports:
-      - "3000:4000"
-    depends_on:
-      - db
-      - api
-    volumes:
-      - ./tocs:/usr/src/app
-      - /usr/src/app/node_modules
+  # toc:
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/toC/Dockerfile
+  #   ports:
+  #     - "8000:4000"
+  #   depends_on:
+  #     - db
+  #     - api
+  #   volumes:
+  #     - ./toc:/usr/src/app
+  #     - /usr/src/app/node_modules
+
+  # tocs:
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/toCS/Dockerfile
+  #   ports:
+  #     - "3000:4000"
+  #   depends_on:
+  #     - db
+  #     - api
+  #   volumes:
+  #     - ./tocs:/usr/src/app
+  #     - /usr/src/app/node_modules

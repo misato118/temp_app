@@ -1,9 +1,9 @@
 FROM postgres:16.4 AS development
 
-WORKDIR /var/lib/postgresql/data
+RUN apt-get update && \
+    apt-get install -y curl
 
-RUN apt-get update && apt-get install -y procps && rm -rf /var/lib/apt/lists/*
-
-RUN localedef -i de_DE -c -f UTF-8 -A /usr/share/locale/locale.alias de_DE.UTF-8
-
-ENV LANG de_DE.utf8
+ENV LANG=ja_JP.UTF-8
+ENV TZ=Asia/Tokyo
+RUN locale-gen ja_JP.UTF-8
+RUN localedef -f UTF-8 -i ja_JP ja_JP
