@@ -60,18 +60,19 @@ services:
     tty: true
     command: npm run dev
 
-  #tocs:
-    #container_name: tocs
-    #build:
-      #context: .
-      #dockerfile: ./docker/toCS/Dockerfile
-    #ports:
-      #- "11003:3000"
-    #depends_on:
-      #- api
-    #volumes:
-      #- ./tocs:/usr/src/app
-    #tty: true
+  tocs:
+    container_name: tocs
+    build:
+      context: .
+      dockerfile: ./docker/toCS/Dockerfile
+    ports:
+      - "11003:3000"
+    depends_on:
+      - api
+    volumes:
+      - ./tocs:/usr/src/app
+    tty: true
+    command: npm run dev
 
 volumes:
   db-store:
