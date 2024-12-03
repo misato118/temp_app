@@ -46,31 +46,32 @@ services:
     tty: true
     command: npm run dev
 
-  # toc:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/toC/Dockerfile
-  #   ports:
-  #     - "8000:4000"
-  #   depends_on:
-  #     - db
-  #     - api
-  #   volumes:
-  #     - ./toc:/usr/src/app
-  #     - /usr/src/app/node_modules
+  toc:
+    container_name: toc
+    build:
+      context: .
+      dockerfile: ./docker/toC/Dockerfile
+    ports:
+      - "11002:3000"
+    depends_on:
+      - api
+    volumes:
+      - ./toc:/usr/src/app
+    tty: true
+    command: npm run dev
 
-  # tocs:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/toCS/Dockerfile
-  #   ports:
-  #     - "3000:4000"
-  #   depends_on:
-  #     - db
-  #     - api
-  #   volumes:
-  #     - ./tocs:/usr/src/app
-  #     - /usr/src/app/node_modules
+  #tocs:
+    #container_name: tocs
+    #build:
+      #context: .
+      #dockerfile: ./docker/toCS/Dockerfile
+    #ports:
+      #- "11003:3000"
+    #depends_on:
+      #- api
+    #volumes:
+      #- ./tocs:/usr/src/app
+    #tty: true
 
 volumes:
   db-store:
