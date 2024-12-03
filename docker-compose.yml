@@ -31,46 +31,48 @@ services:
       - ./docker/database/entrypoint:/docker-entrypoint-initdb.d
       - db-store:/var/lib/postgresql/data
     tty: true
-    
+
+  tob:
+    container_name: tob
+    build:
+      context: .
+      dockerfile: ./docker/toB/Dockerfile
+    ports:
+      - "11001:3000"
+    depends_on:
+      - api
+    volumes:
+      - ./tob:/usr/src/app
+    tty: true
+    command: npm run dev
+
+  toc:
+    container_name: toc
+    build:
+      context: .
+      dockerfile: ./docker/toC/Dockerfile
+    ports:
+      - "11002:3000"
+    depends_on:
+      - api
+    volumes:
+      - ./toc:/usr/src/app
+    tty: true
+    command: npm run dev
+
+  tocs:
+    container_name: tocs
+    build:
+      context: .
+      dockerfile: ./docker/toCS/Dockerfile
+    ports:
+      - "11003:3000"
+    depends_on:
+      - api
+    volumes:
+      - ./tocs:/usr/src/app
+    tty: true
+    command: npm run dev
 
 volumes:
   db-store:
-
-  # tob:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/toB/Dockerfile
-  #   ports:
-  #     - "5000:4000"
-  #   depends_on:
-  #     - db
-  #     - api
-  #   volumes:
-  #     - ./tob:/usr/src/app
-  #     - /usr/src/app/node_modules
-
-  # toc:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/toC/Dockerfile
-  #   ports:
-  #     - "8000:4000"
-  #   depends_on:
-  #     - db
-  #     - api
-  #   volumes:
-  #     - ./toc:/usr/src/app
-  #     - /usr/src/app/node_modules
-
-  # tocs:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/toCS/Dockerfile
-  #   ports:
-  #     - "3000:4000"
-  #   depends_on:
-  #     - db
-  #     - api
-  #   volumes:
-  #     - ./tocs:/usr/src/app
-  #     - /usr/src/app/node_modules
