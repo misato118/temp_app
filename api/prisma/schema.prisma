@@ -1,0 +1,248 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  name  String?
+  email String  @unique
+  posts Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  published Boolean? @default(false)
+  title     String
+  content   String?
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
+}
+
+model Employee {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  birthDate DateTime
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  imageURL  String?
+  company   Company  @relation(fields: [companyId], references: [id])
+  companyId Int
+  answer    Answer?  @relation(fields: [answerId], references: [id])
+  answerId  Int?     @unique
+}
+
+model Company {
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String        @unique
+  description  String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  logoURL      String?
+  employee     Employee[]
+  item         Item[]
+  admins       Admin[]
+  notification Notification[]
+}
+
+model Item {
+  id                 Int               @id @default(autoincrement())
+  name               String
+  description        String?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  category           ItemCategory
+  fee                Decimal           @db.Decimal(9,2)
+  feeType            String
+  maxDuration        Int
+  maxDurationType    String
+  imageURL           String?
+  deposit            Decimal           @db.Decimal(9,2)
+  overallReview      Int?
+  company            Company           @relation(fields: [companyId], references: [id])
+  companyId          Int
+  review             Review[]
+  ownerAppllication  OwnerApplication?
+  stockStatus        StockStatus?
+  conversation       Conversation[]
+  notification       Notification[]
+}
+
+enum ItemCategory {
+  FURNITURE
+  MUSIC
+  TOOL
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  title     String
+  contents  String
+  rating    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  item      Item     @relation(fields: [itemId], references: [id])
+  itemId    Int
+}
+
+model OwnerApplication {
+  id        Int               @id @default(autoincrement())
+  status    ApplicationStatus
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  item      Item              @relation(fields: [itemId], references: [id])
+  itemId    Int               @unique
+}
+
+enum ApplicationStatus {
+  APPLIED
+  DECLINED
+  ACCEPTED
+}
+
+model StockStatus {
+  id           Int  @id @default(autoincrement())
+  totalStock   Int?
+  currentStock Int?
+  item         Item @relation(fields: [itemId], references: [id])
+  itemId       Int  @unique
+}
+
+model Conversation {
+  id        Int      @id @default(autoincrement())
+  contents  String    
+  createdAt DateTime @default(now())
+  item      Item     @relation(fields: [itemId], references: [id])
+  itemId    Int
+  questions Question[]
+  answers   Answer[]
+}
+
+model Question {
+  id             Int          @id @default(autoincrement())
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId Int
+  sender         Renter?
+  answer         Answer?      @relation(fields: [answerId], references: [id])
+  answerId       Int?         @unique
+}
+
+model Answer {
+  id             Int          @id @default(autoincrement())
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId Int
+  replyTo        Question?
+  sender         Employee?
+}
+
+model Admin {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  email     String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  companies Company[]
+  renters   Renter[]
+}
+
+model Renter {
+  id                 Int                           @id @default(autoincrement())
+  username           String                        @unique
+  firstName          String
+  lastName           String
+  birthDate          DateTime?
+  email              String                        @unique
+  createdAt          DateTime                      @default(now())
+  updatedAt          DateTime                      @updatedAt
+  imageURL           String?
+  admins             Admin[]
+  question           Question?                     @relation(fields: [questionId], references: [id])
+  questionId         Int?                          @unique
+  notifications      Notification[]
+  address            Address?
+  renterapplications RenterApplicationsOnRenters[]
+}
+
+model Notification {
+  id         Int      @id @default(autoincrement())
+  details    String
+  link       String?
+  createdAt  DateTime @default(now())
+  imageURL   String?
+  renter     Renter   @relation(fields: [renterId], references: [id])
+  renterId   Int 
+  item       Item?    @relation(fields: [itemId], references: [id])
+  itemId     Int?
+  company    Company? @relation(fields: [companyId], references: [id])
+  companyId  Int?  
+}
+
+model Address {
+  id           Int    @id @default(autoincrement())
+  country      String
+  province     String
+  city         String
+  addressLine1 String
+  addressLine2 String?
+  postalCode   String
+  renter       Renter @relation(fields: [renterId], references: [id])
+  renterId     Int    @unique
+}
+
+model RenterApplication {
+  id                      Int                           @id @default(autoincrement())
+  createdAt               DateTime                      @default(now())
+  renters                 RenterApplicationsOnRenters[]
+  form                    Form                          @relation(fields: [formId], references: [id])
+  formId                  Int                           @unique
+  renterApplicationStatus RenterApplicationStatus[]
+}
+
+model RenterApplicationsOnRenters {
+  renter              Renter            @relation(fields: [renterId], references: [id])
+  renterId            Int
+  renterApplication   RenterApplication @relation(fields: [renterApplicationId], references: [id])
+  renterApplicationId Int
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  @@id([renterId, renterApplicationId])
+}
+
+model Form {
+  id                Int                @id @default(autoincrement())
+  offeringPrice     Decimal            @db.Decimal(9,2)
+  offeringDuration  Int
+  renterApplication RenterApplication?
+}
+
+model RenterApplicationStatus {
+  id                  Int                         @id @default(autoincrement())
+  status              RenterApplicationStatusType
+  updatedAt           DateTime                    @updatedAt
+  renterApplication   RenterApplication           @relation(fields: [renterApplicationId], references: [id])
+  renterApplicationId Int
+}
+
+enum RenterApplicationStatusType {
+  APPLIED
+  DECLINED
+  ACCEPTED
+  DELIVERED
+  RENTED
+  RETURNED
+  COMPLETED
+}
