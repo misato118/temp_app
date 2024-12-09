@@ -40,45 +40,42 @@ model Employee {
   imageURL  String?
   company   Company  @relation(fields: [companyId], references: [id])
   companyId Int
-  answer    Answer?  @relation(fields: [answerId], references: [id])
-  answerId  Int?     @unique
+  answers   Answer[]
 }
 
 model Company {
-  id           Int           @id @default(autoincrement())
-  name         String
-  email        String        @unique
-  description  String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  logoURL      String?
-  employee     Employee[]
-  item         Item[]
-  admins       Admin[]
-  notification Notification[]
+  id            Int           @id @default(autoincrement())
+  name          String
+  email         String        @unique
+  description   String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  logoURL       String?
+  employees     Employee[]
+  items         Item[]
+  admins        Admin[]
 }
 
 model Item {
-  id                 Int               @id @default(autoincrement())
-  name               String
-  description        String?
-  createdAt          DateTime          @default(now())
-  updatedAt          DateTime          @updatedAt
-  category           ItemCategory
-  fee                Decimal           @db.Decimal(9,2)
-  feeType            String
-  maxDuration        Int
-  maxDurationType    String
-  imageURL           String?
-  deposit            Decimal           @db.Decimal(9,2)
-  overallReview      Int?
-  company            Company           @relation(fields: [companyId], references: [id])
-  companyId          Int
-  review             Review[]
-  ownerAppllication  OwnerApplication?
-  stockStatus        StockStatus?
-  conversation       Conversation[]
-  notification       Notification[]
+  id                Int               @id @default(autoincrement())
+  name              String
+  description       String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  category          ItemCategory
+  fee               Decimal           @db.Decimal(9,2)
+  feeType           String
+  maxDuration       Int
+  maxDurationType   String
+  imageURL          String?
+  deposit           Decimal           @db.Decimal(9,2)
+  overallReview     Int?
+  company           Company           @relation(fields: [companyId], references: [id])
+  companyId         Int
+  reviews           Review[]
+  ownerAppllication OwnerApplication?
+  stockStatus       StockStatus?
+  conversations     Conversation[]
 }
 
 enum ItemCategory {
@@ -135,7 +132,8 @@ model Question {
   id             Int          @id @default(autoincrement())
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   conversationId Int
-  sender         Renter?
+  sender         Renter       @relation(fields: [senderId], references: [id])
+  senderId       Int
   answer         Answer?      @relation(fields: [answerId], references: [id])
   answerId       Int?         @unique
 }
@@ -145,7 +143,8 @@ model Answer {
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   conversationId Int
   replyTo        Question?
-  sender         Employee?
+  sender         Employee     @relation(fields: [senderId], references: [id])
+  senderId       Int
 }
 
 model Admin {
@@ -169,25 +168,22 @@ model Renter {
   updatedAt          DateTime                      @updatedAt
   imageURL           String?
   admins             Admin[]
-  question           Question?                     @relation(fields: [questionId], references: [id])
-  questionId         Int?                          @unique
+  questions          Question[]
   notifications      Notification[]
   address            Address?
   renterapplications RenterApplicationsOnRenters[]
 }
 
 model Notification {
-  id         Int      @id @default(autoincrement())
-  details    String
-  link       String?
-  createdAt  DateTime @default(now())
-  imageURL   String?
-  renter     Renter   @relation(fields: [renterId], references: [id])
-  renterId   Int 
-  item       Item?    @relation(fields: [itemId], references: [id])
-  itemId     Int?
-  company    Company? @relation(fields: [companyId], references: [id])
-  companyId  Int?  
+  id          Int      @id @default(autoincrement())
+  details     String
+  link        String?
+  createdAt   DateTime @default(now())
+  imageURL    String?
+  renter      Renter   @relation(fields: [renterId], references: [id])
+  renterId    Int 
+  itemName    String?
+  companyName String?
 }
 
 model Address {
