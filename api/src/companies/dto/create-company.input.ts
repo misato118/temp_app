@@ -1,12 +1,13 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { Employee } from 'src/employees/models/employee.model';
 
 @InputType()
 export class CreateCompanyInput {
-  @Field(() => String, { description: '' })
+  @Field(() => String)
   name: string;
-  @Field(() => String, { description: '' })
+  @Field(() => String)
   email: string;
-  @Field(() => String, { description: '' })
+  @Field(() => String)
   description: string;
+  @Field(() => String)
+  logoURL: string;
 }

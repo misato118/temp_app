@@ -1,4 +1,4 @@
-import { Resolver, ResolveField, Args, Query } from '@nestjs/graphql';
+import { Resolver, ResolveField, Args, Query, Mutation } from '@nestjs/graphql';
 import { Employee } from './models/employee.model';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeInput } from './dto/create-employee.input';
@@ -12,5 +12,10 @@ export class EmployeesResolver {
   @Query(() => [Employee], { name: 'employee' })
   async findAll() {
     return this.employeesService.findAll();
+  }
+
+  @Mutation(() => Employee, { name: 'createEmployee' })
+  createEmployee(@Args('createEmployeeInput') createEmployeeInput: CreateEmployeeInput) {
+    return this.employeesService.create(createEmployeeInput);
   }
 }
