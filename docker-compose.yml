@@ -1,5 +1,6 @@
 services:
   api:
+    container_name: temp-api-1
     build:
       context: .
       dockerfile: ./docker/api/Dockerfile
@@ -10,7 +11,8 @@ services:
     volumes:
       - ./api:/usr/src/app
       - /app/node_modules
-    command: npm run start
+    command: npx prisma generate \
+      npm run start
     depends_on:
       - db
 
