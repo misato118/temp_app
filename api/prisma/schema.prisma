@@ -38,14 +38,14 @@ model Employee {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   imageURL  String?
-  company   Company? @relation(fields: [companyId], references: [id])
-  companyId Int?
+  company   Company  @relation(fields: [companyId], references: [id])
+  companyId Int
   answers   Answer[]
 }
 
 model Company {
   id            Int           @id @default(autoincrement())
-  name          String        @unique
+  name          String
   email         String        @unique
   description   String
   createdAt     DateTime      @default(now())
