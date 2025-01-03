@@ -4,6 +4,10 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { EmployeesModule } from './employees/employees.module';
 import { CompaniesModule } from './companies/companies.module';
+import { ItemsModule } from './items/items.module';
+import { ReviewsModule } from './reviews/reviews.module';
+import { StockStatusesModule } from './stockStatuses/stockStatuses.module';
+import { OwnerApplicationsModule } from './ownerApplications/ownerApplications.module';
 
 @Module({
   imports: [
@@ -14,6 +18,10 @@ import { CompaniesModule } from './companies/companies.module';
     }),
     EmployeesModule,
     CompaniesModule,
+    ItemsModule,
+    ReviewsModule,
+    StockStatusesModule,
+    OwnerApplicationsModule,
   ],
 })
 export class AppModule {}

@@ -63,17 +63,17 @@ model Item {
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
   category          ItemCategory
-  fee               Decimal           @db.Decimal(9,2)
+  fee               Float
   feeType           String
   maxDuration       Int
   maxDurationType   String
   imageURL          String?
-  deposit           Decimal           @db.Decimal(9,2)
+  deposit           Float
   overallReview     Int?
   company           Company           @relation(fields: [companyId], references: [id])
   companyId         Int
   reviews           Review[]
-  ownerAppllication OwnerApplication?
+  ownerApplication  OwnerApplication?
   stockStatus       StockStatus?
   conversations     Conversation[]
 }

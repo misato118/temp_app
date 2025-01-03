@@ -1,45 +1,37 @@
-import { Employee, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const employees: Omit<Employee, 'id'>[] = [
-  {
-    firstName: 'John',
-    lastName: 'Lee2',
-    birthDate: new Date('2002-11-02'),
-    email: 'johnlee@noemail.invalid',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    imageURL: 'https://www.test-image.com',
-    companyId: 1,
-  },
-];
-
 export const seed = async () => {
   const transaction = [];
-  for (const employee of employees) {
-    const updateCompany = prisma.company.update({
-      where: {
-        id: 1
-      },
-      data: {
-        employees: {
-          create: {
-            firstName: 'John',
-            lastName: 'Lee2',
-            birthDate: new Date('2002-11-02'),
-            email: 'johnlee@noemail.invalid',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            imageURL: 'https://www.test-image.com',
-          },
-          connect: {
-            id: 1
-          }
-        }
-      }
-    });
-    transaction.push(updateCompany);
-  }
+  const createEmployee1 = prisma.employee.update({
+    where: {
+      id: 1,
+    },
+    data: {
+      companyId: 1,
+    }
+  });
+  transaction.push(createEmployee1);
+
+  const createEmployee2 = prisma.employee.update({
+    where: {
+      id: 2,
+    },
+    data: {
+      companyId: 1,
+    }
+  });
+  transaction.push(createEmployee2);
+
+  const createEmployee3 = prisma.employee.update({
+    where: {
+      id: 3,
+    },
+    data: {
+      companyId: 2,
+    }
+  });
+  transaction.push(createEmployee3);
   return await prisma.$transaction(transaction);
 };

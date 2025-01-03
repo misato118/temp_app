@@ -2,32 +2,71 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Owner application status for an item"""
+enum ApplicationStatus {
+  """When an owner application is accepted"""
+  ACCEPTED
+
+  """When an owner applied to publish an item."""
+  APPLIED
+
+  """When an owner application is declined."""
+  DECLINED
+}
+
 type Company {
   createdAt: DateTime!
   description: String!
   email: String!
   employees: [Employee!]
   id: Int!
+  items: [Item!]
   logoURL: String
   name: String!
   updatedAt: DateTime!
 }
 
+input CreateCompanyInput {
+  description: String!
+  email: String!
+  logoURL: String!
+  name: String!
+}
+
 input CreateEmployeeInput {
-  """"""
   birthDate: String!
 
-  """"""
+  """The name of a company this employee works for"""
   company: String!
-
-  """"""
   email: String!
-
-  """"""
   firstName: String!
-
-  """"""
   lastName: String!
+}
+
+input CreateItemInput {
+  category: ItemCategory!
+  company: String!
+  deposit: Int!
+  description: String!
+  fee: Float!
+  feeType: String!
+  imageURL: String!
+  maxDuration: Int!
+  maxDurationType: String!
+  name: String!
+}
+
+input CreateReviewInput {
+  contents: String!
+  itemId: Int!
+  rating: Int!
+  title: String!
+}
+
+input CreateStockStatusInput {
+  currentStock: Int!
+  itemId: Int!
+  totalStock: Int!
 }
 
 """
@@ -48,11 +87,78 @@ type Employee {
   updatedAt: DateTime!
 }
 
+type Item {
+  category: ItemCategory!
+  company: Company!
+  companyId: Int!
+  createdAt: DateTime!
+  deposit: Int!
+  description: String!
+  fee: Float!
+  feeType: String!
+  id: Int!
+  imageURL: String
+  maxDuration: Int!
+  maxDurationType: String!
+  name: String!
+  ownerApplication: OwnerApplication!
+  reviews: [Review!]!
+  stockStatus: StockStatus!
+  updatedAt: DateTime!
+}
+
+"""The item types"""
+enum ItemCategory {
+  """Any furniture."""
+  FURNITURE
+
+  """Anything related to music such as instruments, scores, etc."""
+  MUSIC
+
+  """Any tools."""
+  TOOL
+}
+
 type Mutation {
+  createCompany(createCompanyInput: CreateCompanyInput!): Company!
   createEmployee(createEmployeeInput: CreateEmployeeInput!): Employee!
+  createItem(createItemInput: CreateItemInput!): Company!
+  createReview(createReviewInput: CreateReviewInput!): Item!
+  createStockStatus(createStockStatusInput: CreateStockStatusInput!): Item!
+  updateOwnerApplication(applicationId: Int!, newStatus: ApplicationStatus!): OwnerApplication!
+}
+
+type OwnerApplication {
+  createdAt: DateTime!
+  id: Int!
+  status: ApplicationStatus!
+  updatedAt: DateTime!
 }
 
 type Query {
   company: [Company!]!
   employee: [Employee!]!
+  item: [Item!]!
+  ownerApplication(itemId: Int!): OwnerApplication!
+  review: [Review!]!
+  stockStatus(itemId: Int!): StockStatus!
+}
+
+type Review {
+  contents: String!
+  createdAt: DateTime!
+  id: Int!
+  item: Item!
+  itemId: Int!
+  rating: Int!
+  title: String!
+  updatedAt: DateTime!
+}
+
+type StockStatus {
+  currentStock: Int!
+  id: Int!
+  item: Item!
+  itemId: Int!
+  totalStock: Int!
 }

@@ -1,14 +1,22 @@
 import { PrismaClient } from "@prisma/client";
-import { seed as employeeSeeding } from "./dummies/employee";
 import { seed as companySeeding } from "./dummies/company";
+import { seed as itemSeeding } from "./dummies/item";
+import { seed as reviewSeeding } from "./dummies/review";
+import { seed as stockStatusSeeding } from "./dummies/stockStatus";
 
 const prisma = new PrismaClient();
 
 const main = async () => {
     console.log(`Start seeding ...`);
   
+    // Seed companies and nested employees
     await companySeeding();
-    await employeeSeeding();
+    // Seed items and nested owner applications
+    await itemSeeding();
+    // Seed reviews
+    await reviewSeeding();
+    // Seed stock status
+    await stockStatusSeeding();
   
     console.log(`Seeding finished.`);
   };
