@@ -33,6 +33,7 @@ export class Employee {
   @Field(type => Int)
   companyId: number;
 
+  // TODO: Uncomment here after adding Answers
   //@Field({ nullable: true })
   //answers: Answer[];
 }

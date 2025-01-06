@@ -6,7 +6,7 @@ import { CreateEmployeeInput } from './dto/create-employee.input';
 export class EmployeesService {
   constructor(private prisma: PrismaService) {}
 
-  // Obtains all companies
+  // Obtains all employees
   findAll() {
     return this.prisma.employee.findMany();
   }

@@ -1,12 +1,14 @@
 import { Resolver, Args, Query, Mutation, Int } from '@nestjs/graphql';
 import { OwnerApplication } from './models/ownerApplication.model';
 import { OwnerApplicationsService } from './ownerApplications.service';
+import { ConversationsService } from 'src/conversations/conversations.service';
 import { ApplicationStatus } from 'src/applicationStatus/models/applicationStatus.model';
 
 @Resolver(() => OwnerApplication)
 export class OwnerApplicationsResolver {
   constructor(
     private ownerApplicationsService: OwnerApplicationsService,
+    private conversationsService: ConversationsService,
   ) {}
 
   @Query(() => OwnerApplication, { name: 'ownerApplication' })
@@ -15,7 +17,16 @@ export class OwnerApplicationsResolver {
   }
 
   @Mutation(() => OwnerApplication, { name: 'updateOwnerApplication' })
-  updateOwnerApplication(@Args('applicationId', { type: () => Int }) applicationId: number, @Args('newStatus', { type: () => ApplicationStatus }) newStatus: ApplicationStatus) {
+  updateOwnerApplication(
+    @Args('applicationId', { type: () => Int }) applicationId: number,
+    @Args('newStatus', { type: () => ApplicationStatus }) newStatus: ApplicationStatus,
+    @Args('itemId', { type: () => Int }) itemId: number,
+  ) {
+    // If Accepted, create a Conversation
+    if (newStatus.valueOf() === ApplicationStatus.ACCEPTED) {
+      // TODO: Why does this not work here after passing the if statement?
+      this.conversationsService.create(itemId);
+    }
     return this.ownerApplicationsService.updateStatus(applicationId, newStatus);
   }
 }

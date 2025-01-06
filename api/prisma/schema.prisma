@@ -58,17 +58,17 @@ model Company {
 
 model Item {
   id                Int               @id @default(autoincrement())
-  name              String
+  name              String?
   description       String?
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
-  category          ItemCategory
-  fee               Float
-  feeType           String
-  maxDuration       Int
-  maxDurationType   String
+  category          ItemCategory?
+  fee               Float?
+  feeType           String?
+  maxDuration       Int?
+  maxDurationType   String?
   imageURL          String?
-  deposit           Float
+  deposit           Float?
   overallReview     Int?
   company           Company           @relation(fields: [companyId], references: [id])
   companyId         Int
@@ -120,8 +120,6 @@ model StockStatus {
 
 model Conversation {
   id        Int      @id @default(autoincrement())
-  contents  String    
-  createdAt DateTime @default(now())
   item      Item     @relation(fields: [itemId], references: [id])
   itemId    Int
   questions Question[]
@@ -132,6 +130,8 @@ model Question {
   id             Int          @id @default(autoincrement())
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   conversationId Int
+  contents       String    
+  createdAt      DateTime     @default(now())
   sender         Renter       @relation(fields: [senderId], references: [id])
   senderId       Int
   answer         Answer?      @relation(fields: [answerId], references: [id])
@@ -142,6 +142,8 @@ model Answer {
   id             Int          @id @default(autoincrement())
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   conversationId Int
+  contents       String    
+  createdAt      DateTime     @default(now())
   replyTo        Question?
   sender         Employee     @relation(fields: [senderId], references: [id])
   senderId       Int

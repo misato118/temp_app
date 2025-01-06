@@ -4,7 +4,7 @@ import { ItemCategory } from 'src/itemCategories/models/itemCategory.model';
 import { Review } from 'src/reviews/models/review.model';
 import { StockStatus } from 'src/stockStatuses/models/stockStatus.model';
 import { OwnerApplication } from 'src/ownerApplications/models/ownerApplication.model';
-//import { Conversation } from 'src/conversations/models/conversation.model';
+import { Conversation } from 'src/conversations/models/conversation.model';
 
 @ObjectType()
 export class Item {
@@ -62,6 +62,6 @@ export class Item {
   @Field(type => StockStatus)
   stockStatus: StockStatus;
 
-  //@Field(type => Conversation)
-  //conversations: Conversation;
+  @Field(type => Conversation)
+  conversations: Conversation;
 }

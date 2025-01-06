@@ -3,23 +3,25 @@ import { ItemCategory } from 'src/itemCategories/models/itemCategory.model';
 
 @InputType()
 export class CreateItemInput {
-  @Field(() => String)
+  @Field(() => Int, { nullable: true })
+  id: number;
+  @Field(() => String, { nullable: true })
   name: string;
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   description: string;
-  @Field(() => ItemCategory)
+  @Field(() => ItemCategory, { nullable: true })
   category: ItemCategory;
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   fee: number;
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   feeType: string;
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   maxDuration: number;
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   maxDurationType: string;
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   imageURL: string;
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   deposit: number;
   @Field(() => String)
   company: string;

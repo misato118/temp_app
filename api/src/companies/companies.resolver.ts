@@ -14,6 +14,11 @@ export class CompaniesResolver {
     return this.companiesService.findAll();
   }
 
+  @Query(() => Company, { name: 'companyInfo' })
+  async findOneByCompanyName(@Args('companyName', { type: () => String }) companyName: string) {
+    return this.companiesService.findOneByName(companyName);
+  }
+
   @Mutation(() => Company, { name: 'createCompany' })
   createCompany(@Args('createCompanyInput') createCompanyInput: CreateCompanyInput) {
     return this.companiesService.create(createCompanyInput);

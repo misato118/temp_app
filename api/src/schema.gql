@@ -26,6 +26,12 @@ type Company {
   updatedAt: DateTime!
 }
 
+type Conversation {
+  id: Int!
+  item: Item!
+  itemId: Int!
+}
+
 input CreateCompanyInput {
   description: String!
   email: String!
@@ -91,6 +97,7 @@ type Item {
   category: ItemCategory!
   company: Company!
   companyId: Int!
+  conversations: Conversation!
   createdAt: DateTime!
   deposit: Int!
   description: String!
@@ -121,11 +128,12 @@ enum ItemCategory {
 
 type Mutation {
   createCompany(createCompanyInput: CreateCompanyInput!): Company!
+  createConversation(itemId: Int!): Conversation!
   createEmployee(createEmployeeInput: CreateEmployeeInput!): Employee!
   createItem(createItemInput: CreateItemInput!): Company!
   createReview(createReviewInput: CreateReviewInput!): Item!
   createStockStatus(createStockStatusInput: CreateStockStatusInput!): Item!
-  updateOwnerApplication(applicationId: Int!, newStatus: ApplicationStatus!): OwnerApplication!
+  updateOwnerApplication(applicationId: Int!, itemId: Int!, newStatus: ApplicationStatus!): OwnerApplication!
 }
 
 type OwnerApplication {
@@ -137,6 +145,8 @@ type OwnerApplication {
 
 type Query {
   company: [Company!]!
+  companyInfo(companyName: String!): Company!
+  conversation(itemId: Int!): Conversation!
   employee: [Employee!]!
   item: [Item!]!
   ownerApplication(itemId: Int!): OwnerApplication!
