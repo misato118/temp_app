@@ -1,5 +1,6 @@
 services:
   api:
+    container_name: api
     build:
       context: .
       dockerfile: ./docker/api/Dockerfile
@@ -10,11 +11,15 @@ services:
     volumes:
       - ./api:/usr/src/app
       - /app/node_modules
-    command: npm run start
+    # command: npm run start:dev
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    networks:
+      - api_network
 
   db:
+    container_name: postgres
     build:
       context: .
       dockerfile: ./docker/database/Dockerfile
@@ -31,6 +36,14 @@ services:
       - ./docker/database/entrypoint:/docker-entrypoint-initdb.d
       - db-store:/var/lib/postgresql/data
     tty: true
+    networks:
+      - api_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "postgres"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
 
   tob:
     container_name: tob
@@ -76,3 +89,7 @@ services:
 
 volumes:
   db-store:
+
+networks:
+  api_network:
+    driver: bridge
