@@ -50,14 +50,33 @@ export class ItemsService {
     });
   }
 
-  // Submit an item
+  // Submit an item by creating an owner application
   submit(createItemInput: CreateItemInput) {
-    if (this.hasNullFields(createItemInput)) { // Some fields are null
-      // TODO: What should I return if I want to let users know that they must fill up all the fields?
-      return null;
-    }
+    const itemId = createItemInput.id;
 
-    return this.create(createItemInput);
+    return this.prisma.item.update({
+      where: {
+        id: itemId,
+      },
+      data: {
+        ownerApplication: {
+          create: {
+            status: ApplicationStatus.APPLIED,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          }
+        }
+      },
+    });
+  }
+
+  // Delete an item
+  delete(@Args('itemId', { type: () => Int }) itemId: number) {
+    return this.prisma.item.delete({
+      where: {
+        id: itemId,
+      }
+    });
   }
 
   // TODO: Add a function to conduct a category search
@@ -73,14 +92,5 @@ export class ItemsService {
         id: itemId,
       }
     })
-  }
-
-  hasNullFields(createItemInput: CreateItemInput) {
-    for (var field in createItemInput) {
-      if (field == null) {
-        return true;
-      }
-    }
-    return false;
   }
 }
