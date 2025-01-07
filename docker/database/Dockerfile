@@ -1,4 +1,4 @@
-FROM postgres:16.4 AS development
+FROM postgres:latest AS development
 
 RUN apt-get update && \
     apt-get install -y curl
