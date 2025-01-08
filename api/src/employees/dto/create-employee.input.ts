@@ -10,6 +10,6 @@ export class CreateEmployeeInput {
   birthDate: Date;
   @Field(() => String)
   email: string;
-  //@Field(() => String, { description: 'The name of a company this employee works for' })
-  //company: string;
+  @Field(() => String, { description: 'The name of a company this employee works for' })
+  company: string;
 }

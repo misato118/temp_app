@@ -2,8 +2,29 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Company {
+  createdAt: DateTime!
+  description: String!
+  email: String!
+  employees: [Employee!]
+  id: Int!
+  logoURL: String
+  name: String!
+  updatedAt: DateTime!
+}
+
+input CreateCompanyInput {
+  description: String!
+  email: String!
+  logoURL: String!
+  name: String!
+}
+
 input CreateEmployeeInput {
   birthDate: DateTime!
+
+  """The name of a company this employee works for"""
+  company: String!
   email: String!
   firstName: String!
   lastName: String!
@@ -16,6 +37,8 @@ scalar DateTime
 
 type Employee {
   birthDate: DateTime!
+  company: Company!
+  companyId: Int!
   createdAt: DateTime!
   email: String!
   firstName: String!
@@ -26,9 +49,12 @@ type Employee {
 }
 
 type Mutation {
+  createCompany(createCompanyInput: CreateCompanyInput!): Company!
   createEmployee(createEmployeeInput: CreateEmployeeInput!): Employee!
 }
 
 type Query {
+  company: [Company!]!
+  companyInfo(companyName: String!): Company!
   employee: [Employee!]!
 }

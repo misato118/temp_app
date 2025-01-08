@@ -13,6 +13,11 @@ export const seed = async () => {
         createdAt: new Date(),
         updatedAt: new Date(),
         imageURL: 'https://www.test-image.com',
+        company: {
+          connect: {
+            id: 1,
+          }
+        }
       }
   });
   transaction.push(createEmployee1);
@@ -26,6 +31,11 @@ export const seed = async () => {
         createdAt: new Date(),
         updatedAt: new Date(),
         imageURL: 'https://www.test-image.com',
+        company: {
+          connect: {
+            id: 1,
+          }
+        }
       }
   });
   transaction.push(createEmployee2);
@@ -39,6 +49,11 @@ export const seed = async () => {
         createdAt: new Date(),
         updatedAt: new Date(),
         imageURL: 'https://www.test-image.com',
+        company: {
+          connect: {
+            id: 1,
+          }
+        }
       }
   });
   transaction.push(createEmployee3);

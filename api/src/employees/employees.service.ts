@@ -8,17 +8,36 @@ export class EmployeesService {
 
   // Obtains all employees
   findAll() {
-    return this.prisma.employee.findMany();
+    return this.prisma.employee.findMany({
+      include: {
+        company: true,
+      }
+    });
   }
 
   // Create a new employee
   create(createEmployeeInput: CreateEmployeeInput) {
-    return this.prisma.employee.create({
-        data: {
-            ...createEmployeeInput,
+    const companyName = createEmployeeInput.company;
+    const updatedInput = { ...createEmployeeInput, ['company']: undefined };
+
+    // When a company name is not provided, and 
+    if (companyName == null) {
+      return null;
+    }
+
+    return this.prisma.company.update({
+      where: {
+        name: companyName,
+      },
+      data: {
+        employees: {
+          create: {
+            ...updatedInput,
             createdAt: new Date(),
             updatedAt: new Date(),
+          }
         }
-      });    
+      }
+    });    
   }
 }

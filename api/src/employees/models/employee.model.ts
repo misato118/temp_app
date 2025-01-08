@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-//import { Company } from 'src/companies/models/company.model';
+import { Company } from 'src/companies/models/company.model';
 
 @ObjectType()
 export class Employee {
@@ -27,11 +27,11 @@ export class Employee {
   @Field({ nullable: true })
   imageURL?: string;
 
-  //@Field(type => Company)
-  //company: Company;
+  @Field(type => Company)
+  company: Company;
 
-  //@Field(type => Int)
-  //companyId: number;
+  @Field(type => Int)
+  companyId: number;
 
   // TODO: Uncomment here after adding Answers
   //@Field({ nullable: true })
