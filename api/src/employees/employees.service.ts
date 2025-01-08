@@ -40,4 +40,18 @@ export class EmployeesService {
       }
     });    
   }
+
+  // Obtain an employee
+  /*
+  findOneById(@Args('id', { type: () => Int }) id: number) {
+    return this.prisma.employee.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        company: true,
+      }
+    });
+  }
+  */
 }

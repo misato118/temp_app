@@ -8,7 +8,7 @@ import { Employee } from 'src/employees/models/employee.model';
 export class CompaniesService {
   constructor(private prisma: PrismaService) {}
 
-  // Obtain all companies
+  // MODIFY HERE TO GET AN OWNER'S LIST ON TOCS SIDE: Obtain all companies
   findAll() {
     return this.prisma.company.findMany({
       include: {
@@ -33,11 +33,38 @@ export class CompaniesService {
     return this.prisma.company.findUnique({
       where: {
         name: companyName,
-      }
+      },
+      /*
+      include: {
+        items: true,
+      }      
+      */
     })
   }
 
-  // TODO: Add a function to obtain a company address after adding Addresses
+  // Delete a company
+  /*deleteCompany(@Args('companyName', { type: () => String }) companyName: string) {
+    return this,prisma.company.delete({
+      where: {
+        name: companyName,
+      }
+    });
+  }*/
 
-  // TODO: Add a function to obtain companies with optional filters
+  // TODO: Add a function to obtain a company address after adding Addresses
+  /*
+  getAddress(@Args('companyName', { type: () => String }) companyName: string) {
+    return this.prisma.company.findUnique({
+      where: {
+        name: companyName,
+      },
+      include: {
+        address: true,
+      },
+      select: {
+        address: true,
+      }
+    });
+  }
+  */
 }
