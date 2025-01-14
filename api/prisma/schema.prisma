@@ -37,6 +37,7 @@ model Company {
   logoURL       String?
   employees     Employee[]
   items         Item[]
+  admins        Admin[]
 }
 
 model Item {
@@ -116,6 +117,8 @@ model Question {
   contents       String    
   createdAt      DateTime     @default(now())
   answer         Answer?      @relation(fields: [answerId], references: [id])
+  sender         Renter       @relation(fields: [senderId], references: [id])
+  senderId       Int
   answerId       Int?         @unique
 }
 
@@ -128,4 +131,100 @@ model Answer {
   replyTo        Question?
   sender         Employee     @relation(fields: [senderId], references: [id])
   senderId       Int
+}
+
+model Renter {
+  id                 Int                           @id @default(autoincrement())
+  username           String                        @unique
+  firstName          String
+  lastName           String
+  birthDate          DateTime?
+  email              String                        @unique
+  createdAt          DateTime                      @default(now())
+  updatedAt          DateTime                      @updatedAt
+  imageURL           String?
+  admins             Admin[]
+  questions          Question[]
+  notifications      Notification[]
+  address            Address?
+  renterapplications RenterApplicationsOnRenters[]
+}
+
+model Admin {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  email     String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  companies Company[]
+  renters   Renter[]
+}
+
+model Notification {
+  id          Int      @id @default(autoincrement())
+  details     String
+  link        String?
+  createdAt   DateTime @default(now())
+  imageURL    String?
+  renter      Renter   @relation(fields: [renterId], references: [id])
+  renterId    Int 
+  itemName    String?
+  companyName String?
+}
+
+model Address {
+  id           Int    @id @default(autoincrement())
+  country      String
+  province     String
+  city         String
+  addressLine1 String
+  addressLine2 String?
+  postalCode   String
+  renter       Renter @relation(fields: [renterId], references: [id])
+  renterId     Int    @unique
+}
+
+model RenterApplication {
+  id                      Int                           @id @default(autoincrement())
+  createdAt               DateTime                      @default(now())
+  renters                 RenterApplicationsOnRenters[]
+  form                    Form                          @relation(fields: [formId], references: [id])
+  formId                  Int                           @unique
+  renterApplicationStatus RenterApplicationStatus[]
+}
+
+model RenterApplicationsOnRenters {
+  renter              Renter            @relation(fields: [renterId], references: [id])
+  renterId            Int
+  renterApplication   RenterApplication @relation(fields: [renterApplicationId], references: [id])
+  renterApplicationId Int
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  @@id([renterId, renterApplicationId])
+}
+
+model Form {
+  id                Int                @id @default(autoincrement())
+  offeringPrice     Decimal            @db.Decimal(9,2)
+  offeringDuration  Int
+  renterApplication RenterApplication?
+}
+
+model RenterApplicationStatus {
+  id                  Int                         @id @default(autoincrement())
+  status              RenterApplicationStatusType
+  updatedAt           DateTime                    @updatedAt
+  renterApplication   RenterApplication           @relation(fields: [renterApplicationId], references: [id])
+  renterApplicationId Int
+}
+
+enum RenterApplicationStatusType {
+  APPLIED
+  DECLINED
+  ACCEPTED
+  DELIVERED
+  RENTED
+  RETURNED
+  COMPLETED
 }
