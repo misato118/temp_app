@@ -2,16 +2,7 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import type { ReactElement } from 'react';
 import { NextPageWithLayout } from "../_app";
 import RootLayout from '@/components/Layout';
-
-type Company = {
-  id: number;
-  name: string;
-  email: string;
-  description: string;
-  createdAt: Date;
-  updatedAt: Date;
-  logoURL: string;
-}
+import type { Company } from '@/types/types';
 
 // TODO: Add item info as well after adding Item data to prisma
 export const getServerSideProps = (async ({ query }) => {

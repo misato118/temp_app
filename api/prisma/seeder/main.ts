@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { seed as employeeSeeding } from "./dummies/employee";
 import { seed as companySeeding } from "./dummies/company";
 import { seed as itemSeeding } from "./dummies/item";
+import { seed as reviewSeeding } from "./dummies/review";
 const prisma = new PrismaClient();
 
 const main = async () => {
@@ -10,6 +11,7 @@ const main = async () => {
     await companySeeding();
     await employeeSeeding();
     await itemSeeding();
+    await reviewSeeding();
 
     console.log(`Seeding finished.`);
   };

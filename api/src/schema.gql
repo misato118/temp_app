@@ -43,6 +43,13 @@ input CreateItemInput {
   name: String
 }
 
+input CreateReviewInput {
+  contents: String!
+  itemId: Int!
+  rating: Int!
+  title: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -75,6 +82,7 @@ type Item {
   maxDuration: Int!
   maxDurationType: String!
   name: String!
+  reviews: [Review!]!
   updatedAt: DateTime!
 }
 
@@ -94,6 +102,7 @@ type Mutation {
   createCompany(createCompanyInput: CreateCompanyInput!): Company!
   createEmployee(createEmployeeInput: CreateEmployeeInput!): Employee!
   createItem(createItemInput: CreateItemInput!): Company!
+  createReview(createReviewInput: CreateReviewInput!): Item!
   deleteItem(itemId: Int!): Item!
 }
 
@@ -103,4 +112,16 @@ type Query {
   employee: [Employee!]!
   item: [Item!]!
   itemInfo(itemId: Int!): Item!
+  review: [Review!]!
+}
+
+type Review {
+  contents: String!
+  createdAt: DateTime!
+  id: Int!
+  item: Item!
+  itemId: Int!
+  rating: Int!
+  title: String!
+  updatedAt: DateTime!
 }

@@ -1,28 +1,9 @@
+import Link from 'next/link';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import type { ReactElement } from 'react';
 import { NextPageWithLayout } from "../../_app";
 import RootLayout from '@/components/Layout';
-
-enum ItemCategory {
-    FURNITURE,
-    MUSIC,
-    TOOL,
-}
-
-type Item = {
-    id: number;
-    name: string;
-    description: string;
-    createdAt: Date;
-    updatedAt: Date;
-    category: ItemCategory;
-    fee: number;
-    feeType: string;
-    maxDuration: number;
-    maxDurationType: string;
-    imageURL: string;
-    deposit: number;
-}
+import type { Item } from '@/types/types';
 
 export const getServerSideProps = (async ({ query }) => {
     const itemId: number = query?.item ? Number(query?.item) : 0;
@@ -47,6 +28,14 @@ export const getServerSideProps = (async ({ query }) => {
                     maxDurationType
                     imageURL
                     deposit
+                    company {
+                        name
+                        logoURL
+                        description
+                    }
+                    reviews {
+                        title
+                    }
                 }
             }
         `,
@@ -65,11 +54,22 @@ const Item: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
     return (
         <main>
           <div>
+            <Link legacyBehavior
+                href={{
+                pathname: '/items/[item]/rental-application-form',
+                query: { item: item.id },
+            }}>
+                <a>Apply to Rent</a>
+            </Link>
             <p>{item.name}</p>
             <p>{item.description}</p>
             <p>{item.category}</p>
             <p>{item.fee}</p>
             <p>{item.feeType}</p>
+            <p>{item.company.name}</p>
+            {item.reviews.map((review) => (
+                <p>{review.title}</p>
+            ))}
           </div>
         </main>
       );

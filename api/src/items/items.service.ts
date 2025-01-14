@@ -92,6 +92,10 @@ export class ItemsService {
     return this.prisma.item.findUnique({
       where: {
         id: itemId,
+      },
+      include: {
+        company: true,
+        reviews: true,
       }
     })
   }

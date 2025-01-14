@@ -3,22 +3,7 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import type { ReactElement } from 'react';
 import { NextPageWithLayout } from "./_app";
 import RootLayout from '@/components/Layout';
-
-type Item = {
-  id: number;
-  name: string;
-  description: string;
-  createdAt: Date;
-  updatedAt: Date;
-  category: string;
-  fee: number;
-  feeType: string;
-  maxDuration: number;
-  maxDurationType: string;
-  logoURL: string;
-  deposit: number;
-  overallReview: number;
-}
+import type { Item } from '@/types/types';
 
 export const getServerSideProps = (async () => {
     // Fetch data from external API
@@ -67,7 +52,7 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
                   <a>{item.id}</a>
                 </Link>
                 <p>{item.name}</p>
-                <p>{item.logoURL}</p>
+                <p>{item.imageURL}</p>
                 <p>{item.fee} {item.feeType}</p>
                 <p>{item.maxDuration} {item.maxDurationType}</p>
               </>

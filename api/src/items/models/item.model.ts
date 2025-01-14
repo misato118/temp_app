@@ -1,7 +1,7 @@
 import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import { Company } from 'src/companies/models/company.model';
 import { ItemCategory } from 'src/itemCategories/models/itemCategory.model';
-//import { Review } from 'src/reviews/models/review.model';
+import { Review } from 'src/reviews/models/review.model';
 //import { StockStatus } from 'src/stockStatuses/models/stockStatus.model';
 //import { OwnerApplication } from 'src/ownerApplications/models/ownerApplication.model';
 //import { Conversation } from 'src/conversations/models/conversation.model';
@@ -53,8 +53,8 @@ export class Item {
   @Field(type => Int)
   companyId: number;
 
-  //@Field(type => [Review])
-  //reviews: Review[];
+  @Field(type => [Review])
+  reviews: Review[];
 
   //@Field(type => OwnerApplication)
   //ownerApplication: OwnerApplication;
