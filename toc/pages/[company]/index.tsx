@@ -66,6 +66,6 @@ CompanyInfo.getLayout = function getLayout(page: ReactElement) {
             {page}
         </RootLayout>
     );
-  }
+}
   
-  export default CompanyInfo;
+export default CompanyInfo;

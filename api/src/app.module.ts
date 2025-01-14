@@ -4,6 +4,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { EmployeesModule } from './employees/employees.module';
 import { CompaniesModule } from './companies/companies.module';
+import { ItemsModule } from './items/items.module';
 //import { AppController } from './app.controller';
 //import { AppService } from './app.service';
 
@@ -16,6 +17,7 @@ import { CompaniesModule } from './companies/companies.module';
     }),
     EmployeesModule,
     CompaniesModule,
+    ItemsModule,
   ]
   //controllers: [AppController],
   //providers: [AppService],
