@@ -2,8 +2,9 @@ import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import { Company } from 'src/companies/models/company.model';
 import { ItemCategory } from 'src/itemCategories/models/itemCategory.model';
 import { Review } from 'src/reviews/models/review.model';
-//import { StockStatus } from 'src/stockStatuses/models/stockStatus.model';
-//import { OwnerApplication } from 'src/ownerApplications/models/ownerApplication.model';
+import { StockStatus } from 'src/stockStatuses/models/stockStatus.model';
+import { OwnerApplication } from 'src/ownerApplications/models/ownerApplication.model';
+import { RenterApplication } from 'src/renterApplications/models/renterApplication.model';
 //import { Conversation } from 'src/conversations/models/conversation.model';
 
 @ObjectType()
@@ -56,12 +57,15 @@ export class Item {
   @Field(type => [Review])
   reviews: Review[];
 
-  //@Field(type => OwnerApplication)
-  //ownerApplication: OwnerApplication;
+  @Field(type => OwnerApplication)
+  ownerApplication: OwnerApplication;
 
-  //@Field(type => StockStatus)
-  //stockStatus: StockStatus;
+  @Field(type => StockStatus)
+  stockStatus: StockStatus;
 
   //@Field(type => Conversation)
   //conversations: Conversation;
+
+  @Field(type => [RenterApplication])
+  renterApplications: RenterApplication[];
 }

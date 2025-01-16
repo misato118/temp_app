@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateItemInput } from './dto/create-item.input';
 import { Args, Int } from '@nestjs/graphql';
-//import { ApplicationStatus } from 'src/applicationStatus/models/applicationStatus.model';
+import { ApplicationStatus } from 'src/applicationStatus/models/applicationStatus.model';
 
 @Injectable()
 export class ItemsService {
@@ -11,6 +11,29 @@ export class ItemsService {
   // Obtain all items
   findAll() {
     return this.prisma.item.findMany();
+  }
+
+  // Obtain all items by a company name
+  findAllByCompany(@Args('companyName', { type: () => String }) companyName: string) {
+    return this.prisma.company.findUnique({
+      where: {
+        name: companyName,
+      },
+      include: {
+        items: {
+          include: {
+            ownerApplication: true,
+            stockStatus: true,
+            renterApplications: {
+              include: {
+                renter: true,
+                renterApplicationStatus: true,
+              }
+            }
+          }
+        }
+      }
+    })
   }
 
   // Create a new item
@@ -50,7 +73,6 @@ export class ItemsService {
     });
   }
 
-  /*
   // Submit an item by creating an owner application
   submit(createItemInput: CreateItemInput) {
     const itemId = createItemInput.id;
@@ -70,7 +92,6 @@ export class ItemsService {
       },
     });
   }
-  */
 
   // Delete an item
   delete(@Args('itemId', { type: () => Int }) itemId: number) {

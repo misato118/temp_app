@@ -16,6 +16,12 @@ export class ItemsResolver {
     return this.itemsService.findAll();
   }
 
+  // Obtain all items by a company name
+  @Query(() => Company, { name: 'itemByCompany' })
+  async findAllByCompany(@Args('companyName', { type: () => String }) companyName: string) {
+    return this.itemsService.findAllByCompany(companyName);
+  }
+
   // Obtain item details
   @Query(() => Item, { name: 'itemInfo' })
   async findOneByItemId(@Args('itemId', { type: () => Int }) itemId: number) {

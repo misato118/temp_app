@@ -41,25 +41,26 @@ model Company {
 }
 
 model Item {
-  id                Int               @id @default(autoincrement())
-  name              String?
-  description       String?
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  category          ItemCategory?
-  fee               Float?
-  feeType           String?
-  maxDuration       Int?
-  maxDurationType   String?
-  imageURL          String?
-  deposit           Float?
-  overallReview     Int?
-  company           Company           @relation(fields: [companyId], references: [id])
-  companyId         Int
-  reviews           Review[]
-  ownerApplication  OwnerApplication?
-  stockStatus       StockStatus?
-  conversations     Conversation[]
+  id                 Int               @id @default(autoincrement())
+  name               String?
+  description        String?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  category           ItemCategory?
+  fee                Float?
+  feeType            String?
+  maxDuration        Int?
+  maxDurationType    String?
+  imageURL           String?
+  deposit            Float?
+  overallReview      Int?
+  company            Company           @relation(fields: [companyId], references: [id])
+  companyId          Int
+  reviews            Review[]
+  ownerApplication   OwnerApplication?
+  stockStatus        StockStatus?
+  conversations      Conversation[]
+  renterApplications RenterApplication[]
 }
 
 enum ItemCategory {
@@ -147,7 +148,7 @@ model Renter {
   questions          Question[]
   notifications      Notification[]
   address            Address?
-  renterapplications RenterApplicationsOnRenters[]
+  renterApplications RenterApplication[]
 }
 
 model Admin {
@@ -187,21 +188,13 @@ model Address {
 model RenterApplication {
   id                      Int                           @id @default(autoincrement())
   createdAt               DateTime                      @default(now())
-  renters                 RenterApplicationsOnRenters[]
+  renter                  Renter                        @relation(fields: [renterId], references: [id])
+  renterId                Int
   form                    Form                          @relation(fields: [formId], references: [id])
   formId                  Int                           @unique
   renterApplicationStatus RenterApplicationStatus[]
-}
-
-model RenterApplicationsOnRenters {
-  renter              Renter            @relation(fields: [renterId], references: [id])
-  renterId            Int
-  renterApplication   RenterApplication @relation(fields: [renterApplicationId], references: [id])
-  renterApplicationId Int
-  createdAt           DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
-
-  @@id([renterId, renterApplicationId])
+  item                    Item                          @relation(fields: [itemId], references: [id])
+  itemId                  Int
 }
 
 model Form {

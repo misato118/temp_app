@@ -1,5 +1,5 @@
 import { InputType, Field, Int, Float } from '@nestjs/graphql';
-//import { ItemCategory } from 'src/itemCategories/models/itemCategory.model';
+import { ItemCategory } from 'src/itemCategories/models/itemCategory.model';
 
 @InputType()
 export class CreateItemInput {
@@ -9,8 +9,8 @@ export class CreateItemInput {
   name: string;
   @Field(() => String, { nullable: true })
   description: string;
-  //@Field(() => ItemCategory, { nullable: true })
-  //category: ItemCategory;
+  @Field(() => ItemCategory, { nullable: true })
+  category: ItemCategory;
   @Field(() => Float, { nullable: true })
   fee: number;
   @Field(() => String, { nullable: true })

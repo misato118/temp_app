@@ -1,0 +1,57 @@
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma.service';
+import { CreateFormInput } from 'src/forms/dto/create-form.input';
+import { RenterApplicationStatusType } from 'src/renterApplicationStatusTypes/models/renterApplicationStatusType.model';
+
+@Injectable()
+export class RenterApplicationsService {
+  constructor(private prisma: PrismaService) {}
+
+  // Obtains renter applications
+  findAll() {
+    return this.prisma.renterApplication.findMany();
+  }
+
+  // Creates a new renter application
+  create(createFormInput: CreateFormInput) {
+    const renterId = createFormInput.renterId;
+    const itemId = createFormInput.itemId;
+    const updatedInput = { ...createFormInput, ['renterId']: undefined, ['itemId']: undefined };
+
+    // When a renter or item id is not provided
+    if (renterId == null || itemId == null) {
+      return null;
+    }
+
+    return this.prisma.renterApplication.create({
+      data: {
+        createdAt: new Date(),
+        renter: {
+          connect: {
+            id: renterId
+          }
+        },
+        form: {
+          create: {
+            ...updatedInput
+          }
+        },
+        renterApplicationStatus: {
+          create: {
+            status: RenterApplicationStatusType.APPLIED,
+            updatedAt: new Date()
+          }
+        },
+        item: {
+          connect: {
+            id: itemId
+          }
+        }
+      },
+      include: {
+        renter: true,
+        renterApplicationStatus: true,
+      }
+    });
+  }
+}

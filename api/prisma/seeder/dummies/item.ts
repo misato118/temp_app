@@ -26,6 +26,12 @@ export const seed = async () => {
           createdAt: new Date(),
           updatedAt: new Date(),
         }
+      },
+      stockStatus: {
+        create: {
+          totalStock: 300,
+          currentStock: 300,
+        }
       }
     }
   });
