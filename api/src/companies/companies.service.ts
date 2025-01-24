@@ -30,9 +30,13 @@ export class CompaniesService {
 
   // Find a company by name
   findOneByName(@Args('companyName', { type: () => String }) companyName: string) {
-    return this.prisma.company.findUnique({
+    return this.prisma.company.findFirst({
       where: {
-        name: companyName,
+        //name: companyName,
+        name: {
+          equals: companyName,
+          mode: 'insensitive',
+        }
       },
       /*
       include: {
