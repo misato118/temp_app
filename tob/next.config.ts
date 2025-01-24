@@ -5,4 +5,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
 };
 
+module.exports = {
+  env: {
+    graphql: 'http://localhost:12000/graphql',
+  },
+}
+
 export default nextConfig;
