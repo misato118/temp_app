@@ -11,7 +11,7 @@ services:
     volumes:
       - ./api:/usr/src/app
       - /app/node_modules
-    # command: npm run start:dev
+    command: npm run start:dev
     depends_on:
       db:
         condition: service_healthy

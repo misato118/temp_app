@@ -9,12 +9,12 @@ RUN apt-get update && \
 ENV POSTGRES_USER=postgres \
     POSTGRES_PASSWORD=password
 
-# COPY ./api/package*.json .
+COPY ./api/package*.json .
 
-# RUN npm ci --only=production
+RUN npm ci --only=production
 
-# COPY ./api .
-# RUN npx prisma generate && npm run build
+COPY ./api .
+RUN npx prisma generate && npm run build
 
 # # 本番環境はdistを使用することでサイズを縮小する
 # FROM node:22.11 AS production
