@@ -24,6 +24,7 @@ model Employee {
   imageURL  String?
   company   Company? @relation(fields: [companyId], references: [id])
   companyId Int?
+  answers   Answer[]
 }
 
 model Company {
@@ -35,4 +36,188 @@ model Company {
   updatedAt     DateTime      @updatedAt
   logoURL       String?
   employees     Employee[]
+  items         Item[]
+  admins        Admin[]
+}
+
+model Item {
+  id                 Int               @id @default(autoincrement())
+  name               String?
+  description        String?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  category           ItemCategory?
+  fee                Float?
+  feeType            String?
+  maxDuration        Int?
+  maxDurationType    String?
+  imageURL           String?
+  deposit            Float?
+  overallReview      Int?
+  company            Company           @relation(fields: [companyId], references: [id])
+  companyId          Int
+  reviews            Review[]
+  ownerApplication   OwnerApplication?
+  stockStatus        StockStatus?
+  conversations      Conversation[]
+  renterApplications RenterApplication[]
+}
+
+enum ItemCategory {
+  FURNITURE
+  MUSIC
+  TOOL
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  title     String
+  contents  String
+  rating    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  item      Item     @relation(fields: [itemId], references: [id])
+  itemId    Int
+}
+
+model OwnerApplication {
+  id        Int               @id @default(autoincrement())
+  status    ApplicationStatus
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  item      Item              @relation(fields: [itemId], references: [id])
+  itemId    Int               @unique
+}
+
+enum ApplicationStatus {
+  APPLIED
+  DECLINED
+  ACCEPTED
+}
+
+model StockStatus {
+  id           Int  @id @default(autoincrement())
+  totalStock   Int?
+  currentStock Int?
+  item         Item @relation(fields: [itemId], references: [id])
+  itemId       Int  @unique
+}
+
+model Conversation {
+  id        Int      @id @default(autoincrement())
+  item      Item     @relation(fields: [itemId], references: [id])
+  itemId    Int
+  questions Question[]
+  answers   Answer[]
+}
+
+model Question {
+  id             Int          @id @default(autoincrement())
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId Int
+  contents       String    
+  createdAt      DateTime     @default(now())
+  answer         Answer?      @relation(fields: [answerId], references: [id])
+  sender         Renter       @relation(fields: [senderId], references: [id])
+  senderId       Int
+  answerId       Int?         @unique
+}
+
+model Answer {
+  id             Int          @id @default(autoincrement())
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId Int
+  contents       String    
+  createdAt      DateTime     @default(now())
+  replyTo        Question?
+  sender         Employee     @relation(fields: [senderId], references: [id])
+  senderId       Int
+}
+
+model Renter {
+  id                 Int                           @id @default(autoincrement())
+  username           String                        @unique
+  firstName          String
+  lastName           String
+  birthDate          DateTime?
+  email              String                        @unique
+  createdAt          DateTime                      @default(now())
+  updatedAt          DateTime                      @updatedAt
+  imageURL           String?
+  admins             Admin[]
+  questions          Question[]
+  notifications      Notification[]
+  address            Address?
+  renterApplications RenterApplication[]
+}
+
+model Admin {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  email     String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  companies Company[]
+  renters   Renter[]
+}
+
+model Notification {
+  id          Int      @id @default(autoincrement())
+  details     String
+  link        String?
+  createdAt   DateTime @default(now())
+  imageURL    String?
+  renter      Renter   @relation(fields: [renterId], references: [id])
+  renterId    Int 
+  itemName    String?
+  companyName String?
+}
+
+model Address {
+  id           Int    @id @default(autoincrement())
+  country      String
+  province     String
+  city         String
+  addressLine1 String
+  addressLine2 String?
+  postalCode   String
+  renter       Renter @relation(fields: [renterId], references: [id])
+  renterId     Int    @unique
+}
+
+model RenterApplication {
+  id                      Int                           @id @default(autoincrement())
+  createdAt               DateTime                      @default(now())
+  renter                  Renter                        @relation(fields: [renterId], references: [id])
+  renterId                Int
+  form                    Form                          @relation(fields: [formId], references: [id])
+  formId                  Int                           @unique
+  renterApplicationStatus RenterApplicationStatus[]
+  item                    Item                          @relation(fields: [itemId], references: [id])
+  itemId                  Int
+}
+
+model Form {
+  id                Int                @id @default(autoincrement())
+  offeringPrice     Decimal            @db.Decimal(9,2)
+  offeringDuration  Int
+  renterApplication RenterApplication?
+}
+
+model RenterApplicationStatus {
+  id                  Int                         @id @default(autoincrement())
+  status              RenterApplicationStatusType
+  updatedAt           DateTime                    @updatedAt
+  renterApplication   RenterApplication           @relation(fields: [renterApplicationId], references: [id])
+  renterApplicationId Int
+}
+
+enum RenterApplicationStatusType {
+  APPLIED
+  DECLINED
+  ACCEPTED
+  DELIVERED
+  RENTED
+  RETURNED
+  COMPLETED
 }
