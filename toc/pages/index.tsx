@@ -41,6 +41,7 @@ export const getServerSideProps = (async () => {
 
 const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ items }: { items: Item[] }) => {
   const [categoryName, setCategoryName] = useState("Select ▼");
+  const [searchWords, setSearchWords] = useState("");
 
   // Manually close a dropdown
   function checkAndCloseDropDown(e: React.MouseEvent<HTMLButtonElement>, val: String){
@@ -77,6 +78,10 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
               <li><button onClick={(e) => checkAndCloseDropDown(e, "Posted Date ▼")}>Posted Date</button></li>
             </ul>
           </div>
+          <input
+            value={searchWords}
+            onChange={(e) => setSearchWords(e.target.value)}
+            className="mt-8 mx-2 input input-bordered rounded-full" />
           <button className="mt-8 py-1 ml-2 btn rounded-full bg-info text-white font-normal">Search <MagnifyingGlassIcon className="h-5 w-5 ml-1 float-right" /></button>
         </div>
       </div>
