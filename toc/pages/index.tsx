@@ -1,10 +1,11 @@
-import Link from 'next/link';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { useState, type ReactElement } from 'react';
 import { NextPageWithLayout } from "./_app";
 import RootLayout from '@/components/Layout';
 import type { Item } from '@/types/types';
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Items from '@/components/Items';
+import Filters from '@/components/Filters';
 
 export const getServerSideProps = (async () => {
   // Fetch data from external API
@@ -42,6 +43,20 @@ export const getServerSideProps = (async () => {
 const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ items }: { items: Item[] }) => {
   const [categoryName, setCategoryName] = useState("Select ▼");
   const [searchWords, setSearchWords] = useState("");
+  const [filteredItems, setFilteredItems] = useState<Item[]>(items);
+
+  const handleFilterSubmit = (filters: { priceType?: string; maxPrice?: number; durationType?: string; maxDuration?: number }) => {
+    const newFilteredItems = items.filter((item) => {
+      return (
+        (!filters.maxPrice || item.fee <= filters.maxPrice) &&
+        (!filters.maxDuration || item.maxDuration <= filters.maxDuration) &&
+        (!filters.priceType || item.feeType === filters.priceType) &&
+        (!filters.durationType || item.maxDurationType === filters.durationType)
+      );
+    });
+
+    setFilteredItems(newFilteredItems);
+  };
 
   // Manually close a dropdown
   function checkAndCloseDropDown(e: React.MouseEvent<HTMLButtonElement>, val: String){
@@ -55,7 +70,7 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
   }
 
   return (
-    <main>     
+    <main className="flex-1 flex flex-col">     
       {/* Search area */}
       <div className="my-10">
         <div className="flex justify-center">
@@ -85,31 +100,10 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
           <button className="mt-8 py-1 ml-2 btn rounded-full bg-info text-white font-normal">Search <MagnifyingGlassIcon className="h-5 w-5 ml-1 float-right" /></button>
         </div>
       </div>
-
-      {/*
-      <div>
-        {items.map((item) => (
-          <div className="max-w-sm rounded overflow-hidden shadow-lg">
-            <img className="w-full" src="" alt="Image here"></img>
-              <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">
-                  <Link legacyBehavior
-                    href={{
-                    pathname: '/items/[item]',
-                    query: { item: item.id },
-                  }}>
-                    <a>{item.id}</a>
-                  </Link>
-                </div>
-                <p className="text-gray-700 text-base">{item.name}</p>
-                <p className="text-gray-700 text-base">{item.imageURL}</p>
-                <p className="text-gray-700 text-base">{item.fee} {item.feeType}</p>
-                <p className="text-gray-700 text-base">{item.maxDuration} {item.maxDurationType}</p>
-              </div>
-          </div>
-        ))}
-      </div>      
-      */}
+      <div className="flex-1 flex overflow-auto bg-base-200 py-5">
+        <div className="w-1/6 flex justify-center"><Filters onFilterSubmit={handleFilterSubmit} /></div>
+        <div className="w-5/6 overflow-auto"><Items items={filteredItems} /></div>
+      </div>
     </main>
   );
 }
