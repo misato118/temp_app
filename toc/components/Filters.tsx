@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import Range from "./Range";
-import Dropdown from "./Dropdown";
+import FilterDropdown from "./FilterDropdown";
 
 const schema = z.object({
     maxPrice: z.number(),
@@ -38,17 +38,17 @@ const Filters: React.FC<FilterProps> = ({ onFilterSubmit }) => {
     }
 
     return (
-        <div className="card bg-base-100 shadow-xl w-4/5 h-auto">
+        <div className="card bg-base-100 shadow-xl w-4/5 h-auto max-h-fit">
             <div className="card-body p-5">
                 <h2 className="card-title">Filters</h2>
                 <div className="divider my-1"></div>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    <Dropdown dataType={"Price"} register={register} setValue={setValue} watch={watch} />
+                    <FilterDropdown dataType={"Price"} register={register} setValue={setValue} watch={watch} />
                     <Range range={[0, 50, 100, 150, 200]} register={register} setValue={setValue} watch={watch} />
 
                     <div className="divider my-1"></div>
 
-                    <Dropdown dataType={"Duration"} register={register} setValue={setValue} watch={watch} />
+                    <FilterDropdown dataType={"Duration"} register={register} setValue={setValue} watch={watch} />
                     <Range range={[0, 5, 10, 15, 20]} register={register} setValue={setValue} watch={watch} />
 
                     <div className="card-actions flex justify-center">
