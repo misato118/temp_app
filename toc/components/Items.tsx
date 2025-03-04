@@ -29,7 +29,12 @@ const Items = ({ items }: ItemsProps) => {
     <div className="flex flex-col items-center">
       <div className="grid grid-cols-3 gap-6">
         {paginatedItems.map((item) => (
-          <div className="max-w-sm rounded-lg overflow-hidden shadow-lg px-6 py-4 bg-white">
+          <div
+            className="max-w-sm rounded-lg overflow-hidden shadow-lg px-6 py-4 bg-white cursor-pointer"
+            onClick={() => router.push({
+              pathname: "/items/[item]",
+              query: { item: item.id }
+            })}>
             {/* Substitute this image with {item.imageURL}*/}
             <img src="/sampleImg.png" alt="Item Image"></img>
             <div className="divider w-5/6 mx-auto my-1"></div>

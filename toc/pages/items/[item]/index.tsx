@@ -4,6 +4,8 @@ import type { ReactElement } from 'react';
 import { NextPageWithLayout } from "../../_app";
 import RootLayout from '@/components/Layout';
 import type { Item } from '@/types/types';
+import ImageDisplay from '@/components/ImageDisplay';
+import ItemDetails from '@/components/ItemDetails';
 
 export const getServerSideProps = (async ({ query }) => {
     const itemId: number = query?.item ? Number(query?.item) : 0;
@@ -52,25 +54,28 @@ export const getServerSideProps = (async ({ query }) => {
 
 const Item: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ item }: { item: Item }) => {
     return (
-        <main>
-          <div>
-            <Link legacyBehavior
-                href={{
-                pathname: '/items/[item]/rental-application-form',
-                query: { item: item.id },
-            }}>
-                <a>Apply to Rent</a>
-            </Link>
-            <p>{item.name}</p>
-            <p>{item.description}</p>
-            <p>{item.category}</p>
-            <p>{item.fee}</p>
-            <p>{item.feeType}</p>
-            <p>{item.company.name}</p>
-            {item.reviews.map((review) => (
-                <p>{review.title}</p>
-            ))}
-          </div>
+        <main className="flex justify-center items-center h-screen bg-base-200 px-40 py-20">
+            <div className="rounded-lg overflow-hidden shadow-lg px-20 py-10 bg-white mx-10">
+                <div className="flex">
+                    <div className="w-1/2 px-10"><ImageDisplay /></div>
+                    <div className="w-1/2 py-10">
+                        <ItemDetails item={item}/>
+                    </div>
+                </div>
+
+                <div role="tablist" className="tabs tabs-border">
+                    {/* TODO: Add reviews here */}
+                    <a role="tab" className="tab tab-active">Reviews</a>
+                    {/* TODO: Add Q&A chat history here */}
+                    <a role="tab" className="tab">Q&A Chat</a>
+                </div>
+
+                {/*
+                {item.reviews.map((review) => (
+                    <p>{review.title}</p>
+                ))}
+                */}
+            </div>
         </main>
       );
 }
