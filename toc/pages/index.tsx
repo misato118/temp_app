@@ -42,8 +42,8 @@ export const getServerSideProps = (async () => {
 }) satisfies GetServerSideProps<{ items: Item[] }>
 
 const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ items }: { items: Item[] }) => {
-  const [searchWords, setSearchWords] = useState("");
   const [filteredItems, setFilteredItems] = useState<Item[]>(items);
+  const [searchWords, setSearchWords] = useState("");
 
   const handleFilterSubmit = (filters: { priceType?: string; maxPrice?: number; durationType?: string; maxDuration?: number }) => {
     const newFilteredItems = items.filter((item) => {
@@ -70,7 +70,7 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
             Find items you would like to rent for a reasonable price
           </p>
         </div>
-        <div className="mt-8 flex justify-center">
+        <div className="flex justify-center mt-8 ">
           <CategoryDropdown />
           <input
             value={searchWords}
@@ -81,16 +81,7 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
       </div>
       <div className="flex bg-base-200 py-5">
         <div className="w-1/6 flex justify-center"><Filters onFilterSubmit={handleFilterSubmit} /></div>
-        <div className="w-5/6">
-          <div className="flex justify-between items-center mb-4">
-            <p className="text-sm font-medium font-bold">Results: {items.length} items</p>
-            <div className="flex items-center scale-75 scale-x-75">
-              <span className="mr-4">Sort By</span>
-              <CategoryDropdown />
-            </div>
-          </div>
-          <Items items={filteredItems} />
-        </div>
+        <div className="w-5/6 overflow-auto"><Items items={filteredItems} /></div>
       </div>
     </main>
   );
