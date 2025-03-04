@@ -81,7 +81,16 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
       </div>
       <div className="flex bg-base-200 py-5">
         <div className="w-1/6 flex justify-center"><Filters onFilterSubmit={handleFilterSubmit} /></div>
-        <div className="w-5/6 overflow-auto"><Items items={filteredItems} /></div>
+        <div className="w-5/6">
+          <div className="flex justify-between items-center mb-8">
+            <p className="text-sm font-medium">Results: {items.length} items</p>
+            <div className="flex items-center scale-90">
+              <span className="mr-4">Sort By</span>  
+              <CategoryDropdown />
+            </div>
+          </div>
+          <Items items={filteredItems} />
+        </div>
       </div>
     </main>
   );
