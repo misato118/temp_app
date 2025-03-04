@@ -1,10 +1,8 @@
 import Item from "@/pages/items/[item]";
-import Link from 'next/link';
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 interface ItemsProps {
-    items: Item[];
+  items: Item[];
 }
 
 const Items = ({ items }: ItemsProps) => {
@@ -19,10 +17,12 @@ const Items = ({ items }: ItemsProps) => {
 
   // Handle pagination navigation
   const handlePageChange = (newPage: number) => {
-    router.push({
-      pathname: router.pathname,
-      query: { page: newPage },
-    });
+    if (newPage >= 1 && newPage <= totalPages) {
+      router.push({
+        pathname: router.pathname,
+        query: { page: newPage },
+      });
+    }
   };
 
   return (
@@ -53,19 +53,18 @@ const Items = ({ items }: ItemsProps) => {
         ))}
       </div>
 
-      <div className="mt-6 flex items-center space-x-4">
+      <div className="join grid grid-cols-2 mt-6">
         <button
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}
-          className={`btn bg-whilte ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`join-item btn btn-outline ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
         >
           Previous
         </button>
-        <span className="text-lg font-medium">Page {currentPage} of {totalPages}</span>
         <button
           disabled={currentPage === totalPages}
           onClick={() => handlePageChange(currentPage + 1)}
-          className={`btn bg-whilte ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`join-item btn btn-outline ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
         >
           Next
         </button>
