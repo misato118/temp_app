@@ -1,6 +1,7 @@
 import type { Item } from '@/types/types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import OwnerDetailsWithButtons from './OwnerDetailsWithButtons';
 
 interface ItemsProps {
     item: Item;
@@ -47,8 +48,7 @@ const ItemDetails = ({ item }: ItemsProps) => {
             <div className="collapse collapse-plus">
                 <input type="radio" name="my-accordion-3" />
                 <div className="collapse-title font-semibold pl-0">Owner Details</div>
-                {/* TODO: Add owner details */}
-                <div className="collapse-content text-sm">{item.company.name}</div>
+                <div className="collapse-content text-sm"><OwnerDetailsWithButtons company={item.company} /></div>
             </div>
         </div>
     );
