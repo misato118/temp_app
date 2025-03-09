@@ -43,6 +43,7 @@ export const getServerSideProps = (async () => {
 
 const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ items }: { items: Item[] }) => {
   const [filteredItems, setFilteredItems] = useState<Item[]>(items);
+  const [categoryName, setCategoryName] = useState("Select ▼");
   const [searchWords, setSearchWords] = useState("");
 
   const handleFilterSubmit = (filters: { priceType?: string; maxPrice?: number; durationType?: string; maxDuration?: number }) => {
@@ -91,6 +92,7 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
           </div>
           <Items items={filteredItems} />
         </div>
+
       </div>
     </main>
   );

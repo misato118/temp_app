@@ -4,7 +4,7 @@ const priceArray = ["Daily", "Monthly", "Yearly"];
 const durationArray = ["Days", "Months", "Years"];
 
 // Dropdown for price/duration
-const FilterDropdown = ({ dataType, register, setValue, watch }: { dataType: string, register: any, setValue: any, watch: any }) => {
+const Dropdown = ({ dataType, register, setValue, watch }: { dataType: string, register: any, setValue: any, watch: any }) => {
     const array = dataType == "Price" ? priceArray : durationArray;
     const type = dataType == "Price" ? "priceType" : "durationType";
     const typeValue = watch(type, array[0]);
@@ -45,5 +45,4 @@ const FilterDropdown = ({ dataType, register, setValue, watch }: { dataType: str
     );
 }
 
-export default FilterDropdown;
-
+export default Dropdown;

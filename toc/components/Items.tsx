@@ -76,6 +76,7 @@ const Items = ({ items }: ItemsProps) => {
       </div>
     </div>
   );
+
 }
 
 export default Items;
