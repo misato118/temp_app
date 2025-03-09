@@ -26,5 +26,29 @@ export const seed = async () => {
       }
   });
   transaction.push(createCompany);
+
+  const createCompany2 = prisma.company.create({
+    data: {
+        name: 'XYZ Company',
+        email: 'xyzcompany@noemail.invalid',
+        description: 'We\'re XYZ Company.',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        logoURL: 'https://www.test-image.com',
+        employees: {
+          create: [{
+            firstName: 'Kolton',
+            lastName: 'Hines',
+            birthDate: new Date('2003-11-05'),
+            email: 'koltonhines@noemail.invalid',
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            imageURL: 'https://www.test-image.com',
+          }],
+        }
+      }
+  });
+  transaction.push(createCompany2);
+
   return await prisma.$transaction(transaction);
 };

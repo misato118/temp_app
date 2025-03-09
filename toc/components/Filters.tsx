@@ -45,9 +45,7 @@ const Filters: React.FC<FilterProps> = ({ onFilterSubmit }) => {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <FilterDropdown dataType={"Price"} register={register} setValue={setValue} watch={watch} />
                     <Range range={[0, 50, 100, 150, 200]} register={register} setValue={setValue} watch={watch} />
-
                     <div className="divider my-1"></div>
-
                     <FilterDropdown dataType={"Duration"} register={register} setValue={setValue} watch={watch} />
                     <Range range={[0, 5, 10, 15, 20]} register={register} setValue={setValue} watch={watch} />
 

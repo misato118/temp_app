@@ -38,11 +38,9 @@ export class CompaniesService {
           mode: 'insensitive',
         }
       },
-      /*
       include: {
         items: true,
-      }      
-      */
+      }
     })
   }
 
