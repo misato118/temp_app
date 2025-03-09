@@ -1,11 +1,14 @@
 import { Company } from "@/types/types";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
 
 interface CompanyProps {
     company: Company;
 }
 
 const OwnerDetailsWithButtons = ({ company }: CompanyProps) => {
+    const router = useRouter();
+
     return (
         <div>
             <div className="flex items-center">
@@ -21,7 +24,13 @@ const OwnerDetailsWithButtons = ({ company }: CompanyProps) => {
                 <button
                     className="flex py-1 btn rounded-full bg-info text-white font-normal justify-center mr-2"
                 ><ChatBubbleLeftEllipsisIcon className="w-5 h-5" /> Ask Questions</button>
-                <button className="py-1 btn rounded-full bg-secondary text-white font-normal px-4">More</button>
+                <button
+                    className="py-1 btn rounded-full bg-secondary text-white font-normal px-4"
+                    onClick={() => router.push({
+                        pathname: "/[company]",
+                        query: { company: company.name }
+                    })}
+                >More</button>
             </div>
         </div>
     );
