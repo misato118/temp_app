@@ -42,7 +42,6 @@ export const getServerSideProps = (async () => {
 }) satisfies GetServerSideProps<{ items: Item[] }>
 
 const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ items }: { items: Item[] }) => {
-
   const [filteredItems, setFilteredItems] = useState<Item[]>(items);
   const [categoryName, setCategoryName] = useState("Select ▼");
   const [searchWords, setSearchWords] = useState("");
@@ -72,7 +71,6 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
             Find items you would like to rent for a reasonable price
           </p>
         </div>
-
         <div className="flex justify-center mt-8 ">
           <CategoryDropdown />
           <input
@@ -81,29 +79,20 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
             className="mx-2 input input-bordered rounded-full" />
           <button className="py-1 ml-2 btn rounded-full bg-info text-white font-normal">Search <MagnifyingGlassIcon className="h-5 w-5 ml-1 float-right" /></button>
         </div>
-        <div className="flex justify-center">
-          {/* Dropdown to select an item category */}
-          <div className="mt-8 dropdown dropdown-bottom dropdown-center mr-2">
-            <button className="btn btn-outline btn-wide btn-circle dropdown-toggle">
-              {categoryName}
-            </button>
-            <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] p-2 shadow w-full">
-              <li><button onClick={(e) => checkAndCloseDropDown(e, "Category ▼")}>Category</button></li>
-              <li><button onClick={(e) => checkAndCloseDropDown(e, "Review ▼")}>Review</button></li>
-              <li><button onClick={(e) => checkAndCloseDropDown(e, "Posted Date ▼")}>Posted Date</button></li>
-            </ul>
-          </div>
-          <input
-            value={searchWords}
-            onChange={(e) => setSearchWords(e.target.value)}
-            className="mt-8 mx-2 input input-bordered rounded-full" />
-          <button className="mt-8 py-1 ml-2 btn rounded-full bg-info text-white font-normal">Search <MagnifyingGlassIcon className="h-5 w-5 ml-1 float-right" /></button>
-
-        </div>
       </div>
       <div className="flex bg-base-200 py-5">
         <div className="w-1/6 flex justify-center"><Filters onFilterSubmit={handleFilterSubmit} /></div>
-        <div className="w-5/6 overflow-auto"><Items items={filteredItems} /></div>
+        <div className="w-5/6">
+          <div className="flex justify-between items-center mb-8">
+            <p className="text-sm font-medium">Results: {items.length} items</p>
+            <div className="flex items-center scale-90">
+              <span className="mr-4">Sort By</span>  
+              <CategoryDropdown />
+            </div>
+          </div>
+          <Items items={filteredItems} />
+        </div>
+
       </div>
     </main>
   );
