@@ -10,7 +10,6 @@ services:
       - "12000:3000"
     volumes:
       - ./api:/usr/src/app
-      - /app/node_modules
     command: npm run start:dev
     depends_on:
       db:
