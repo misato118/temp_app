@@ -1,10 +1,12 @@
-import Link from 'next/link';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { useState, type ReactElement } from 'react';
 import { NextPageWithLayout } from "./_app";
 import RootLayout from '@/components/Layout';
 import type { Item } from '@/types/types';
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Items from '@/components/Items';
+import Filters from '@/components/Filters';
+import CategoryDropdown from '@/components/CategoryDropdown';
 
 export const getServerSideProps = (async () => {
   // Fetch data from external API
@@ -40,22 +42,26 @@ export const getServerSideProps = (async () => {
 }) satisfies GetServerSideProps<{ items: Item[] }>
 
 const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ items }: { items: Item[] }) => {
+
+  const [filteredItems, setFilteredItems] = useState<Item[]>(items);
   const [categoryName, setCategoryName] = useState("Select ▼");
   const [searchWords, setSearchWords] = useState("");
 
-  // Manually close a dropdown
-  function checkAndCloseDropDown(e: React.MouseEvent<HTMLButtonElement>, val: String){
-    let targetEl = e.currentTarget;
-    if (targetEl && targetEl.matches(':focus')) {
-      setCategoryName("" + val);
-      setTimeout(function(){
-        targetEl.blur();
-      }, 0);
-    }
-  }
+  const handleFilterSubmit = (filters: { priceType?: string; maxPrice?: number; durationType?: string; maxDuration?: number }) => {
+    const newFilteredItems = items.filter((item) => {
+      return (
+        (!filters.maxPrice || item.fee <= filters.maxPrice) &&
+        (!filters.maxDuration || item.maxDuration <= filters.maxDuration) &&
+        (!filters.priceType || item.feeType === filters.priceType) &&
+        (!filters.durationType || item.maxDurationType === filters.durationType)
+      );
+    });
+
+    setFilteredItems(newFilteredItems);
+  };
 
   return (
-    <main>     
+    <main className="flex-1 flex flex-col h-full overflow-y-auto">     
       {/* Search area */}
       <div className="my-10">
         <div className="flex justify-center">
@@ -65,6 +71,15 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
           <p className="mt-8 text-lg font-medium text-pretty">
             Find items you would like to rent for a reasonable price
           </p>
+        </div>
+
+        <div className="flex justify-center mt-8 ">
+          <CategoryDropdown />
+          <input
+            value={searchWords}
+            onChange={(e) => setSearchWords(e.target.value)}
+            className="mx-2 input input-bordered rounded-full" />
+          <button className="py-1 ml-2 btn rounded-full bg-info text-white font-normal">Search <MagnifyingGlassIcon className="h-5 w-5 ml-1 float-right" /></button>
         </div>
         <div className="flex justify-center">
           {/* Dropdown to select an item category */}
@@ -83,33 +98,13 @@ const Home: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideP
             onChange={(e) => setSearchWords(e.target.value)}
             className="mt-8 mx-2 input input-bordered rounded-full" />
           <button className="mt-8 py-1 ml-2 btn rounded-full bg-info text-white font-normal">Search <MagnifyingGlassIcon className="h-5 w-5 ml-1 float-right" /></button>
+
         </div>
       </div>
-
-      {/*
-      <div>
-        {items.map((item) => (
-          <div className="max-w-sm rounded overflow-hidden shadow-lg">
-            <img className="w-full" src="" alt="Image here"></img>
-              <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">
-                  <Link legacyBehavior
-                    href={{
-                    pathname: '/items/[item]',
-                    query: { item: item.id },
-                  }}>
-                    <a>{item.id}</a>
-                  </Link>
-                </div>
-                <p className="text-gray-700 text-base">{item.name}</p>
-                <p className="text-gray-700 text-base">{item.imageURL}</p>
-                <p className="text-gray-700 text-base">{item.fee} {item.feeType}</p>
-                <p className="text-gray-700 text-base">{item.maxDuration} {item.maxDurationType}</p>
-              </div>
-          </div>
-        ))}
-      </div>      
-      */}
+      <div className="flex bg-base-200 py-5">
+        <div className="w-1/6 flex justify-center"><Filters onFilterSubmit={handleFilterSubmit} /></div>
+        <div className="w-5/6 overflow-auto"><Items items={filteredItems} /></div>
+      </div>
     </main>
   );
 }
