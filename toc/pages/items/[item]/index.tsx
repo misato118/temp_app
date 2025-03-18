@@ -1,49 +1,20 @@
-import { useState, type ReactElement } from 'react';
+import { type ReactElement } from 'react';
 import { NextPageWithLayout } from "../../_app";
 import RootLayout from '@/components/Layout';
 import type { Item } from '@/types/types';
 import ImageDisplay from '@/components/ImageDisplay';
 import ItemDetails from '@/components/ItemDetails';
 import Reviews from '@/components/Reviews';
-import { gql, useQuery } from '@apollo/client';
-import { useRouter } from 'next/router';
-
-const GET_ITEM_INFO = gql`
-    query GetItemInfo($itemId: Int!) {
-        itemInfo(itemId: $itemId) {
-            id
-            name
-            description
-            createdAt
-            category
-            fee
-            feeType
-            maxDuration
-            maxDurationType
-            imageURL
-            deposit
-            company {
-                name
-                logoURL
-                description
-            }
-            reviews {
-                title
-                contents
-                rating
-            }
-        }
-    } 
-`;
+import useItemDetails from '@/hooks/useItemDetails';
 
 const Item: NextPageWithLayout = () => {
-    const router = useRouter();
-    const itemId: number = router.query?.item ? Number(router.query?.item) : 0;
-
-    const { loading, error, data } = useQuery(GET_ITEM_INFO, {
-        variables: { itemId: itemId }
-    });
-    const [activeTab, setActiveTab] = useState("reviews"); 
+    const {
+        loading,
+        error,
+        data,
+        activeTab,
+        setActiveTab
+    } = useItemDetails();
 
     if (loading) return 'Loading...';
     if (error) return `Error in the item details page! ${error.message}`;

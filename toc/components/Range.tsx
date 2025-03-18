@@ -1,18 +1,9 @@
-import { useEffect } from "react";
+import useRange from "@/hooks/useRange";
+import { UseFormSetValue } from "react-hook-form";
 
 // This is a range slider component with a max handle
 const Range = ({ range, register, setValue, watch }: { range: number[], register: any, setValue: any, watch: any }) => {
-    const registerName = range[range.length - 1] >= 100 ? "maxPrice" : "maxDuration";
-    const maxValue = watch(registerName, 75);
-
-    useEffect(() => {
-        setValue(registerName, maxValue);
-    }, [maxValue, setValue, registerName]);
-    
-    const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = Number(e.target.value);
-        setValue(registerName, value);
-    };
+    const { registerName, maxValue } = useRange(range, setValue, watch);
 
     return (
         <div>
@@ -46,3 +37,17 @@ const Range = ({ range, register, setValue, watch }: { range: number[], register
 }
 
 export default Range;
+
+function handleMaxChange(
+    e: React.ChangeEvent<HTMLInputElement>,
+    registerName: "maxPrice" | "maxDuration",
+    setValue: UseFormSetValue<{
+        maxPrice: number;
+        maxDuration: number;
+        priceType: string;
+        durationType: string;
+    }>
+) {
+    const value = Number(e.target.value);
+    setValue(registerName, value);
+};

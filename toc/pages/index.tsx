@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactElement } from 'react';
+import { type ReactElement } from 'react';
 import { NextPageWithLayout } from "./_app";
 import RootLayout from '@/components/Layout';
 import type { Item } from '@/types/types';
@@ -6,49 +6,21 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Items from '@/components/Items';
 import Filters from '@/components/Filters';
 import CategoryDropdown from '@/components/CategoryDropdown';
-import { gql, useQuery } from '@apollo/client';
-
-const GET_ALL_ITEMS = gql`
-    query {
-        item {
-            id
-            name
-            category
-            fee
-            feeType
-            maxDuration
-            maxDurationType
-            imageURL
-        }
-    }    
-`;
+import useHomeItems from '@/hooks/useHomeItems';
 
 const Home: NextPageWithLayout = () => {
-    const { loading, error, data } = useQuery(GET_ALL_ITEMS);
-    const [filteredItems, setFilteredItems] = useState<Item[]>([]);
-    const [categoryName, setCategoryName] = useState("Select ▼");
-    const [searchWords, setSearchWords] = useState("");
-
-    useEffect(() => {
-        if (data?.item) {
-            setFilteredItems(data.item);
-        }
-    }, [data]);
+    const {
+        loading,
+        error,
+        filteredItems,
+        setFilteredItems,
+        searchWords,
+        setSearchWords,
+        data
+    } = useHomeItems();
 
     if (loading) return 'Loading...';
     if (error) return `Error in the main page! ${error.message}`;
-
-    const handleFilterSubmit = (filters: { priceType?: string; maxPrice?: number; durationType?: string; maxDuration?: number }) => {
-        const newFilteredItems = data.item.filter((item: Item) => {
-            return (
-                (!filters.maxPrice || item.fee <= filters.maxPrice) &&
-                (!filters.maxDuration || item.maxDuration <= filters.maxDuration) &&
-                (!filters.priceType || item.feeType === filters.priceType) &&
-                (!filters.durationType || item.maxDurationType === filters.durationType)
-            );
-        });
-        setFilteredItems(newFilteredItems);
-    };
 
     return (
         <main className="flex-1 flex flex-col h-full overflow-y-auto">
@@ -72,7 +44,7 @@ const Home: NextPageWithLayout = () => {
                 </div>
             </div>
             <div className="flex bg-base-200 py-5">
-                <div className="w-1/6 flex justify-center"><Filters onFilterSubmit={handleFilterSubmit} /></div>
+                <div className="w-1/6 flex justify-center"><Filters onFilterSubmit={(filters) => handleFilterSubmit(filters, data, setFilteredItems)} /></div>
                 <div className="w-5/6">
                     <div className="flex justify-between items-center mb-8">
                         <p className="text-sm font-medium">Results: {filteredItems?.length} items</p>
@@ -97,3 +69,21 @@ Home.getLayout = function getLayout(page: ReactElement) {
 }
 
 export default Home;
+
+function handleFilterSubmit(
+    filters: { priceType?: string; maxPrice?: number; durationType?: string; maxDuration?: number },
+    data: { item: Item[] },
+    setFilteredItems: React.Dispatch<React.SetStateAction<Item[]>>
+) {
+    const newFilteredItems = data.item.filter((item: Item) => {
+        const isMaxFee = filters.maxPrice && item.fee > filters.maxPrice;
+        const isMaxDuration = filters.maxDuration && item.maxDuration > filters.maxDuration;
+        const isFeeType = filters.priceType && item.feeType !== filters.priceType;
+        const isDurationType = filters.durationType && item.maxDurationType !== filters.durationType;
+
+        return (
+            !isMaxFee && !isMaxDuration && !isFeeType && !isDurationType
+        );
+    });
+    setFilteredItems(newFilteredItems);
+};

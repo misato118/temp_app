@@ -1,19 +1,13 @@
 import RootLayout from "@/components/Layout";
-import { useRouter } from "next/router";
-import { ReactElement, useEffect, useState } from "react";
+import useDeliveryCalc from "@/hooks/useDeliveryCalc";
+import { ReactElement } from "react";
 
 const DeliveryCalc = () => {
-    const router = useRouter();
-    const { company, homeAddress } = router.query;
-    const [progress, setProgress] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-          setProgress((prev) => (prev < 100 ? prev + 4 : 100));
-        }, 100);
-    
-        return () => clearInterval(interval);
-      }, []);
+    const {
+        progress,
+        company,
+        homeAddress
+    } = useDeliveryCalc();
 
     return (
         <main className="flex justify-center h-screen bg-base-200">

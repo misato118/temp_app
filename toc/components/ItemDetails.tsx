@@ -1,5 +1,5 @@
 import type { Item } from '@/types/types';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import OwnerDetailsWithButtons from './OwnerDetailsWithButtons';
 import { useState } from 'react';
 import { MapPinIcon } from "@heroicons/react/24/outline";
@@ -15,18 +15,6 @@ const ItemDetails = ({ item }: ItemsProps) => {
     const [isDeliveryModalOpen, setIsDeliveryModalOpen] = useState(false);
     const [address, setAddress] = useState("");
 
-    const checkAddress = () => {
-        if (isAddressSet) {
-            router.push({
-                pathname: "/delivery",
-                // TODO: Fetch the renter's home address here
-                query: { company: item.company.name, homeAddress: "104 Elephant St, Toronto, ON Q0C6W8" }
-            });
-        } else {
-            setIsDeliveryModalOpen(true);
-        }
-    };
-
     return (
         <div>
             <p className="font-bold text-2xl mb-2">{item.name}</p>
@@ -40,7 +28,7 @@ const ItemDetails = ({ item }: ItemsProps) => {
                     })}>
                 Apply for Rent</button>
                 <button
-                    onClick={checkAddress}
+                    onClick={() => {checkAddress(isAddressSet, router, item, setIsDeliveryModalOpen)}}
                     className="py-1 ml-2 btn rounded-full bg-white text-info border border-info font-normal">
                 Estimated Delivery Fee</button>
 
@@ -95,3 +83,20 @@ const ItemDetails = ({ item }: ItemsProps) => {
 }
 
 export default ItemDetails;
+
+function checkAddress(
+    isAddressSet: boolean,
+    router: NextRouter,
+    item: Item,
+    setIsDeliveryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+) {
+    if (isAddressSet) {
+        router.push({
+            pathname: "/delivery",
+            // TODO: Fetch the renter's home address here
+            query: { company: item.company.name, homeAddress: "104 Elephant St, Toronto, ON Q0C6W8" }
+        });
+    } else {
+        setIsDeliveryModalOpen(true);
+    }
+};
