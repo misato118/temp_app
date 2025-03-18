@@ -1,59 +1,48 @@
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import type { ReactElement } from 'react';
 import { NextPageWithLayout } from "../_app";
 import RootLayout from '@/components/Layout';
-import type { Company } from '@/types/types';
 import OwnerDetailsWithoutButtons from '@/components/OwnerDetailsWithoutButtons';
 import CompanyItems from '@/components/CompanyItems';
+import { gql, useQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
 
-// TODO: Add item info as well after adding Item data to prisma
-export const getServerSideProps = (async ({ query }) => {
-    // e.g., 'abc-company' to 'abc company'
-    const route = typeof query?.company == 'string' && query?.company
-        ? query.company.replace('-', ' ') : null;
-    // TODO: Add overall review for each item  
-    // Fetch data from external API
-    const { data } = await fetch(`${process.env.GRAPHQL_API_URL}`, {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-        query: `
-            query {
-                companyInfo(companyName: "` + route + `") {
-                    id
-                    name
-                    description
-                    createdAt
-                    logoURL
-                    items {
-                        id
-                        name
-                        fee
-                        feeType
-                        imageURL
-                    }
-                }
+const GET_COMPANY_INFO = gql`
+    query GetCompanyInfo($companyName: String!) {
+        companyInfo(companyName: $companyName) {
+            id
+            name
+            description
+            createdAt
+            logoURL
+            items {
+                id
+                name
+                fee
+                feeType
+                imageURL
             }
-        `,
-        }),
-        next: { revalidate: 10 }
-    })
-    .then((res) => res.json());
+        }
+    }  
+`;
 
-    const company = data?.companyInfo;
+const CompanyInfo: NextPageWithLayout = () => {
+    const router = useRouter();
+    // e.g., 'abc-company' to 'abc company'
+    const companyName = typeof router.query?.company == 'string' && router.query?.company
+        ? router.query.company.replace('-', ' ') : null;
 
-    // Pass data to the page via props
-    return { props: { company: JSON.parse(JSON.stringify(company)) } }
-}) satisfies GetServerSideProps<{ company: Company }>
+    const { loading, error, data } = useQuery(GET_COMPANY_INFO, {
+        variables: { companyName: companyName }
+    });
+        
+    if (loading) return null;
+    if (error) return `Error! ${error}`;
 
-const CompanyInfo: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ company }: { company: Company }) => {
     return (
         <main className="flex-1 flex flex-col h-full overflow-y-auto bg-base-200 px-40 py-20">
             <div className="flex">
-                <div className="w-1/3 flex justify-center"><OwnerDetailsWithoutButtons company={company} /></div>
-                <div className="w-2/3 flex"><CompanyItems items={company.items} /></div>
+                <div className="w-1/3 flex justify-center"><OwnerDetailsWithoutButtons company={data.companyInfo} /></div>
+                <div className="w-2/3 flex"><CompanyItems items={data.companyInfo.items} /></div>
           </div>
         </main>
       );
@@ -66,5 +55,5 @@ CompanyInfo.getLayout = function getLayout(page: ReactElement) {
         </RootLayout>
     );
 }
-  
+
 export default CompanyInfo;
