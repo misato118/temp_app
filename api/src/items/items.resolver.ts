@@ -6,19 +6,19 @@ import { Company } from 'src/companies/models/company.model';
 
 @Resolver(() => Item)
 export class ItemsResolver {
-  constructor(
-    private itemsService: ItemsService,
-  ) {}
+  constructor(private itemsService: ItemsService) {}
 
   // Obtain all items
-  @Query(() => [Item], { name: 'item' })
+  @Query(() => [Item], { name: 'items' })
   async findAll() {
     return this.itemsService.findAll();
   }
 
   // Obtain all items by a company name
   @Query(() => Company, { name: 'itemByCompany' })
-  async findAllByCompany(@Args('companyName', { type: () => String }) companyName: string) {
+  async findAllByCompany(
+    @Args('companyName', { type: () => String }) companyName: string,
+  ) {
     return this.itemsService.findAllByCompany(companyName);
   }
 
@@ -56,7 +56,7 @@ export class ItemsResolver {
   @Mutation(() => Item, { name: 'deleteItem' })
   async deleteItem(@Args('itemId', { type: () => Int }) itemId: number) {
     return this.itemsService.delete(itemId);
-  }  
+  }
 
   hasNullFields(createItemInput: CreateItemInput) {
     for (var field in createItemInput) {
@@ -66,5 +66,4 @@ export class ItemsResolver {
     }
     return false;
   }
-  
 }

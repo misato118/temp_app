@@ -159,9 +159,9 @@ type Query {
   company: [Company!]!
   companyInfo(companyName: String!): Company!
   employee: [Employee!]!
-  item: [Item!]!
   itemByCompany(companyName: String!): Company!
   itemInfo(itemId: Int!): Item!
+  items: [Item!]!
   renter: [Renter!]!
   renterApplication: [RenterApplication!]!
   review: [Review!]!

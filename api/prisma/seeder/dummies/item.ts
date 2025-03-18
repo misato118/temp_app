@@ -18,22 +18,22 @@ export const seed = async () => {
       maxDuration: 30,
       maxDurationType: 'days',
       imageURL: 'https://www.test-image.com',
-      deposit: 300.00,
+      deposit: 300.0,
       companyId: 1,
       ownerApplication: {
         create: {
           status: ApplicationStatus.APPLIED,
           createdAt: new Date(),
           updatedAt: new Date(),
-        }
+        },
       },
       stockStatus: {
         create: {
           totalStock: 300,
           currentStock: 300,
-        }
-      }
-    }
+        },
+      },
+    },
   });
   transaction.push(createGuitar);
 
@@ -45,36 +45,36 @@ export const seed = async () => {
     data: {
       items: {
         connect: {
-            id: 1,
-        }
-      }
-    }
+          id: 1,
+        },
+      },
+    },
   });
   transaction.push(updateCompanyGuitar);
 
   // Create an item, chair
   const createChair = prisma.item.create({
     data: {
-        name: 'Very Fancy Chair',
-        description: 'This chair is extremely fancy.',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        category: ItemCategory.FURNITURE,
-        fee: 300.00,
-        feeType: 'monthly',
-        maxDuration: 2,
-        maxDurationType: 'years',
-        imageURL: 'https://www.test-image.com',
-        deposit: 400.00,
-        companyId: 1,
-        ownerApplication: {
-          create: {
-            status: ApplicationStatus.APPLIED,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          }
-        }
-      }
+      name: 'Very Fancy Chair',
+      description: 'This chair is extremely fancy.',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: ItemCategory.FURNITURE,
+      fee: 300.0,
+      feeType: 'monthly',
+      maxDuration: 2,
+      maxDurationType: 'years',
+      imageURL: 'https://www.test-image.com',
+      deposit: 400.0,
+      companyId: 1,
+      ownerApplication: {
+        create: {
+          status: ApplicationStatus.APPLIED,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      },
+    },
   });
   transaction.push(createChair);
 
@@ -86,10 +86,10 @@ export const seed = async () => {
     data: {
       items: {
         connect: {
-            id: 2,
-        }
-      }
-    }
+          id: 2,
+        },
+      },
+    },
   });
   transaction.push(updateCompanyChair);
 
@@ -106,22 +106,22 @@ export const seed = async () => {
       maxDuration: 5,
       maxDurationType: 'years',
       imageURL: 'https://www.test-image.com',
-      deposit: 1000.00,
+      deposit: 1000.0,
       companyId: 2,
       ownerApplication: {
         create: {
           status: ApplicationStatus.ACCEPTED,
           createdAt: new Date(),
           updatedAt: new Date(),
-        }
+        },
       },
       stockStatus: {
         create: {
           totalStock: 300,
           currentStock: 300,
-        }
-      }
-    }
+        },
+      },
+    },
   });
   transaction.push(createPiano);
 
@@ -133,200 +133,200 @@ export const seed = async () => {
     data: {
       items: {
         connect: {
-            id: 3,
-        }
-      }
-    }
+          id: 3,
+        },
+      },
+    },
   });
   transaction.push(updateCompanyPiano);
 
-    // Create an item, hammer
-    const createHammer = prisma.item.create({
-      data: {
-        name: 'Strong Hammer',
-        description: 'This is a hammer that doesn\'t break.',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        category: ItemCategory.TOOL,
-        fee: 250.00,
-        feeType: 'daily',
-        maxDuration: 60,
-        maxDurationType: 'days',
-        imageURL: 'https://www.test-image.com',
-        deposit: 100.00,
-        companyId: 2,
-        ownerApplication: {
-          create: {
-            status: ApplicationStatus.APPLIED,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          }
+  // Create an item, hammer
+  const createHammer = prisma.item.create({
+    data: {
+      name: 'Strong Hammer',
+      description: "This is a hammer that doesn't break.",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: ItemCategory.TOOL,
+      fee: 250.0,
+      feeType: 'daily',
+      maxDuration: 60,
+      maxDurationType: 'days',
+      imageURL: 'https://www.test-image.com',
+      deposit: 100.0,
+      companyId: 2,
+      ownerApplication: {
+        create: {
+          status: ApplicationStatus.APPLIED,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
-        stockStatus: {
-          create: {
-            totalStock: 300,
-            currentStock: 300,
-          }
-        }
-      }
-    });
-    transaction.push(createHammer);
-  
-    // Connect an item to a company
-    const updateCompanyHammer = prisma.company.update({
-      where: {
-        id: 2,
       },
-      data: {
-        items: {
-          connect: {
-              id: 4,
-          }
-        }
-      }
-    });
-    transaction.push(updateCompanyHammer);
+      stockStatus: {
+        create: {
+          totalStock: 300,
+          currentStock: 300,
+        },
+      },
+    },
+  });
+  transaction.push(createHammer);
 
-    // Create an item, wrench
-    const createWrench = prisma.item.create({
-      data: {
-        name: 'Wrench',
-        description: 'This is a wrench.',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        category: ItemCategory.TOOL,
-        fee: 10.00,
-        feeType: 'daily',
-        maxDuration: 60,
-        maxDurationType: 'days',
-        imageURL: 'https://www.test-image.com',
-        deposit: 1.00,
-        companyId: 2,
-        ownerApplication: {
-          create: {
-            status: ApplicationStatus.APPLIED,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          }
+  // Connect an item to a company
+  const updateCompanyHammer = prisma.company.update({
+    where: {
+      id: 2,
+    },
+    data: {
+      items: {
+        connect: {
+          id: 4,
         },
-        stockStatus: {
-          create: {
-            totalStock: 300,
-            currentStock: 300,
-          }
-        }
-      }
-    });
-    transaction.push(createWrench);
-  
-    // Connect an item to a company
-    const updateCompanyWrench = prisma.company.update({
-      where: {
-        id: 2,
       },
-      data: {
-        items: {
-          connect: {
-              id: 5,
-          }
-        }
-      }
-    });
-    transaction.push(updateCompanyWrench);
+    },
+  });
+  transaction.push(updateCompanyHammer);
 
-    // Create an item, drill
-    const createDrill = prisma.item.create({
-      data: {
-        name: 'Powerful Drill',
-        description: 'This is a very powerful drill.',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        category: ItemCategory.TOOL,
-        fee: 500.00,
-        feeType: 'monthly',
-        maxDuration: 3,
-        maxDurationType: 'months',
-        imageURL: 'https://www.test-image.com',
-        deposit: 300.00,
-        companyId: 2,
-        ownerApplication: {
-          create: {
-            status: ApplicationStatus.APPLIED,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          }
+  // Create an item, wrench
+  const createWrench = prisma.item.create({
+    data: {
+      name: 'Wrench',
+      description: 'This is a wrench.',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: ItemCategory.TOOL,
+      fee: 10.0,
+      feeType: 'daily',
+      maxDuration: 60,
+      maxDurationType: 'days',
+      imageURL: 'https://www.test-image.com',
+      deposit: 1.0,
+      companyId: 2,
+      ownerApplication: {
+        create: {
+          status: ApplicationStatus.APPLIED,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
-        stockStatus: {
-          create: {
-            totalStock: 300,
-            currentStock: 300,
-          }
-        }
-      }
-    });
-    transaction.push(createDrill);
-  
-    // Connect an item to a company
-    const updateCompanyDrill = prisma.company.update({
-      where: {
-        id: 2,
       },
-      data: {
-        items: {
-          connect: {
-              id: 6,
-          }
-        }
-      }
-    });
-    transaction.push(updateCompanyDrill);
+      stockStatus: {
+        create: {
+          totalStock: 300,
+          currentStock: 300,
+        },
+      },
+    },
+  });
+  transaction.push(createWrench);
 
-    // Create an item, couch
-    const createCouch = prisma.item.create({
-      data: {
-        name: 'Comfy Couch',
-        description: 'This is a couch.',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        category: ItemCategory.FURNITURE,
-        fee: 500.00,
-        feeType: 'monthly',
-        maxDuration: 3,
-        maxDurationType: 'months',
-        imageURL: 'https://www.test-image.com',
-        deposit: 300.00,
-        companyId: 2,
-        ownerApplication: {
-          create: {
-            status: ApplicationStatus.APPLIED,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          }
+  // Connect an item to a company
+  const updateCompanyWrench = prisma.company.update({
+    where: {
+      id: 2,
+    },
+    data: {
+      items: {
+        connect: {
+          id: 5,
         },
-        stockStatus: {
-          create: {
-            totalStock: 300,
-            currentStock: 300,
-          }
-        }
-      }
-    });
-    transaction.push(createCouch);
-  
-    // Connect an item to a company
-    const updateCompanyCouch = prisma.company.update({
-      where: {
-        id: 2,
       },
-      data: {
-        items: {
-          connect: {
-              id: 7,
-          }
-        }
-      }
-    });
-    transaction.push(updateCompanyCouch);
+    },
+  });
+  transaction.push(updateCompanyWrench);
+
+  // Create an item, drill
+  const createDrill = prisma.item.create({
+    data: {
+      name: 'Powerful Drill',
+      description: 'This is a very powerful drill.',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: ItemCategory.TOOL,
+      fee: 500.0,
+      feeType: 'monthly',
+      maxDuration: 3,
+      maxDurationType: 'months',
+      imageURL: 'https://www.test-image.com',
+      deposit: 300.0,
+      companyId: 2,
+      ownerApplication: {
+        create: {
+          status: ApplicationStatus.APPLIED,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      },
+      stockStatus: {
+        create: {
+          totalStock: 300,
+          currentStock: 300,
+        },
+      },
+    },
+  });
+  transaction.push(createDrill);
+
+  // Connect an item to a company
+  const updateCompanyDrill = prisma.company.update({
+    where: {
+      id: 2,
+    },
+    data: {
+      items: {
+        connect: {
+          id: 6,
+        },
+      },
+    },
+  });
+  transaction.push(updateCompanyDrill);
+
+  // Create an item, couch
+  const createCouch = prisma.item.create({
+    data: {
+      name: 'Comfy Couch',
+      description: 'This is a couch.',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: ItemCategory.FURNITURE,
+      fee: 500.0,
+      feeType: 'monthly',
+      maxDuration: 3,
+      maxDurationType: 'months',
+      imageURL: 'https://www.test-image.com',
+      deposit: 300.0,
+      companyId: 2,
+      ownerApplication: {
+        create: {
+          status: ApplicationStatus.APPLIED,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      },
+      stockStatus: {
+        create: {
+          totalStock: 300,
+          currentStock: 300,
+        },
+      },
+    },
+  });
+  transaction.push(createCouch);
+
+  // Connect an item to a company
+  const updateCompanyCouch = prisma.company.update({
+    where: {
+      id: 2,
+    },
+    data: {
+      items: {
+        connect: {
+          id: 7,
+        },
+      },
+    },
+  });
+  transaction.push(updateCompanyCouch);
 
   return await prisma.$transaction(transaction);
 };

@@ -13,10 +13,10 @@ export const seed = async () => {
       rating: 4,
       createdAt: new Date(),
       updatedAt: new Date(),
-      itemId: 1
-    }
-   });
-   transaction.push(createGuitarReview);
+      itemId: 1,
+    },
+  });
+  transaction.push(createGuitarReview);
 
   // Connect the review to an item
   const updateReviewGuitar = prisma.item.update({
@@ -26,10 +26,10 @@ export const seed = async () => {
     data: {
       reviews: {
         connect: {
-            id: 1,
-        }
-      }
-    }
+          id: 1,
+        },
+      },
+    },
   });
   transaction.push(updateReviewGuitar);
 
@@ -41,10 +41,10 @@ export const seed = async () => {
       rating: 3,
       createdAt: new Date(),
       updatedAt: new Date(),
-      itemId: 1
-    }
-   });
-   transaction.push(createGuitarReview2);
+      itemId: 1,
+    },
+  });
+  transaction.push(createGuitarReview2);
 
   // Connect the review to an item
   const updateReview2Guitar = prisma.item.update({
@@ -54,12 +54,12 @@ export const seed = async () => {
     data: {
       reviews: {
         connect: {
-            id: 2,
-        }
-      }
-    }
+          id: 2,
+        },
+      },
+    },
   });
   transaction.push(updateReview2Guitar);
 
   return await prisma.$transaction(transaction);
-}
+};
