@@ -1,0 +1,12 @@
+query GetAllItems {
+  items {
+    id
+    name
+    category
+    fee
+    feeType
+    maxDuration
+    maxDurationType
+    imageURL
+  }
+}
