@@ -1,5 +1,5 @@
-query GetAllItems {
-  items {
+query GetAllItems($filter: FilterItemInput) {
+  items(filter: $filter) {
     id
     name
     category

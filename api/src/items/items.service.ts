@@ -3,18 +3,40 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateItemInput } from './dto/create-item.input';
 import { Args, Int } from '@nestjs/graphql';
 import { ApplicationStatus } from 'src/applicationStatus/models/applicationStatus.model';
+import { FilterItemInput } from './dto/filter-item.input';
 
 @Injectable()
 export class ItemsService {
   constructor(private prisma: PrismaService) {}
 
   // Obtain all items
-  findAll() {
-    return this.prisma.item.findMany();
+  findAll(filter?: FilterItemInput) {
+    return this.prisma.item.findMany({
+      where: {
+        maxDuration: filter?.maxDuration
+          ? {
+              lte: filter?.maxDuration,
+            }
+          : undefined,
+        fee: filter?.maxPrice
+          ? {
+              lte: filter?.maxPrice,
+            }
+          : undefined,
+        feeType: filter?.priceType
+          ? { contains: filter?.priceType }
+          : undefined,
+        maxDurationType: filter?.durationType
+          ? { contains: filter?.durationType }
+          : undefined,
+      },
+    });
   }
 
   // Obtain all items by a company name
-  findAllByCompany(@Args('companyName', { type: () => String }) companyName: string) {
+  findAllByCompany(
+    @Args('companyName', { type: () => String }) companyName: string,
+  ) {
     return this.prisma.company.findUnique({
       where: {
         name: companyName,
@@ -28,12 +50,12 @@ export class ItemsService {
               include: {
                 renter: true,
                 renterApplicationStatus: true,
-              }
-            }
-          }
-        }
-      }
-    })
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   // Create a new item
@@ -43,7 +65,7 @@ export class ItemsService {
 
     return this.prisma.company.update({
       where: {
-        name: companyName
+        name: companyName,
       },
       data: {
         items: {
@@ -52,7 +74,7 @@ export class ItemsService {
             createdAt: new Date(),
             updatedAt: new Date(),
           },
-        }
+        },
       },
     });
   }
@@ -60,7 +82,11 @@ export class ItemsService {
   // Update an existing item
   update(createItemInput: CreateItemInput) {
     const itemId = createItemInput.id;
-    const updatedInput = { ...createItemInput, ['company']: undefined, ['id']: undefined };
+    const updatedInput = {
+      ...createItemInput,
+      ['company']: undefined,
+      ['id']: undefined,
+    };
 
     return this.prisma.item.update({
       where: {
@@ -87,8 +113,8 @@ export class ItemsService {
             status: ApplicationStatus.APPLIED,
             createdAt: new Date(),
             updatedAt: new Date(),
-          }
-        }
+          },
+        },
       },
     });
   }
@@ -98,7 +124,7 @@ export class ItemsService {
     return this.prisma.item.delete({
       where: {
         id: itemId,
-      }
+      },
     });
   }
 
@@ -117,7 +143,7 @@ export class ItemsService {
       include: {
         company: true,
         reviews: true,
-      }
-    })
+      },
+    });
   }
 }

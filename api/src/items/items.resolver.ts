@@ -3,6 +3,7 @@ import { Item } from './models/item.model';
 import { ItemsService } from './items.service';
 import { CreateItemInput } from './dto/create-item.input';
 import { Company } from 'src/companies/models/company.model';
+import { FilterItemInput } from './dto/filter-item.input';
 
 @Resolver(() => Item)
 export class ItemsResolver {
@@ -10,8 +11,13 @@ export class ItemsResolver {
 
   // Obtain all items
   @Query(() => [Item], { name: 'items' })
-  async findAll() {
-    return this.itemsService.findAll();
+  async findAll(
+    @Args('filter', {
+      nullable: true,
+    })
+    filter?: FilterItemInput,
+  ) {
+    return this.itemsService.findAll(filter);
   }
 
   // Obtain all items by a company name

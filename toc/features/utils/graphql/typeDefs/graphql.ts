@@ -110,6 +110,13 @@ export type Employee = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+export type FilterItemInput = {
+  durationType?: InputMaybe<Scalars['String']['input']>;
+  maxDuration?: InputMaybe<Scalars['Int']['input']>;
+  maxPrice?: InputMaybe<Scalars['Int']['input']>;
+  priceType?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Form = {
   __typename?: 'Form';
   id: Scalars['Int']['output'];
@@ -232,6 +239,11 @@ export type QueryItemInfoArgs = {
   itemId: Scalars['Int']['input'];
 };
 
+
+export type QueryItemsArgs = {
+  filter?: InputMaybe<FilterItemInput>;
+};
+
 export type Renter = {
   __typename?: 'Renter';
   birthDate: Scalars['DateTime']['output'];
@@ -307,13 +319,15 @@ export type StockStatus = {
   totalStock: Scalars['Int']['output'];
 };
 
-export type GetAllItemsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllItemsQueryVariables = Exact<{
+  filter?: InputMaybe<FilterItemInput>;
+}>;
 
 
 export type GetAllItemsQuery = { __typename?: 'Query', items: Array<{ __typename?: 'Item', id: number, name: string, category: ItemCategory, fee: number, feeType: string, maxDuration: number, maxDurationType: string, imageURL?: string | null }> };
 
 
-export const GetAllItemsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllItems"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"feeType"}},{"kind":"Field","name":{"kind":"Name","value":"maxDuration"}},{"kind":"Field","name":{"kind":"Name","value":"maxDurationType"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}}]}}]}}]} as unknown as DocumentNode<GetAllItemsQuery, GetAllItemsQueryVariables>;
+export const GetAllItemsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllItems"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FilterItemInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"feeType"}},{"kind":"Field","name":{"kind":"Name","value":"maxDuration"}},{"kind":"Field","name":{"kind":"Name","value":"maxDurationType"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}}]}}]}}]} as unknown as DocumentNode<GetAllItemsQuery, GetAllItemsQueryVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -415,6 +429,13 @@ export type Employee = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+export type FilterItemInput = {
+  durationType?: InputMaybe<Scalars['String']['input']>;
+  maxDuration?: InputMaybe<Scalars['Int']['input']>;
+  maxPrice?: InputMaybe<Scalars['Int']['input']>;
+  priceType?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Form = {
   __typename?: 'Form';
   id: Scalars['Int']['output'];
@@ -535,6 +556,11 @@ export type QueryItemByCompanyArgs = {
 
 export type QueryItemInfoArgs = {
   itemId: Scalars['Int']['input'];
+};
+
+
+export type QueryItemsArgs = {
+  filter?: InputMaybe<FilterItemInput>;
 };
 
 export type Renter = {
@@ -696,6 +722,7 @@ export type ResolversTypes = {
   CreateReviewInput: CreateReviewInput;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   Employee: ResolverTypeWrapper<Employee>;
+  FilterItemInput: FilterItemInput;
   Form: ResolverTypeWrapper<Form>;
   Item: ResolverTypeWrapper<Item>;
   ItemCategory: ItemCategory;
@@ -725,6 +752,7 @@ export type ResolversParentTypes = {
   CreateReviewInput: CreateReviewInput;
   DateTime: Scalars['DateTime']['output'];
   Employee: Employee;
+  FilterItemInput: FilterItemInput;
   Form: Form;
   Item: Item;
   Mutation: {};
@@ -823,7 +851,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   employee?: Resolver<Array<ResolversTypes['Employee']>, ParentType, ContextType>;
   itemByCompany?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<QueryItemByCompanyArgs, 'companyName'>>;
   itemInfo?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<QueryItemInfoArgs, 'itemId'>>;
-  items?: Resolver<Array<ResolversTypes['Item']>, ParentType, ContextType>;
+  items?: Resolver<Array<ResolversTypes['Item']>, ParentType, ContextType, Partial<QueryItemsArgs>>;
   renter?: Resolver<Array<ResolversTypes['Renter']>, ParentType, ContextType>;
   renterApplication?: Resolver<Array<ResolversTypes['RenterApplication']>, ParentType, ContextType>;
   review?: Resolver<Array<ResolversTypes['Review']>, ParentType, ContextType>;

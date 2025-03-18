@@ -98,6 +98,13 @@ type Employee {
   updatedAt: DateTime!
 }
 
+input FilterItemInput {
+  durationType: String
+  maxDuration: Int
+  maxPrice: Int
+  priceType: String
+}
+
 type Form {
   id: Int!
   offeringDuration: Int!
@@ -161,7 +168,7 @@ type Query {
   employee: [Employee!]!
   itemByCompany(companyName: String!): Company!
   itemInfo(itemId: Int!): Item!
-  items: [Item!]!
+  items(filter: FilterItemInput): [Item!]!
   renter: [Renter!]!
   renterApplication: [RenterApplication!]!
   review: [Review!]!
