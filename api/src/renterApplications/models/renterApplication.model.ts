@@ -25,7 +25,7 @@ export class RenterApplication {
   formId: number;
 
   @Field(type => [RenterApplicationStatus])
-  renterApplicationStatus: RenterApplicationStatus[];
+  renterApplicationStatuses: RenterApplicationStatus[];
 
   @Field(type => Item)
   item: Item;

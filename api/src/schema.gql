@@ -163,15 +163,15 @@ type OwnerApplication {
 }
 
 type Query {
-  company: [Company!]!
+  companies: [Company!]!
   companyInfo(companyName: String!): Company!
-  employee: [Employee!]!
+  employees: [Employee!]!
   itemByCompany(companyName: String!): Company!
   itemInfo(itemId: Int!): Item!
   items(filter: FilterItemInput): [Item!]!
-  renter: [Renter!]!
-  renterApplication: [RenterApplication!]!
-  review: [Review!]!
+  renterApplications: [RenterApplication!]!
+  renters: [Renter!]!
+  reviews: [Review!]!
 }
 
 type Renter {
@@ -195,7 +195,7 @@ type RenterApplication {
   item: Item!
   itemId: Int!
   renter: Renter!
-  renterApplicationStatus: [RenterApplicationStatus!]!
+  renterApplicationStatuses: [RenterApplicationStatus!]!
   renterId: Int!
 }
 

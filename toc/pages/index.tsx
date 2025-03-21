@@ -13,8 +13,8 @@ const Home = () => {
       filter: {
         maxDuration: Number(router.query.maxDuration),
         maxPrice: Number(router.query.maxPrice),
-        durationType: String(router.query.durationType),
-        priceType: String(router.query.priceType),
+        durationType: typeof router.query.durationType === "string" ? router.query.durationType : undefined,
+        priceType: typeof router.query.priceType === "string" ? router.query.priceType : undefined,
       },
     },
   });
