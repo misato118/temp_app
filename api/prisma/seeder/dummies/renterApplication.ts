@@ -11,26 +11,26 @@ export const seed = async () => {
       renter: {
         connect: {
           id: 1,
-        }
+        },
       },
       form: {
         create: {
           offeringPrice: 300,
           offeringDuration: 5,
-        }
+        },
       },
       renterApplicationStatus: {
         create: {
           status: RenterApplicationStatusType.APPLIED,
-          updatedAt: new Date()
-        }
+          updatedAt: new Date(),
+        },
       },
       item: {
         connect: {
           id: 1,
-        }
-      }
-    }
+        },
+      },
+    },
   });
   transaction.push(createRenterApp1);
 
@@ -40,26 +40,26 @@ export const seed = async () => {
       renter: {
         connect: {
           id: 1,
-        }
+        },
       },
       form: {
         create: {
           offeringPrice: 20.99,
           offeringDuration: 10,
-        }
+        },
       },
       renterApplicationStatus: {
         create: {
           status: RenterApplicationStatusType.APPLIED,
-          updatedAt: new Date()
-        }
+          updatedAt: new Date(),
+        },
       },
       item: {
         connect: {
           id: 2,
-        }
-      }
-    }
+        },
+      },
+    },
   });
   transaction.push(createRenterApp2);
   return await prisma.$transaction(transaction);
