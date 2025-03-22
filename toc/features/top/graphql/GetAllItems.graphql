@@ -1,0 +1,12 @@
+query GetAllItems($filter: FilterItemInput) {
+  items(filter: $filter) {
+    id
+    name
+    category
+    fee
+    feeType
+    maxDuration
+    maxDurationType
+    imageURL
+  }
+}

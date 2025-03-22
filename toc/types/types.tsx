@@ -12,6 +12,7 @@ export type Company = {
     createdAt: Date;
     updatedAt: Date;
     logoURL: string;
+    items: Item[];
 }
 
 export type Item = {

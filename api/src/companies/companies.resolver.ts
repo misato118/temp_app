@@ -9,7 +9,7 @@ export class CompaniesResolver {
     private companiesService: CompaniesService,
   ) {}
 
-  @Query(() => [Company], { name: 'company' })
+  @Query(() => [Company], { name: 'companies' })
   async findAll() {
     return this.companiesService.findAll();
   }

@@ -9,7 +9,7 @@ export class EmployeesResolver {
     private employeesService: EmployeesService,
   ) {}
 
-  @Query(() => [Employee], { name: 'employee' })
+  @Query(() => [Employee], { name: 'employees' })
   async findAll() {
     return this.employeesService.findAll();
   }

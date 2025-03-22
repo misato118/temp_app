@@ -9,7 +9,7 @@ export class RenterApplicationsResolver {
     private renterApplicationsService: RenterApplicationsService,
   ) {}
 
-  @Query(() => [RenterApplication], { name: 'renterApplication' })
+  @Query(() => [RenterApplication], { name: 'renterApplications' })
   async findAll() {
     return this.renterApplicationsService.findAll();
   }
