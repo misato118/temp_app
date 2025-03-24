@@ -1,27 +1,27 @@
-import { PrismaClient } from "@prisma/client";
-import { seed as employeeSeeding } from "./dummies/employee";
-import { seed as companySeeding } from "./dummies/company";
-import { seed as itemSeeding } from "./dummies/item";
-import { seed as reviewSeeding } from "./dummies/review";
-import { seed as renterSeeding } from "./dummies/renter";
-import { seed as renterApplicationSeeding } from "./dummies/renterApplication";
+import { PrismaClient } from '@prisma/client';
+import { seed as employeeSeeding } from './dummies/employee';
+import { seed as companySeeding } from './dummies/company';
+import { seed as itemSeeding } from './dummies/item';
+import { seed as reviewSeeding } from './dummies/review';
+import { seed as renterSeeding } from './dummies/renter';
+import { seed as renterApplicationSeeding } from './dummies/renterApplication';
 
 const prisma = new PrismaClient();
 
 const main = async () => {
-    console.log(`Start seeding ...`);
-  
-    await companySeeding();
-    await employeeSeeding();
-    await itemSeeding();
-    await reviewSeeding();
-    await renterSeeding();
-    await renterApplicationSeeding();
+  console.log(`Start seeding ...`);
 
-    console.log(`Seeding finished.`);
-  };
+  await companySeeding();
+  await employeeSeeding();
+  await itemSeeding();
+  await reviewSeeding();
+  await renterSeeding();
+  await renterApplicationSeeding();
 
-  main()
+  console.log(`Seeding finished.`);
+};
+
+main()
   .catch((e) => {
     console.error(e);
     process.exit(1);

@@ -1,48 +1,48 @@
-import Item from "@/pages/items/[item]";
+import { GetAllItemsQuery } from "@/features/utils/graphql/typeDefs/graphql";
 import { NextRouter, useRouter } from "next/router";
 
 interface ItemsProps {
-    items: Item[];
+    items?: GetAllItemsQuery["items"];
 }
 
 const Items = ({ items }: ItemsProps) => {
     const router = useRouter();
-    const itemsPerPage = 6; // 3 columns x 2 rows
+    const ITEM_COUNT_PER_PAGE = 6; // 3 columns x 2 rows
     const currentPage = Number(router.query.page) || 1;
-    const totalPages = Math.ceil(items.length / itemsPerPage);
+    const totalPages = Math.ceil((items || []).length / ITEM_COUNT_PER_PAGE);
 
     // Slice items for current page
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedItems = items.slice(startIndex, startIndex + itemsPerPage);
+    const startIndex = (currentPage - 1) * ITEM_COUNT_PER_PAGE;
+    const paginatedItems = (items || []).slice(
+        startIndex,
+        startIndex + ITEM_COUNT_PER_PAGE
+    );
 
     return (
         <div className="flex flex-col items-center">
             <div className="grid grid-cols-3 gap-6">
-                {paginatedItems.map((item) => (
+                {paginatedItems.map((item, index) => (
                     <div
+                        key={item.id + index}
                         className="max-w-sm rounded-lg overflow-hidden shadow-lg px-6 py-4 bg-white cursor-pointer"
-                        onClick={() => router.push({
-                            pathname: "/items/[item]",
-                            query: { item: item.id }
-                        })}>
+                        onClick={() =>
+                            router.push({
+                                pathname: "/items/[item]",
+                                query: { item: item.id },
+                            })
+                        }
+                    >
                         {/* Substitute this image with {item.imageURL}*/}
                         <img src="/sampleImg.png" alt="Item Image"></img>
                         <div className="divider w-5/6 mx-auto my-1"></div>
                         <div>
-                            {/*
-              <div className="font-bold text-xl mb-2">
-                <Link legacyBehavior
-                  href={{
-                  pathname: '/items/[item]',
-                  query: { item: item.id },
-                }}>
-                  <a>{item.id}</a>
-                </Link>
-              </div>              
-              */}
                             <p className="font-bold text-xl mb-2">{item.name}</p>
-                            <p className="text-gray-700 text-base">${item.fee} {item.feeType}</p>
-                            <p className="text-gray-700 text-base">{item.maxDuration} {item.maxDurationType}</p>
+                            <p className="text-gray-700 text-base">
+                                ${item.fee} {item.feeType}
+                            </p>
+                            <p className="text-gray-700 text-base">
+                                {item.maxDuration} {item.maxDurationType}
+                            </p>
                         </div>
                     </div>
                 ))}
@@ -66,7 +66,6 @@ const Items = ({ items }: ItemsProps) => {
             </div>
         </div>
     );
-
 }
 
 export default Items;

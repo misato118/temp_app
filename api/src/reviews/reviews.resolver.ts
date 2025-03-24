@@ -10,7 +10,7 @@ export class ReviewsResolver {
     private reviewsService: ReviewsService,
   ) {}
 
-  @Query(() => [Review], { name: 'review' })
+  @Query(() => [Review], { name: 'reviews' })
   async findAll() {
     return this.reviewsService.findAll();
   }

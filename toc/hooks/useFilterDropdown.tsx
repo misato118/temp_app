@@ -1,27 +1,31 @@
 import { useState, useEffect } from "react";
 
-const priceArray = ["Daily", "Monthly", "Yearly"];
-const durationArray = ["Days", "Months", "Years"];
+const priceArray = ["daily", "monthly", "yearly"];
+const durationArray = ["days", "months", "years"];
+type TimeType = "TYPE" | "DA" | "MONTH" | "YEAR";
 
-const useFilterDropdown = (dataType: string, register: any, setValue: any, watch: any) => {
-    const array = dataType == "Price" ? priceArray : durationArray;
-    const type = dataType == "Price" ? "priceType" : "durationType";
-    const typeValue = watch(type, array[0]);
+const useFilterDropdown = (dataType: string, setValue: any) => {
+    const array = dataType === "PRICE" ? priceArray : durationArray;
+    const type = dataType === "PRICE" ? "priceType" : "durationType";
 
-    const [isOpen, setIsOpen] = useState(false);
-    const [title, setTitle] = useState(dataType + "Type");
+    const [timeType, setTimeType] = useState<TimeType>("TYPE");
 
     useEffect(() => {
-        setValue(type, typeValue);
-    }, [typeValue, setValue, type]);
+        if (timeType !== "TYPE") {
+            if (timeType === "DA") {
+                setValue(type, array[0]);
+            } else if (timeType === "MONTH") {
+                setValue(type, array[1]);
+            } else if (timeType === "YEAR") {
+                setValue(type, array[2]);
+            }
+        }
+    }, [timeType, setValue, type]);
 
     return {
-        title,
-        isOpen,
-        array,
+        timeType,
         type,
-        setIsOpen,
-        setTitle
+        setTimeType
     }
 }
 

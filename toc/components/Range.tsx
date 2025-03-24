@@ -1,8 +1,10 @@
 import useRange from "@/hooks/useRange";
 import { UseFormSetValue } from "react-hook-form";
 
+type DataType = "PRICE" | "DURATION";
+
 // This is a range slider component with a max handle
-const Range = ({ range, register, setValue, watch }: { range: number[], register: any, setValue: any, watch: any }) => {
+const Range = ({ dataType, range, register, setValue, watch }: { dataType: DataType, range: number[], register: any, setValue: any, watch: any }) => {
     const { registerName, maxValue } = useRange(range, setValue, watch);
 
     return (
@@ -13,7 +15,7 @@ const Range = ({ range, register, setValue, watch }: { range: number[], register
                 min={0}
                 max={range[range.length - 1]}
                 value={maxValue}
-                onChange={handleMaxChange}
+                onChange={(e) => handleMaxChange(e, dataType, setValue)}
                 className="range range-info"
                 step="1" />
 
@@ -27,7 +29,7 @@ const Range = ({ range, register, setValue, watch }: { range: number[], register
                 <input
                     {...register(registerName, { valueAsNumber: true })}
                     value={maxValue}
-                    onChange={handleMaxChange}
+                    onChange={(e) => handleMaxChange(e, dataType, setValue)}
                     type="number"
                     placeholder="Max"
                     className="input input-bordered w-full rounded-full mt-2" />
@@ -40,7 +42,7 @@ export default Range;
 
 function handleMaxChange(
     e: React.ChangeEvent<HTMLInputElement>,
-    registerName: "maxPrice" | "maxDuration",
+    dataType: DataType,
     setValue: UseFormSetValue<{
         maxPrice: number;
         maxDuration: number;
@@ -49,5 +51,7 @@ function handleMaxChange(
     }>
 ) {
     const value = Number(e.target.value);
+    const registerName = dataType === "PRICE" ? "maxPrice" : "maxDuration";
+
     setValue(registerName, value);
 };

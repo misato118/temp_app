@@ -3,22 +3,28 @@ import { Item } from './models/item.model';
 import { ItemsService } from './items.service';
 import { CreateItemInput } from './dto/create-item.input';
 import { Company } from 'src/companies/models/company.model';
+import { FilterItemInput } from './dto/filter-item.input';
 
 @Resolver(() => Item)
 export class ItemsResolver {
-  constructor(
-    private itemsService: ItemsService,
-  ) {}
+  constructor(private itemsService: ItemsService) {}
 
   // Obtain all items
-  @Query(() => [Item], { name: 'item' })
-  async findAll() {
-    return this.itemsService.findAll();
+  @Query(() => [Item], { name: 'items' })
+  async findAll(
+    @Args('filter', {
+      nullable: true,
+    })
+    filter?: FilterItemInput,
+  ) {
+    return this.itemsService.findAll(filter);
   }
 
   // Obtain all items by a company name
   @Query(() => Company, { name: 'itemByCompany' })
-  async findAllByCompany(@Args('companyName', { type: () => String }) companyName: string) {
+  async findAllByCompany(
+    @Args('companyName', { type: () => String }) companyName: string,
+  ) {
     return this.itemsService.findAllByCompany(companyName);
   }
 
@@ -56,7 +62,7 @@ export class ItemsResolver {
   @Mutation(() => Item, { name: 'deleteItem' })
   async deleteItem(@Args('itemId', { type: () => Int }) itemId: number) {
     return this.itemsService.delete(itemId);
-  }  
+  }
 
   hasNullFields(createItemInput: CreateItemInput) {
     for (var field in createItemInput) {
@@ -66,5 +72,4 @@ export class ItemsResolver {
     }
     return false;
   }
-  
 }

@@ -98,6 +98,13 @@ type Employee {
   updatedAt: DateTime!
 }
 
+input FilterItemInput {
+  durationType: String
+  maxDuration: Int
+  maxPrice: Int
+  priceType: String
+}
+
 type Form {
   id: Int!
   offeringDuration: Int!
@@ -156,15 +163,15 @@ type OwnerApplication {
 }
 
 type Query {
-  company: [Company!]!
+  companies: [Company!]!
   companyInfo(companyName: String!): Company!
-  employee: [Employee!]!
-  item: [Item!]!
+  employees: [Employee!]!
   itemByCompany(companyName: String!): Company!
   itemInfo(itemId: Int!): Item!
-  renter: [Renter!]!
-  renterApplication: [RenterApplication!]!
-  review: [Review!]!
+  items(filter: FilterItemInput): [Item!]!
+  renterApplications: [RenterApplication!]!
+  renters: [Renter!]!
+  reviews: [Review!]!
 }
 
 type Renter {
@@ -188,7 +195,7 @@ type RenterApplication {
   item: Item!
   itemId: Int!
   renter: Renter!
-  renterApplicationStatus: [RenterApplicationStatus!]!
+  renterApplicationStatuses: [RenterApplicationStatus!]!
   renterId: Int!
 }
 
