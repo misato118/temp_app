@@ -15,9 +15,13 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "query GetAllItems($filter: FilterItemInput) {\n  items(filter: $filter) {\n    id\n    name\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n  }\n}": typeof types.GetAllItemsDocument,
+    "query GetCompanyInfo($companyName: String!) {\n  companyInfo(companyName: $companyName) {\n    id\n    name\n    description\n    createdAt\n    logoURL\n    items {\n      id\n      name\n      fee\n      feeType\n      imageURL\n    }\n  }\n}": typeof types.GetCompanyInfoDocument,
+    "query GetItemInfo($itemId: Int!) {\n  itemInfo(itemId: $itemId) {\n    id\n    name\n    description\n    createdAt\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n    deposit\n    company {\n      name\n      logoURL\n      description\n    }\n    reviews {\n      title\n      contents\n      rating\n    }\n  }\n}": typeof types.GetItemInfoDocument,
 };
 const documents: Documents = {
     "query GetAllItems($filter: FilterItemInput) {\n  items(filter: $filter) {\n    id\n    name\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n  }\n}": types.GetAllItemsDocument,
+    "query GetCompanyInfo($companyName: String!) {\n  companyInfo(companyName: $companyName) {\n    id\n    name\n    description\n    createdAt\n    logoURL\n    items {\n      id\n      name\n      fee\n      feeType\n      imageURL\n    }\n  }\n}": types.GetCompanyInfoDocument,
+    "query GetItemInfo($itemId: Int!) {\n  itemInfo(itemId: $itemId) {\n    id\n    name\n    description\n    createdAt\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n    deposit\n    company {\n      name\n      logoURL\n      description\n    }\n    reviews {\n      title\n      contents\n      rating\n    }\n  }\n}": types.GetItemInfoDocument,
 };
 
 /**
@@ -38,6 +42,14 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query GetAllItems($filter: FilterItemInput) {\n  items(filter: $filter) {\n    id\n    name\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n  }\n}"): (typeof documents)["query GetAllItems($filter: FilterItemInput) {\n  items(filter: $filter) {\n    id\n    name\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetCompanyInfo($companyName: String!) {\n  companyInfo(companyName: $companyName) {\n    id\n    name\n    description\n    createdAt\n    logoURL\n    items {\n      id\n      name\n      fee\n      feeType\n      imageURL\n    }\n  }\n}"): (typeof documents)["query GetCompanyInfo($companyName: String!) {\n  companyInfo(companyName: $companyName) {\n    id\n    name\n    description\n    createdAt\n    logoURL\n    items {\n      id\n      name\n      fee\n      feeType\n      imageURL\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetItemInfo($itemId: Int!) {\n  itemInfo(itemId: $itemId) {\n    id\n    name\n    description\n    createdAt\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n    deposit\n    company {\n      name\n      logoURL\n      description\n    }\n    reviews {\n      title\n      contents\n      rating\n    }\n  }\n}"): (typeof documents)["query GetItemInfo($itemId: Int!) {\n  itemInfo(itemId: $itemId) {\n    id\n    name\n    description\n    createdAt\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n    deposit\n    company {\n      name\n      logoURL\n      description\n    }\n    reviews {\n      title\n      contents\n      rating\n    }\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

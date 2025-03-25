@@ -1,9 +1,9 @@
-import { Company } from "@/types/types";
+import { GetItemInfoQuery } from "@/features/utils/graphql/typeDefs/graphql";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 
 interface CompanyProps {
-    company: Company;
+    company?: GetItemInfoQuery["itemInfo"] extends { company: infer T } ? T : undefined;
 }
 
 const OwnerDetailsWithButtons = ({ company }: CompanyProps) => {
@@ -17,9 +17,9 @@ const OwnerDetailsWithButtons = ({ company }: CompanyProps) => {
                     alt="Owner Image"
                     src="/sampleImg.png"
                     className="h-12 w-12 rounded-full mr-4" />
-                <p>{company.name}</p>
+                <p>{company?.name}</p>
             </div>
-            <p className="my-3">{company.description}</p>
+            <p className="my-3">{company?.description}</p>
             <div className="flex">
                 <button
                     className="flex py-1 btn rounded-full bg-info text-white font-normal justify-center mr-2"
@@ -28,7 +28,7 @@ const OwnerDetailsWithButtons = ({ company }: CompanyProps) => {
                     className="py-1 btn rounded-full bg-secondary text-white font-normal px-4"
                     onClick={() => router.push({
                         pathname: "/[company]",
-                        query: { company: company.name }
+                        query: { company: company?.name }
                     })}
                 >More</button>
             </div>

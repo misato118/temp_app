@@ -25,7 +25,7 @@ const Item: NextPageWithLayout = () => {
                 <div className="flex">
                     <div className="w-1/2 px-10"><ImageDisplay /></div>
                     <div className="w-1/2 py-10">
-                        <ItemDetails item={data.itemInfo} />
+                        <ItemDetails itemInfo={data?.itemInfo} />
                     </div>
                 </div>
 
@@ -44,7 +44,7 @@ const Item: NextPageWithLayout = () => {
                 </div>
 
                 <div className="p-4 mt-4">
-                    {activeTab === "reviews" && <Reviews reviews={data.itemInfo.reviews} />}
+                    {activeTab === "reviews" && <Reviews reviews={data?.itemInfo?.reviews} />}
                     {activeTab === "qa" && <p>This is the Q&A Chat content.</p>}
                 </div>
             </div>

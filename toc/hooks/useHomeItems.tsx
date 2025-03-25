@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import type { Item } from '@/types/types';
 import { useQuery } from '@apollo/client';
 import { GetAllItemsDocument } from "@/features/utils/graphql/typeDefs/graphql";
 import { useRouter } from "next/router";
@@ -16,16 +14,10 @@ const useHomeItems = () => {
           },
         },
       });
-    //const [filteredItems, setFilteredItems] = useState<Item[]>([]);
-    //const [searchWords, setSearchWords] = useState("");
 
     return {
         loading,
         error,
-        //filteredItems,
-        //setFilteredItems,
-        //searchWords,
-        //setSearchWords,
         data
     }
 }

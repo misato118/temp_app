@@ -1,0 +1,16 @@
+query GetCompanyInfo($companyName: String!) {
+  companyInfo(companyName: $companyName) {
+    id
+    name
+    description
+    createdAt
+    logoURL
+    items {
+      id
+      name
+      fee
+      feeType
+      imageURL
+    }
+  }
+}

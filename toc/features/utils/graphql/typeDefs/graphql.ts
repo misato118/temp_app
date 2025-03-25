@@ -213,15 +213,15 @@ export type OwnerApplication = {
 
 export type Query = {
   __typename?: 'Query';
-  company: Array<Company>;
+  companies: Array<Company>;
   companyInfo: Company;
-  employee: Array<Employee>;
+  employees: Array<Employee>;
   itemByCompany: Company;
   itemInfo: Item;
   items: Array<Item>;
-  renter: Array<Renter>;
-  renterApplication: Array<RenterApplication>;
-  review: Array<Review>;
+  renterApplications: Array<RenterApplication>;
+  renters: Array<Renter>;
+  reviews: Array<Review>;
 };
 
 
@@ -267,7 +267,7 @@ export type RenterApplication = {
   item: Item;
   itemId: Scalars['Int']['output'];
   renter: Renter;
-  renterApplicationStatus: Array<RenterApplicationStatus>;
+  renterApplicationStatuses: Array<RenterApplicationStatus>;
   renterId: Scalars['Int']['output'];
 };
 
@@ -326,8 +326,24 @@ export type GetAllItemsQueryVariables = Exact<{
 
 export type GetAllItemsQuery = { __typename?: 'Query', items: Array<{ __typename?: 'Item', id: number, name: string, category: ItemCategory, fee: number, feeType: string, maxDuration: number, maxDurationType: string, imageURL?: string | null }> };
 
+export type GetCompanyInfoQueryVariables = Exact<{
+  companyName: Scalars['String']['input'];
+}>;
+
+
+export type GetCompanyInfoQuery = { __typename?: 'Query', companyInfo: { __typename?: 'Company', id: number, name: string, description: string, createdAt: any, logoURL?: string | null, items?: Array<{ __typename?: 'Item', id: number, name: string, fee: number, feeType: string, imageURL?: string | null }> | null } };
+
+export type GetItemInfoQueryVariables = Exact<{
+  itemId: Scalars['Int']['input'];
+}>;
+
+
+export type GetItemInfoQuery = { __typename?: 'Query', itemInfo: { __typename?: 'Item', id: number, name: string, description: string, createdAt: any, category: ItemCategory, fee: number, feeType: string, maxDuration: number, maxDurationType: string, imageURL?: string | null, deposit: number, company: { __typename?: 'Company', name: string, logoURL?: string | null, description: string }, reviews: Array<{ __typename?: 'Review', title: string, contents: string, rating: number }> } };
+
 
 export const GetAllItemsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllItems"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FilterItemInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"feeType"}},{"kind":"Field","name":{"kind":"Name","value":"maxDuration"}},{"kind":"Field","name":{"kind":"Name","value":"maxDurationType"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}}]}}]}}]} as unknown as DocumentNode<GetAllItemsQuery, GetAllItemsQueryVariables>;
+export const GetCompanyInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCompanyInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"companyName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companyInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"companyName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"companyName"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"logoURL"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"feeType"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}}]}}]}}]}}]} as unknown as DocumentNode<GetCompanyInfoQuery, GetCompanyInfoQueryVariables>;
+export const GetItemInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetItemInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"itemId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"itemInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"itemId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"itemId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"feeType"}},{"kind":"Field","name":{"kind":"Name","value":"maxDuration"}},{"kind":"Field","name":{"kind":"Name","value":"maxDurationType"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"deposit"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"logoURL"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reviews"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contents"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}}]}}]}}]}}]} as unknown as DocumentNode<GetItemInfoQuery, GetItemInfoQueryVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -532,15 +548,15 @@ export type OwnerApplication = {
 
 export type Query = {
   __typename?: 'Query';
-  company: Array<Company>;
+  companies: Array<Company>;
   companyInfo: Company;
-  employee: Array<Employee>;
+  employees: Array<Employee>;
   itemByCompany: Company;
   itemInfo: Item;
   items: Array<Item>;
-  renter: Array<Renter>;
-  renterApplication: Array<RenterApplication>;
-  review: Array<Review>;
+  renterApplications: Array<RenterApplication>;
+  renters: Array<Renter>;
+  reviews: Array<Review>;
 };
 
 
@@ -586,7 +602,7 @@ export type RenterApplication = {
   item: Item;
   itemId: Scalars['Int']['output'];
   renter: Renter;
-  renterApplicationStatus: Array<RenterApplicationStatus>;
+  renterApplicationStatuses: Array<RenterApplicationStatus>;
   renterId: Scalars['Int']['output'];
 };
 
@@ -846,15 +862,15 @@ export type OwnerApplicationResolvers<ContextType = any, ParentType extends Reso
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  company?: Resolver<Array<ResolversTypes['Company']>, ParentType, ContextType>;
+  companies?: Resolver<Array<ResolversTypes['Company']>, ParentType, ContextType>;
   companyInfo?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<QueryCompanyInfoArgs, 'companyName'>>;
-  employee?: Resolver<Array<ResolversTypes['Employee']>, ParentType, ContextType>;
+  employees?: Resolver<Array<ResolversTypes['Employee']>, ParentType, ContextType>;
   itemByCompany?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<QueryItemByCompanyArgs, 'companyName'>>;
   itemInfo?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<QueryItemInfoArgs, 'itemId'>>;
   items?: Resolver<Array<ResolversTypes['Item']>, ParentType, ContextType, Partial<QueryItemsArgs>>;
-  renter?: Resolver<Array<ResolversTypes['Renter']>, ParentType, ContextType>;
-  renterApplication?: Resolver<Array<ResolversTypes['RenterApplication']>, ParentType, ContextType>;
-  review?: Resolver<Array<ResolversTypes['Review']>, ParentType, ContextType>;
+  renterApplications?: Resolver<Array<ResolversTypes['RenterApplication']>, ParentType, ContextType>;
+  renters?: Resolver<Array<ResolversTypes['Renter']>, ParentType, ContextType>;
+  reviews?: Resolver<Array<ResolversTypes['Review']>, ParentType, ContextType>;
 };
 
 export type RenterResolvers<ContextType = any, ParentType extends ResolversParentTypes['Renter'] = ResolversParentTypes['Renter']> = {
@@ -879,7 +895,7 @@ export type RenterApplicationResolvers<ContextType = any, ParentType extends Res
   item?: Resolver<ResolversTypes['Item'], ParentType, ContextType>;
   itemId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   renter?: Resolver<ResolversTypes['Renter'], ParentType, ContextType>;
-  renterApplicationStatus?: Resolver<Array<ResolversTypes['RenterApplicationStatus']>, ParentType, ContextType>;
+  renterApplicationStatuses?: Resolver<Array<ResolversTypes['RenterApplicationStatus']>, ParentType, ContextType>;
   renterId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

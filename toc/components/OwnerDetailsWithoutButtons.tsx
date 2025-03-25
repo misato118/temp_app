@@ -1,7 +1,11 @@
-import { Company } from "@/types/types";
+import { GetCompanyInfoQuery } from "@/features/utils/graphql/typeDefs/graphql";
 
-const OwnerDetailsWithoutButtons = ({ company }: { company: Company }) => {
-    const date = new Date(company.createdAt.toString());
+interface CompanyInfoProps {
+    companyInfo?: GetCompanyInfoQuery["companyInfo"];
+}
+
+const OwnerDetailsWithoutButtons = ({ companyInfo }: CompanyInfoProps) => {
+    const date = new Date(companyInfo?.createdAt.toString());
     const formattedDate = date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
@@ -14,8 +18,8 @@ const OwnerDetailsWithoutButtons = ({ company }: { company: Company }) => {
                 {/* TODO: Change this image to an actual company image from database */}
                 <div className="mb-4"><img src="/sampleImg.png" alt="Company Logo" className="rounded-full" /></div>
                 <div className="text-center">
-                    <h2 className="font-bold">{company.name}</h2>
-                    <p>{company.description}</p>
+                    <h2 className="font-bold">{companyInfo?.name}</h2>
+                    <p>{companyInfo?.description}</p>
                     <p className="text-info text-sm">Joined on {formattedDate}</p>
                 </div>
             </div>

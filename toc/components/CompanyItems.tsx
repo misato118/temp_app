@@ -1,8 +1,12 @@
-import { Item } from "@/types/types";
 import Rating from "./Rating";
 import useCompanyItems from "@/hooks/useCompanyItems";
+import { GetCompanyInfoQuery } from "@/features/utils/graphql/typeDefs/graphql";
 
-const CompanyItems = ({ items }: { items: Item[] }) => {
+interface ItemsProps {
+    items: NonNullable<GetCompanyInfoQuery["companyInfo"]>["items"];
+}
+
+const CompanyItems = ({ items }: ItemsProps) => {
     const {
         paginatedItems,
         overallRating,
@@ -16,6 +20,7 @@ const CompanyItems = ({ items }: { items: Item[] }) => {
         <div className="flex flex-col items-center">
             <div className="grid grid-cols-1 grid-rows-3 gap-3">
                 {paginatedItems.map((item) => (
+                    
                     <div className="card bg-base-100 shadow-xl">
                         <div className="card-body flex flex-row gap-4">
                             <div className="w-1/2">

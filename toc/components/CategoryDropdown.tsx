@@ -8,7 +8,7 @@ const CategoryDropdown = () => {
 
     return (
         <div className="dropdown dropdown-bottom dropdown-center mr-2">
-            <button className="btn btn-outline btn-wide btn-circle dropdown-toggle">
+            <button className="btn btn-outline btn-wide btn-circle dropdown-toggle px-4">
                 { getButtonLabel(categoryType) }
             </button>
             <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] p-2 shadow w-full">

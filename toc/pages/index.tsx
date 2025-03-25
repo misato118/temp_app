@@ -10,8 +10,6 @@ const Home = () => {
     const {
         loading,
         error,
-        //searchWords,
-        //setSearchWords,
         data
     } = useHomeItems();
 
