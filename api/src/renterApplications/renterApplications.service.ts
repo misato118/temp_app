@@ -36,7 +36,7 @@ export class RenterApplicationsService {
             ...updatedInput
           }
         },
-        renterApplicationStatus: {
+        renterApplicationStatuses: {
           create: {
             status: RenterApplicationStatusType.APPLIED,
             updatedAt: new Date()
@@ -49,8 +49,10 @@ export class RenterApplicationsService {
         }
       },
       include: {
+        form: true,
+        item: true,
         renter: true,
-        renterApplicationStatus: true,
+        renterApplicationStatuses: true,
       }
     });
   }

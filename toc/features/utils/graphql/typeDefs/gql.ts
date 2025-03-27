@@ -14,11 +14,13 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "mutation CreateRenterApplication($createRenterApplicationInput: CreateFormInput!) {\n  createRenterApplication(\n    createRenterApplicationInput: $createRenterApplicationInput\n  ) {\n    id\n    createdAt\n    form {\n      id\n      offeringPrice\n      offeringDuration\n    }\n    renterApplicationStatuses {\n      id\n      status\n      updatedAt\n    }\n    item {\n      id\n    }\n  }\n}": typeof types.CreateRenterApplicationDocument,
     "query GetAllItems($filter: FilterItemInput) {\n  items(filter: $filter) {\n    id\n    name\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n  }\n}": typeof types.GetAllItemsDocument,
     "query GetCompanyInfo($companyName: String!) {\n  companyInfo(companyName: $companyName) {\n    id\n    name\n    description\n    createdAt\n    logoURL\n    items {\n      id\n      name\n      fee\n      feeType\n      imageURL\n    }\n  }\n}": typeof types.GetCompanyInfoDocument,
     "query GetItemInfo($itemId: Int!) {\n  itemInfo(itemId: $itemId) {\n    id\n    name\n    description\n    createdAt\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n    deposit\n    company {\n      name\n      logoURL\n      description\n    }\n    reviews {\n      title\n      contents\n      rating\n    }\n  }\n}": typeof types.GetItemInfoDocument,
 };
 const documents: Documents = {
+    "mutation CreateRenterApplication($createRenterApplicationInput: CreateFormInput!) {\n  createRenterApplication(\n    createRenterApplicationInput: $createRenterApplicationInput\n  ) {\n    id\n    createdAt\n    form {\n      id\n      offeringPrice\n      offeringDuration\n    }\n    renterApplicationStatuses {\n      id\n      status\n      updatedAt\n    }\n    item {\n      id\n    }\n  }\n}": types.CreateRenterApplicationDocument,
     "query GetAllItems($filter: FilterItemInput) {\n  items(filter: $filter) {\n    id\n    name\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n  }\n}": types.GetAllItemsDocument,
     "query GetCompanyInfo($companyName: String!) {\n  companyInfo(companyName: $companyName) {\n    id\n    name\n    description\n    createdAt\n    logoURL\n    items {\n      id\n      name\n      fee\n      feeType\n      imageURL\n    }\n  }\n}": types.GetCompanyInfoDocument,
     "query GetItemInfo($itemId: Int!) {\n  itemInfo(itemId: $itemId) {\n    id\n    name\n    description\n    createdAt\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n    deposit\n    company {\n      name\n      logoURL\n      description\n    }\n    reviews {\n      title\n      contents\n      rating\n    }\n  }\n}": types.GetItemInfoDocument,
@@ -38,6 +40,10 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CreateRenterApplication($createRenterApplicationInput: CreateFormInput!) {\n  createRenterApplication(\n    createRenterApplicationInput: $createRenterApplicationInput\n  ) {\n    id\n    createdAt\n    form {\n      id\n      offeringPrice\n      offeringDuration\n    }\n    renterApplicationStatuses {\n      id\n      status\n      updatedAt\n    }\n    item {\n      id\n    }\n  }\n}"): (typeof documents)["mutation CreateRenterApplication($createRenterApplicationInput: CreateFormInput!) {\n  createRenterApplication(\n    createRenterApplicationInput: $createRenterApplicationInput\n  ) {\n    id\n    createdAt\n    form {\n      id\n      offeringPrice\n      offeringDuration\n    }\n    renterApplicationStatuses {\n      id\n      status\n      updatedAt\n    }\n    item {\n      id\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

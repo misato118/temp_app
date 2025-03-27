@@ -187,15 +187,15 @@ model Address {
 }
 
 model RenterApplication {
-  id                      Int                           @id @default(autoincrement())
-  createdAt               DateTime                      @default(now())
-  renter                  Renter                        @relation(fields: [renterId], references: [id])
-  renterId                Int
-  form                    Form                          @relation(fields: [formId], references: [id])
-  formId                  Int                           @unique
-  renterApplicationStatus RenterApplicationStatus[]
-  item                    Item                          @relation(fields: [itemId], references: [id])
-  itemId                  Int
+  id                        Int                           @id @default(autoincrement())
+  createdAt                 DateTime                      @default(now())
+  renter                    Renter                        @relation(fields: [renterId], references: [id])
+  renterId                  Int
+  form                      Form                          @relation(fields: [formId], references: [id])
+  formId                    Int                           @unique
+  renterApplicationStatuses RenterApplicationStatus[]
+  item                      Item                          @relation(fields: [itemId], references: [id])
+  itemId                    Int
 }
 
 model Form {

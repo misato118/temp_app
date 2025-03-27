@@ -19,7 +19,7 @@ export const seed = async () => {
           offeringDuration: 5,
         },
       },
-      renterApplicationStatus: {
+      renterApplicationStatuses: {
         create: {
           status: RenterApplicationStatusType.APPLIED,
           updatedAt: new Date(),
@@ -48,7 +48,7 @@ export const seed = async () => {
           offeringDuration: 10,
         },
       },
-      renterApplicationStatus: {
+      renterApplicationStatuses: {
         create: {
           status: RenterApplicationStatusType.APPLIED,
           updatedAt: new Date(),

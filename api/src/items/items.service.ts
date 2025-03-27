@@ -49,7 +49,7 @@ export class ItemsService {
             renterApplications: {
               include: {
                 renter: true,
-                renterApplicationStatus: true,
+                renterApplicationStatuses: true,
               },
             },
           },
