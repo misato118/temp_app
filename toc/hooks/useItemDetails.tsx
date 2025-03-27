@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { GetItemInfoDocument } from '@/features/utils/graphql/typeDefs/graphql';
@@ -11,13 +11,21 @@ const useItemDetails = () => {
         variables: { itemId: itemId }
     });
     const [activeTab, setActiveTab] = useState("reviews");
+    const [showToast, setShowToast] = useState(false);
+
+    useEffect(() => {
+        if (router.query.showToast === "true") {
+            setShowToast(true);
+        }
+    }, [router.query]);
 
     return {
         loading,
         error,
         data,
         activeTab,
-        setActiveTab
+        setActiveTab,
+        showToast
     }
 }
 

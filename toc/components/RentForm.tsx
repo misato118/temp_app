@@ -44,7 +44,10 @@ const RentForm = ({ feeType, maxDurationType }: { feeType: string, maxDurationTy
             });
 
             console.log(response);
-            router.push(`/items/${Number(router.query.item)}`);
+            router.push({
+                pathname: `/items/${Number(router.query.item)}`,
+                query: { showToast: "true" }
+            });
         } catch (error) {
             console.log("Mutation Error: " + error);
         }

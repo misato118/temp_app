@@ -6,6 +6,7 @@ import ImageDisplay from '@/components/ImageDisplay';
 import ItemDetails from '@/components/ItemDetails';
 import Reviews from '@/components/Reviews';
 import useItemDetails from '@/hooks/useItemDetails';
+import { CheckIcon } from '@heroicons/react/24/outline';
 
 const Item: NextPageWithLayout = () => {
     const {
@@ -13,7 +14,8 @@ const Item: NextPageWithLayout = () => {
         error,
         data,
         activeTab,
-        setActiveTab
+        setActiveTab,
+        showToast
     } = useItemDetails();
 
     if (loading) return 'Loading...';
@@ -21,11 +23,19 @@ const Item: NextPageWithLayout = () => {
 
     return (
         <main className="flex-1 flex flex-col h-full overflow-y-auto bg-base-200 px-40 py-20">
+            {/* Show a toast when user successfully submitted a rental applictaion form */}
+            {showToast && (
+                <div className="toast toast-top toast-center">
+                    <div className="alert alert-success">
+                        <span><CheckIcon /> You have successfully applied for this item!</span>
+                    </div>
+                </div>
+            )}
             <div className="rounded-lg shadow-lg px-20 py-10 bg-white mx-10">
                 <div className="flex">
                     <div className="w-1/2 px-10"><ImageDisplay /></div>
                     <div className="w-1/2 py-10">
-                        <ItemDetails itemInfo={data?.itemInfo} />
+                        <ItemDetails itemInfo={data?.itemInfo} toast={showToast} />
                     </div>
                 </div>
 
