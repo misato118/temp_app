@@ -170,6 +170,7 @@ type Query {
   itemInfo(itemId: Int!): Item!
   items(filter: FilterItemInput): [Item!]!
   renterApplications: [RenterApplication!]!
+  renterInfo(renterId: Int!): Renter!
   renters: [Renter!]!
   reviews: [Review!]!
 }

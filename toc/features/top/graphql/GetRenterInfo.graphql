@@ -1,0 +1,33 @@
+query GetRenterInfo($renterId: Int!) {
+    renterInfo(renterId: $renterId) {
+        id
+        username
+        firstName
+        lastName
+        birthDate
+        email
+        createdAt
+        updatedAt
+        imageURL
+        renterApplications {
+            id
+            form {
+                id
+                offeringPrice
+                offeringDuration
+            }
+            renterApplicationStatuses {
+                id
+                status
+                updatedAt
+            }
+            item {
+                id
+                name
+                company {
+                    name
+                }
+            }
+        }
+    }
+}

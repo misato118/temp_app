@@ -1,15 +1,14 @@
 import Header from './Header';
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  return (
-    <div className="h-full flex flex-col">
-      <Header />
-      {children}
-    </div>
-  );
-
+    return (
+        <div className="h-screen flex flex-col">
+            <Header />
+            {children}
+        </div>
+    );
 }
