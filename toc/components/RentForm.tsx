@@ -57,7 +57,7 @@ const RentForm = ({ feeType, maxDurationType }: { feeType: string, maxDurationTy
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-9 gap-2 justify-center items-center mb-2">
                 <h3 className="col-span-2 font-semibold">Offering Fee</h3>
-                <label className="input rounded-full bg-white border border-neutral-content flex flex-row items-center mx-4 col-span-4">
+                <label className="input rounded-full bg-white border border-neutral-content flex flex-row items-center col-span-4">
                     <p className="px-2">$</p>
                     <input
                         type="number"
@@ -78,7 +78,7 @@ const RentForm = ({ feeType, maxDurationType }: { feeType: string, maxDurationTy
                 <h3 className="col-span-2 font-semibold">Rental Duration</h3>
                 <input
                     type="number"
-                    className="input input-bordered rounded-full mt-2 mx-4 col-span-4"
+                    className="input input-bordered rounded-full mt-2 col-span-4"
                     placeholder="Type here"                   
                     {...register("offeringDuration", { valueAsNumber: true })}
                     />
