@@ -6,6 +6,11 @@ module.exports = {
     "./toc/features/utils/graphql/typeDefs/": {
       preset: "client",
       plugins: [],
+      config: {
+        scalars: {
+            DateTime: "Date",
+        }
+      }
     },
   },
 };

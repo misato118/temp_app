@@ -24,6 +24,10 @@ query GetRenterInfo($renterId: Int!) {
             item {
                 id
                 name
+                fee
+                feeType
+                maxDuration
+                maxDurationType
                 company {
                     name
                 }

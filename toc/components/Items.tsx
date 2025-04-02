@@ -1,22 +1,18 @@
 import { GetAllItemsQuery } from "@/features/utils/graphql/typeDefs/graphql";
-import { NextRouter, useRouter } from "next/router";
+import usePagination from "@/hooks/usePagination";
+import { NextRouter } from "next/router";
 
 interface ItemsProps {
     items?: GetAllItemsQuery["items"];
 }
 
 const Items = ({ items }: ItemsProps) => {
-    const router = useRouter();
-    const ITEM_COUNT_PER_PAGE = 6; // 3 columns x 2 rows
-    const currentPage = Number(router.query.page) || 1;
-    const totalPages = Math.ceil((items || []).length / ITEM_COUNT_PER_PAGE);
-
-    // Slice items for current page
-    const startIndex = (currentPage - 1) * ITEM_COUNT_PER_PAGE;
-    const paginatedItems = (items || []).slice(
-        startIndex,
-        startIndex + ITEM_COUNT_PER_PAGE
-    );
+    const {
+        router,
+        currentPage,
+        totalPages,
+        paginatedItems
+    } = usePagination(items ?? [], "item");
 
     return (
         <div className="flex flex-col items-center">
