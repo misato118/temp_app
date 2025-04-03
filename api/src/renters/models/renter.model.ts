@@ -15,7 +15,7 @@ export class Renter {
   @Field(type => String)
   lastName: string;
 
-  @Field(type => Date)
+  @Field(type => Date, { nullable: true })
   birthDate: Date;
 
   @Field(type => String)
@@ -29,6 +29,9 @@ export class Renter {
 
   @Field({ nullable: true })
   imageURL?: string;
+
+  @Field(type => String)
+  password: string;  
 
   //@Field(type => [Admin])
   //admins: Admin[];

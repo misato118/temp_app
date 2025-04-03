@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "mutation CreateRenter($createRenterInput: CreateRenterInput!) {\n  createRenter(createRenterInput: $createRenterInput) {\n    id\n  }\n}": typeof types.CreateRenterDocument,
     "mutation CreateRenterApplication($createRenterApplicationInput: CreateFormInput!) {\n  createRenterApplication(\n    createRenterApplicationInput: $createRenterApplicationInput\n  ) {\n    id\n    createdAt\n    form {\n      id\n      offeringPrice\n      offeringDuration\n    }\n    renterApplicationStatuses {\n      id\n      status\n      updatedAt\n    }\n    item {\n      id\n    }\n  }\n}": typeof types.CreateRenterApplicationDocument,
     "query GetAllItems($filter: FilterItemInput) {\n  items(filter: $filter) {\n    id\n    name\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n  }\n}": typeof types.GetAllItemsDocument,
     "query GetCompanyInfo($companyName: String!) {\n  companyInfo(companyName: $companyName) {\n    id\n    name\n    description\n    createdAt\n    logoURL\n    items {\n      id\n      name\n      fee\n      feeType\n      imageURL\n    }\n  }\n}": typeof types.GetCompanyInfoDocument,
@@ -21,6 +22,7 @@ type Documents = {
     "query GetRenterInfo($renterId: Int!) {\n  renterInfo(renterId: $renterId) {\n    id\n    username\n    firstName\n    lastName\n    birthDate\n    email\n    createdAt\n    updatedAt\n    imageURL\n    renterApplications {\n      id\n      form {\n        id\n        offeringPrice\n        offeringDuration\n      }\n      renterApplicationStatuses {\n        id\n        status\n        updatedAt\n      }\n      item {\n        id\n        name\n        fee\n        feeType\n        maxDuration\n        maxDurationType\n        company {\n          name\n        }\n      }\n    }\n  }\n}": typeof types.GetRenterInfoDocument,
 };
 const documents: Documents = {
+    "mutation CreateRenter($createRenterInput: CreateRenterInput!) {\n  createRenter(createRenterInput: $createRenterInput) {\n    id\n  }\n}": types.CreateRenterDocument,
     "mutation CreateRenterApplication($createRenterApplicationInput: CreateFormInput!) {\n  createRenterApplication(\n    createRenterApplicationInput: $createRenterApplicationInput\n  ) {\n    id\n    createdAt\n    form {\n      id\n      offeringPrice\n      offeringDuration\n    }\n    renterApplicationStatuses {\n      id\n      status\n      updatedAt\n    }\n    item {\n      id\n    }\n  }\n}": types.CreateRenterApplicationDocument,
     "query GetAllItems($filter: FilterItemInput) {\n  items(filter: $filter) {\n    id\n    name\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n  }\n}": types.GetAllItemsDocument,
     "query GetCompanyInfo($companyName: String!) {\n  companyInfo(companyName: $companyName) {\n    id\n    name\n    description\n    createdAt\n    logoURL\n    items {\n      id\n      name\n      fee\n      feeType\n      imageURL\n    }\n  }\n}": types.GetCompanyInfoDocument,
@@ -42,6 +44,10 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CreateRenter($createRenterInput: CreateRenterInput!) {\n  createRenter(createRenterInput: $createRenterInput) {\n    id\n  }\n}"): (typeof documents)["mutation CreateRenter($createRenterInput: CreateRenterInput!) {\n  createRenter(createRenterInput: $createRenterInput) {\n    id\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

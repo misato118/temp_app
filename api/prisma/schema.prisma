@@ -145,6 +145,7 @@ model Renter {
   createdAt          DateTime                      @default(now())
   updatedAt          DateTime                      @updatedAt
   imageURL           String?
+  password           String
   admins             Admin[]
   questions          Question[]
   notifications      Notification[]

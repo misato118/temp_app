@@ -1,0 +1,5 @@
+mutation CreateRenter($createRenterInput: CreateRenterInput!) {
+    createRenter(createRenterInput: $createRenterInput) {
+        id
+    }
+}

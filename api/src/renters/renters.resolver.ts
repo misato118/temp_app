@@ -20,7 +20,7 @@ export class RentersResolver {
   }
 
   @Mutation(() => Renter, { name: 'createRenter' })
-  createEmployee(@Args('createRenterInput') createRenterInput: CreateRenterInput) {
+  createRenter(@Args('createRenterInput') createRenterInput: CreateRenterInput) {
     return this.rentersService.create(createRenterInput);
   }
 }

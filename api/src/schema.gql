@@ -65,11 +65,12 @@ input CreateItemInput {
 }
 
 input CreateRenterInput {
-  birthDate: String!
+  birthDate: String
   email: String!
   firstName: String!
-  imageURL: String!
+  imageURL: String
   lastName: String!
+  password: String!
   username: String!
 }
 
@@ -183,6 +184,7 @@ type Renter {
   id: Int!
   imageURL: String
   lastName: String!
+  password: String!
   renterApplications: [RenterApplication!]!
   updatedAt: DateTime!
   username: String!

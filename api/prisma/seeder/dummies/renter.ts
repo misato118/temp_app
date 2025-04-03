@@ -14,6 +14,7 @@ export const seed = async () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       imageURL: 'https://www.test-image.com',
+      password: '1',
     },
   });
   transaction.push(createRenter1);
@@ -28,6 +29,7 @@ export const seed = async () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       imageURL: 'https://www.test-image.com',
+      password: '1',
     },
   });
   transaction.push(createRenter2);
@@ -42,6 +44,7 @@ export const seed = async () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       imageURL: 'https://www.test-image.com',
+      password: '1',
     },
   });
   transaction.push(createRenter3);
