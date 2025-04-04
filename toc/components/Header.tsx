@@ -1,6 +1,7 @@
 import { UserIcon, BellIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 
+// Header component with a logo, notification and navigation buttons
 const Header = () => {
     const router = useRouter();
 
@@ -40,11 +41,11 @@ const Header = () => {
                             className="h-6 w-6"
                             onClick={() => {
                                 const renterId = localStorage.getItem("renterId");
-
                                 if (renterId) {
                                     router.push(`/renters/${renterId}`);
+                                } else {
+                                    router.push("/login");
                                 }
-                                router.push("/login");
                             }}
                         />
                     </a>
