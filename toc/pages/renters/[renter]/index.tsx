@@ -2,14 +2,13 @@ import AccountInfoCard from "@/components/AccountInfoCard";
 import RootLayout from "@/components/Layout";
 import ShippingInfoCard from "@/components/ShippingInfoCard";
 import SideNavigation from "@/components/SideNavigation";
-import { GetRenterInfoDocument } from "@/features/utils/graphql/typeDefs/graphql";
-import { useQuery } from "@apollo/client";
+import useLoginConfirmation from "@/hooks/useLoginConfirmation";
 import { ReactElement } from "react";
 
 const Renter = () => {
-    const { loading, error, data } = useQuery(GetRenterInfoDocument, {
-            variables: { renterId: 1 }
-        });
+    const {
+        data     
+    } = useLoginConfirmation();
 
     return (
         <div className="flex flex-col items-center space-y-6">
