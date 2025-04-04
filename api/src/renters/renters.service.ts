@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateRenterInput } from './dto/create-renter.input';
 import { Args, Int } from '@nestjs/graphql';
+import { LoginRenterInput } from './dto/login-renter.input';
 
 @Injectable()
 export class RentersService {
@@ -63,6 +64,19 @@ export class RentersService {
                     }
                 }
             }
+        }
+    })
+  }
+
+  // Find a renter ID when logging in
+  findRenterId(loginRenterInput: LoginRenterInput) {
+    return this.prisma.renter.findUnique({
+        where: {
+            username: loginRenterInput.username,
+            password: loginRenterInput.password
+        },
+        select: {
+            id: true
         }
     })
   }

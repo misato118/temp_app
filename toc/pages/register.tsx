@@ -1,4 +1,4 @@
-// This feature/add-register-page branch is from feature/add-user-item-list-page
+// This feature/add-login-page branch is from feature/add-register-page
 
 import RootLayout from "@/components/Layout";
 import RegisterForm from "@/components/RegisterForm";
