@@ -109,7 +109,7 @@ const RegisterForm = () => {
             </fieldset>
 
             <div className="flex justify-center my-4">
-                <button type="submit" className="btn btn-info rounded-full">Register</button>
+                <button type="submit" className="btn btn-info rounded-full text-white">Register</button>
             </div>
             
             <p>If you already have am account, {" "}

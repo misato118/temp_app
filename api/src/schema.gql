@@ -177,7 +177,7 @@ type Query {
 }
 
 type Renter {
-  birthDate: DateTime!
+  birthDate: DateTime
   createdAt: DateTime!
   email: String!
   firstName: String!
