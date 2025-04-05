@@ -1,20 +1,25 @@
-import { NextRouter, useRouter } from 'next/router';
+import { NextRouter } from 'next/router';
 import OwnerDetailsWithButtons from './OwnerDetailsWithButtons';
-import { useState } from 'react';
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { GetItemInfoQuery } from '@/features/utils/graphql/typeDefs/graphql';
+import useRentFormStatus from '@/hooks/useRentFormStatus';
 
 interface ItemsProps {
     itemInfo?: GetItemInfoQuery["itemInfo"];
     toast?: boolean;
 }
 
-const ItemDetails = ({ itemInfo, toast }: ItemsProps) => {
-    const router = useRouter();
-    // TODO: Check if the renter has already set their address
-    const isAddressSet = true;
-    const [isDeliveryModalOpen, setIsDeliveryModalOpen] = useState(false);
-    const [address, setAddress] = useState("");
+const ItemDetails = ({ itemInfo }: ItemsProps) => {
+    const {
+        data,
+        router,
+        storedId,
+        isAddressSet,
+        setIsDeliveryModalOpen,
+        isDeliveryModalOpen,
+        address,
+        setAddress
+    } = useRentFormStatus({ itemInfo });
 
     return (
         <div>
@@ -22,12 +27,20 @@ const ItemDetails = ({ itemInfo, toast }: ItemsProps) => {
             <p >{itemInfo?.category}</p>
             <div className="my-4">
                 <button
-                    className={`py-1 btn rounded-full bg-info text-white font-normal ${toast ? "btn-disabled" : ""}`}
-                    disabled={toast}
-                    onClick={() => router.push({
-                        pathname: "/items/[item]/rental-application-form",
-                        query: { item: itemInfo?.id }
-                    })}>
+                    className={`py-1 btn rounded-full bg-info text-white font-normal ${!data?.canApply ? "btn-disabled" : ""}`}
+                    disabled={!data?.canApply}
+                    onClick={() => {
+                        const renterId = localStorage.getItem("renterId");
+                        if (renterId) {
+                            router.push({
+                                pathname: "/items/[item]/rental-application-form",
+                                query: { item: itemInfo?.id, renterId: storedId }
+                            });
+                        } else {
+                            const currentPath = router.asPath;
+                            router.push(`/login?redirect=${encodeURIComponent(currentPath)}`);
+                        }
+                    }}>
                 Apply for Rent</button>
                 <button
                     onClick={() => {checkAddress(isAddressSet, router, itemInfo?.company?.name, setIsDeliveryModalOpen)}}

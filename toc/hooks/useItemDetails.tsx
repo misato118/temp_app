@@ -6,6 +6,7 @@ import { GetItemInfoDocument } from '@/features/utils/graphql/typeDefs/graphql';
 const useItemDetails = () => {
     const router = useRouter();
     const itemId: number = router.query?.item ? Number(router.query?.item) : 0;
+    const renterId: number = router.query?.renterId ? Number(router.query?.renterId) : 0;
 
     const { loading, error, data } = useQuery(GetItemInfoDocument, {
         variables: { itemId: itemId }
@@ -25,7 +26,8 @@ const useItemDetails = () => {
         data,
         activeTab,
         setActiveTab,
-        showToast
+        showToast,
+        renterId
     }
 }
 

@@ -25,9 +25,12 @@ const Item: NextPageWithLayout = () => {
         <main className="flex-1 flex flex-col h-full overflow-y-auto bg-base-200 px-40 py-20">
             {/* Show a toast when user successfully submitted a rental applictaion form */}
             {showToast && (
-                <div className="toast toast-top toast-center">
-                    <div className="alert alert-success">
-                        <span><CheckIcon /> You have successfully applied for this item!</span>
+                <div className="toast toast-top toast-center mt-25">
+                    <div className="alert alert-success text-white">
+                        <div className="flex items-center space-x-2">
+                            <CheckIcon className="w-6 h-6" />
+                            <span>You have successfully applied for this item!</span>
+                        </div>
                     </div>
                 </div>
             )}
@@ -35,7 +38,7 @@ const Item: NextPageWithLayout = () => {
                 <div className="flex">
                     <div className="w-1/2 px-10"><ImageDisplay /></div>
                     <div className="w-1/2 py-10">
-                        <ItemDetails itemInfo={data?.itemInfo} toast={showToast} />
+                        <ItemDetails itemInfo={data?.itemInfo} />
                     </div>
                 </div>
 

@@ -1,10 +1,8 @@
 import Error from '@/components/Error';
 import RootLayout from '@/components/Layout';
 import RentForm from '@/components/RentForm';
-import { CreateRenterApplicationDocument } from '@/features/utils/graphql/typeDefs/graphql';
 import useItemDetails from '@/hooks/useItemDetails';
 import { NextPageWithLayout } from '@/pages/_app';
-import { useMutation } from '@apollo/client';
 import { ReactElement } from 'react';
 
 // yearly, monthly, daily
@@ -19,6 +17,7 @@ const RentalApplicationForm: NextPageWithLayout = () => {
         loading,
         error,
         data,
+        renterId
     } = useItemDetails();
 
     if (loading) return 'Loading...';
@@ -52,7 +51,7 @@ const RentalApplicationForm: NextPageWithLayout = () => {
                     </table>
                     <p className="mb-4">Please specify your offering price and rental duration to apply for this item.</p>
                     <div>
-                        <RentForm feeType={data?.itemInfo.feeType} maxDurationType={data?.itemInfo.maxDurationType} />
+                        <RentForm feeType={data?.itemInfo.feeType} maxDurationType={data?.itemInfo.maxDurationType} renterId={renterId} />
                     </div>
                 </div>
             </div>

@@ -44,7 +44,8 @@ const Header = () => {
                                 if (renterId) {
                                     router.push(`/renters/${renterId}`);
                                 } else {
-                                    router.push("/login");
+                                    const currentPath = router.asPath;
+                                    router.push(`/login?redirect=${encodeURIComponent(currentPath)}`);
                                 }
                             }}
                         />
