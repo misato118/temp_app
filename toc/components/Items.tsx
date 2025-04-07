@@ -1,5 +1,6 @@
 import { GetAllItemsQuery } from "@/features/utils/graphql/typeDefs/graphql";
 import usePagination from "@/hooks/usePagination";
+import Image from "next/image";
 import { NextRouter } from "next/router";
 
 interface ItemsProps {
@@ -29,7 +30,7 @@ const Items = ({ items }: ItemsProps) => {
                         }
                     >
                         {/* Substitute this image with {item.imageURL}*/}
-                        <img src="/sampleImg.png" alt="Item Image"></img>
+                        <Image src="/sampleImg.png" alt="Item Image" height={300} width={300} />
                         <div className="divider w-5/6 mx-auto my-1"></div>
                         <div>
                             <p className="font-bold text-xl mb-2">{item.name}</p>

@@ -3,6 +3,7 @@ import RootLayout from '@/components/Layout';
 import RentForm from '@/components/RentForm';
 import useItemDetails from '@/hooks/useItemDetails';
 import { NextPageWithLayout } from '@/pages/_app';
+import Image from 'next/image';
 import { ReactElement } from 'react';
 
 // yearly, monthly, daily
@@ -32,7 +33,7 @@ const RentalApplicationForm: NextPageWithLayout = () => {
             <div className="card rounded-lg shadow-lg bg-white px-20 py-10 w-1/2 mx-auto text-center">
                 <div className="card-body justify-center items-center text-center">
                     <h2 className="card-title text-4xl mb-4">Rental Application Form</h2>
-                    <img src="/sampleImg.png" alt="Item Image" /> {/* TODO: Add an actual item image here */}
+                    <Image src="/sampleImg.png" alt="Item Image" height={300} width={300} /> {/* TODO: Add an actual item image here */}
                     <table className="table w-3/4 mx-auto my-4">
                         <tbody>
                             <tr>

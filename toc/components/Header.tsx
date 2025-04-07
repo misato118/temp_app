@@ -1,4 +1,5 @@
 import { UserIcon, BellIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 // Header component with a logo, notification and navigation buttons
@@ -15,10 +16,11 @@ const Header = () => {
                     <a href="#" className="-m-1.5 p-1.5">
                         <span className="sr-only">Application Name</span>
                         {/* TODO: Change this logo later */}
-                        <img
-                            alt=""
-                            src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                            className="h-8 w-auto"
+                        <Image
+                            alt="Logo"
+                            src="/sampleImg.png"
+                            width={32}
+                            height={32}
                             onClick={() => router.push("/")}
                         />
                     </a>

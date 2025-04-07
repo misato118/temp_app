@@ -2,6 +2,7 @@ import { UserIcon, ListBulletIcon, CreditCardIcon, ArrowLeftStartOnRectangleIcon
 import { useRouter } from "next/router";
 import useLoginConfirmation from "@/hooks/useLoginConfirmation";
 import Error from "./Error";
+import Image from "next/image";
 
 // SideNavigation component which stays on the left on a user page
 const SideNavigation = () => {
@@ -9,7 +10,6 @@ const SideNavigation = () => {
     const {
         data,
         error,
-        loading,
         renterId        
     } = useLoginConfirmation();
 
@@ -24,7 +24,7 @@ const SideNavigation = () => {
             {/* Substitute this image with {renter.imageURL}*/}
             <div>
                 <div className="mb-4 mt-16 flex justify-center items-start">
-                    <img src="/sampleImg.png" alt="Renter Image" className="rounded-full w-32 h-32" />
+                    <Image src="/sampleImg.png" alt="Renter Image" className="rounded-full w-32 h-32" height={32} width={32} />
                 </div>
                 <div className="text-center">
                     <h2 className="font-bold text-white">{data?.renterInfo?.firstName} {data?.renterInfo?.lastName}</h2>

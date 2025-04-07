@@ -28,7 +28,7 @@ function checkAndCloseDropDown(
     val: CategoryType,
     setCategoryType: React.Dispatch<React.SetStateAction<CategoryType>>
 ) {
-    let targetEl = e.currentTarget;
+    const targetEl = e.currentTarget;
     if (targetEl && targetEl.matches(':focus')) {
         setCategoryType(val);
         setTimeout(function () {

@@ -26,6 +26,13 @@ const Filters = () => {
         });
 
     const onSubmit: SubmitHandler<Schema> = (data: Schema) => {
+        const result = schema.safeParse(data);
+
+        if (!result.success) {
+          console.error("Validation failed", result.error.format());
+          return;
+        }
+
         router.push({
             query: {
                 maxPrice: data.maxPrice ? Number(data.maxPrice) : undefined,
