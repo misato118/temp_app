@@ -4,14 +4,14 @@ import Range from "./Range";
 import FilterDropdown from "./FilterDropdown";
 import { useRouter } from "next/router";
 
-const schema = z.object({
+export const schema = z.object({
     maxPrice: z.number(),
     maxDuration: z.number(),
     priceType: z.string(),
     durationType: z.string(),
 });
 
-type Schema = z.infer<typeof schema>;
+export type Schema = z.infer<typeof schema>;
 
 const Filters = () => {
     const router = useRouter();

@@ -1,17 +1,9 @@
 import useRange from "@/hooks/useRange";
 import { UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { z } from "zod";
+import { Schema } from "./Filters";
 
 type DataType = "PRICE" | "DURATION";
-
-const schema = z.object({
-    maxPrice: z.number(),
-    maxDuration: z.number(),
-    priceType: z.string(),
-    durationType: z.string(),
-});
-
-type Schema = z.infer<typeof schema>;
 
 interface RangeProps {
     dataType: DataType;

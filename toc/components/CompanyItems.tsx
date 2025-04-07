@@ -21,11 +21,8 @@ const CompanyItems = ({ items }: ItemsProps) => {
         <div className="flex flex-col items-center">
             <div className="grid grid-cols-1 grid-rows-3 gap-3">
                 {paginatedItems.map((item, index) => (
-                    <div className="card bg-base-100 shadow-xl">
-                        <div
-                            className="card-body flex flex-row gap-4"
-                            key={item.id + index}
-                        >
+                    <div className="card bg-base-100 shadow-xl" key={item.id + index}>
+                        <div className="card-body flex flex-row gap-4">
                             <div className="w-1/2">
                                 {/* Substitute this image with {item.imageURL}*/}
                                 <Image src="/sampleImg.png" alt="Item Image" height={300} width={300} />
