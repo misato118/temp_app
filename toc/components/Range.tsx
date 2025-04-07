@@ -1,6 +1,5 @@
 import useRange from "@/hooks/useRange";
 import { UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form";
-import { z } from "zod";
 import { Schema } from "./Filters";
 
 type DataType = "PRICE" | "DURATION";
