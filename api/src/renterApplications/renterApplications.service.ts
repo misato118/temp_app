@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateFormInput } from 'src/forms/dto/create-form.input';
 import { RenterApplicationStatusType } from 'src/renterApplicationStatusTypes/models/renterApplicationStatusType.model';
-import { Args, Int } from '@nestjs/graphql';
 
 @Injectable()
 export class RenterApplicationsService {
@@ -15,9 +14,7 @@ export class RenterApplicationsService {
 
     // Creates a new renter application
     create(createFormInput: CreateFormInput) {
-        const renterId = createFormInput.renterId;
-        const itemId = createFormInput.itemId;
-        const updatedInput = { ...createFormInput, ['renterId']: undefined, ['itemId']: undefined };
+        const { renterId, itemId, ...updatedInput } = createFormInput;
 
         // When a renter or item id is not provided
         if (renterId == null || itemId == null) {
