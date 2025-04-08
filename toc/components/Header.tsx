@@ -19,6 +19,7 @@ const Header = () => {
                             alt=""
                             src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                             className="h-8 w-auto"
+                            onClick={() => router.push("/")}
                         />
                     </a>
                     <a href="#" className="text-base text-gray-900">

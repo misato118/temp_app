@@ -30,7 +30,39 @@ export class RentersService {
             id: renterId,
         },
         include: {
-            renterApplications: true,
+            renterApplications: {
+                include: {
+                    form: {
+                        select: {
+                            id: true,
+                            offeringPrice: true,
+                            offeringDuration: true
+                        }
+                    },
+                    renterApplicationStatuses: {
+                        select: {
+                            id: true,
+                            status: true,
+                            updatedAt: true
+                        }
+                    },
+                    item: {
+                        select: {
+                            id: true,
+                            name: true,
+                            fee: true,
+                            feeType: true,
+                            maxDuration: true,
+                            maxDurationType: true,
+                            company: {
+                                select: {
+                                    name: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     })
   }
