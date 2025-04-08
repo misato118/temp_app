@@ -18,16 +18,16 @@ export class RenterApplication {
   @Field(type => Int)
   renterId: number;
 
-  @Field(type => Form)
+  @Field(type => Form, { nullable: true })
   form: Form;
 
   @Field(type => Int)
   formId: number;
 
-  @Field(type => [RenterApplicationStatus])
+  @Field(type => [RenterApplicationStatus], { nullable: true })
   renterApplicationStatuses: RenterApplicationStatus[];
 
-  @Field(type => Item)
+  @Field(type => Item, { nullable: true })
   item: Item;
 
   @Field(type => Int)

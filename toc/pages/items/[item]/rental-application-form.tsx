@@ -1,8 +1,10 @@
+import Error from '@/components/Error';
 import RootLayout from '@/components/Layout';
 import RentForm from '@/components/RentForm';
+import { CreateRenterApplicationDocument } from '@/features/utils/graphql/typeDefs/graphql';
+import useItemDetails from '@/hooks/useItemDetails';
 import { NextPageWithLayout } from '@/pages/_app';
-import { Item } from '@/types/types';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { useMutation } from '@apollo/client';
 import { ReactElement } from 'react';
 
 // yearly, monthly, daily
@@ -10,42 +12,22 @@ const priceDictionary: Record<string, string> = {
     "daily": "Day",
     "monthly": "Month",
     "yearly": "Year",
-}; 
+};
 
-export const getServerSideProps = (async ({ query }) => {
-    const itemId: number = query?.item ? Number(query?.item) : 0;
-    const { data } = await fetch(`${process.env.GRAPHQL_API_URL}`, {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-        query: `
-            query {
-                itemInfo(itemId: ` + itemId + `) {
-                    id
-                    name
-                    fee
-                    feeType
-                    maxDuration
-                    maxDurationType
-                    imageURL
-                    company {
-                        name
-                    }
-                }
-            }
-        `,
-        }),
-        next: { revalidate: 10 }
-    })
-    .then((res) => res.json());
+const RentalApplicationForm: NextPageWithLayout = () => {
+    const {
+        loading,
+        error,
+        data,
+    } = useItemDetails();
 
-    const item = data?.itemInfo;
-    return { props: { item: JSON.parse(JSON.stringify(item)) } }
-}) satisfies GetServerSideProps<{ item: Item }>
+    if (loading) return 'Loading...';
+    if (error || !data) {
+        return (
+            <Error />
+        );
+    }
 
-const RentalApplicationForm: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ item }: { item: Item }) => {
     return (
         <div className="bg-base-200 h-full py-10 overflow-y-auto">
             <div className="card rounded-lg shadow-lg bg-white px-20 py-10 w-1/2 mx-auto text-center">
@@ -56,21 +38,21 @@ const RentalApplicationForm: NextPageWithLayout<InferGetServerSidePropsType<type
                         <tbody>
                             <tr>
                                 <th>Name</th>
-                                <td>{item.name}</td>
+                                <td>{data?.itemInfo.name}</td>
                             </tr>
                             <tr>
                                 <th>Owner</th>
-                                <td>{item.company.name}</td>
+                                <td>{data?.itemInfo.company.name}</td>
                             </tr>
                             <tr>
                                 <th>Asking Fee</th>
-                                <td>{item.fee} /{priceDictionary[item.feeType]}</td>
+                                <td>{data?.itemInfo.fee} /{priceDictionary[data?.itemInfo.feeType]}</td>
                             </tr>
                         </tbody>
                     </table>
                     <p className="mb-4">Please specify your offering price and rental duration to apply for this item.</p>
                     <div>
-                        <RentForm feeType={item.feeType} maxDurationType={item.maxDurationType} />
+                        <RentForm feeType={data?.itemInfo.feeType} maxDurationType={data?.itemInfo.maxDurationType} />
                     </div>
                 </div>
             </div>

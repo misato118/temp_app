@@ -49,6 +49,8 @@ export class RenterApplicationsService {
         }
       },
       include: {
+        form: true,
+        item: true,
         renter: true,
         renterApplicationStatuses: true,
       }

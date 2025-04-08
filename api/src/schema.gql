@@ -189,13 +189,13 @@ type Renter {
 
 type RenterApplication {
   createdAt: DateTime!
-  form: Form!
+  form: Form
   formId: Int!
   id: Int!
-  item: Item!
+  item: Item
   itemId: Int!
   renter: Renter!
-  renterApplicationStatuses: [RenterApplicationStatus!]!
+  renterApplicationStatuses: [RenterApplicationStatus!]
   renterId: Int!
 }
 

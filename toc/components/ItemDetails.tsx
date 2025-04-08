@@ -6,9 +6,10 @@ import { GetItemInfoQuery } from '@/features/utils/graphql/typeDefs/graphql';
 
 interface ItemsProps {
     itemInfo?: GetItemInfoQuery["itemInfo"];
+    toast?: boolean;
 }
 
-const ItemDetails = ({ itemInfo }: ItemsProps) => {
+const ItemDetails = ({ itemInfo, toast }: ItemsProps) => {
     const router = useRouter();
     // TODO: Check if the renter has already set their address
     const isAddressSet = true;
@@ -21,7 +22,8 @@ const ItemDetails = ({ itemInfo }: ItemsProps) => {
             <p >{itemInfo?.category}</p>
             <div className="my-4">
                 <button
-                    className="py-1 btn rounded-full bg-info text-white font-normal"
+                    className={`py-1 btn rounded-full bg-info text-white font-normal ${toast ? "btn-disabled" : ""}`}
+                    disabled={toast}
                     onClick={() => router.push({
                         pathname: "/items/[item]/rental-application-form",
                         query: { item: itemInfo?.id }

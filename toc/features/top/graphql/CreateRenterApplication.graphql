@@ -1,0 +1,19 @@
+mutation CreateRenterApplication($createRenterApplicationInput: CreateFormInput!) {
+    createRenterApplication(createRenterApplicationInput: $createRenterApplicationInput) {
+        id
+        createdAt
+        form {
+            id
+            offeringPrice
+            offeringDuration
+        }
+        renterApplicationStatuses {
+            id
+            status
+            updatedAt
+        }
+        item {
+            id
+        }
+    }
+}

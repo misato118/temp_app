@@ -1,7 +1,9 @@
-import { FormEvent } from "react";
 import * as z from "zod";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
+import { useMutation } from "@apollo/client";
+import { CreateRenterApplicationDocument } from "@/features/utils/graphql/typeDefs/graphql";
 
 // yearly, monthly, daily
 const priceDictionary: Record<string, string> = {
@@ -18,37 +20,51 @@ const schema = z.object({
 type Schema = z.infer<typeof schema>
 
 const RentForm = ({ feeType, maxDurationType }: { feeType: string, maxDurationType: string }) => {
-    const { register, getValues, setValue, watch, handleSubmit } = useForm<Schema>({
+    const router = useRouter();
+    const { register, handleSubmit } = useForm<Schema>({
         defaultValues: {
             offeringPrice: 0,
             offeringDuration: 0,
         },
     });
 
-    // TODO: USE useMutation HERE
-    async function onSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault()
+    const [createRenterApplicationMutation] = useMutation(CreateRenterApplicationDocument);
 
-        const formData = new FormData(event.currentTarget)
-        const response = await fetch('/api/submitRentForm', {
-            method: 'POST',
-            body: formData,
-        });
+    const onSubmit: SubmitHandler<Schema> = async (data: Schema) => {
+        try {
+            const response = await createRenterApplicationMutation({
+                variables: {
+                    createRenterApplicationInput: {
+                        renterId: 1,
+                        itemId: Number(router.query.item),
+                        offeringPrice: data.offeringPrice,
+                        offeringDuration: data.offeringDuration
+                    }
+                }
+            });
 
-        const data = await response.json()
+            console.log(response);
+            router.push({
+                pathname: `/items/${Number(router.query.item)}`,
+                query: { showToast: "true" }
+            });
+        } catch (error) {
+            console.log("Mutation Error: " + error);
+        }
     }
 
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-9 gap-2 justify-center items-center mb-2">
                 <h3 className="col-span-2 font-semibold">Offering Fee</h3>
-                <label className="input rounded-full bg-white border border-neutral-content flex flex-row items-center mx-4 col-span-4">
+                <label className="input rounded-full bg-white border border-neutral-content flex flex-row items-center col-span-4">
                     <p className="px-2">$</p>
                     <input
-                        name="fee"
                         type="number"
                         className="rounded-full pl-1"
-                        placeholder="Type here" />
+                        placeholder="Type here"
+                        {...register("offeringPrice", { valueAsNumber: true })}
+                        />
                 </label>
                 <button type="button" className="py-1 btn rounded-full bg-white border border-neutral-content col-span-2" disabled={true}>
                     /{priceDictionary[feeType]}
@@ -60,7 +76,12 @@ const RentForm = ({ feeType, maxDurationType }: { feeType: string, maxDurationTy
 
             <div className="grid grid-cols-9 gap-2 justify-center items-center mb-2">
                 <h3 className="col-span-2 font-semibold">Rental Duration</h3>
-                <input type="number" name="duration" placeholder="Type here" className="input input-bordered rounded-full mt-2 mx-4 col-span-4" />
+                <input
+                    type="number"
+                    className="input input-bordered rounded-full mt-2 col-span-4"
+                    placeholder="Type here"                   
+                    {...register("offeringDuration", { valueAsNumber: true })}
+                    />
                 <button type="button" className="py-1 btn rounded-full bg-white border border-neutral-content col-span-2" disabled={true}>
                     {maxDurationType.charAt(0).toUpperCase() + maxDurationType.slice(1)}
                 </button>
