@@ -6,6 +6,7 @@ import { GetRenterInfoDocument, GetRenterInfoQuery } from "@/features/utils/grap
 import usePagination from "@/hooks/usePagination";
 import { useQuery } from "@apollo/client";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import { formatDistance } from "date-fns";
 import { NextRouter } from "next/router";
 import { ReactElement, useState } from "react";
 
@@ -151,16 +152,11 @@ function getFormattedDate(
     }[] | null | undefined
 ) {
     if (statusArr?.length) {
-        const date = new Date(statusArr[statusArr.length - 1].updatedAt.toString());
-        const formattedDate = date.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        });
+        const formattedDate = formatDistance(new Date(statusArr[statusArr.length - 1].updatedAt), new Date(), { addSuffix: true });
 
         return {
             status: statusArr[statusArr.length - 1].status,
-            date: formattedDate
+            date: formattedDate            
         }
     }
 

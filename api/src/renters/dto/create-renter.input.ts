@@ -14,4 +14,6 @@ export class CreateRenterInput {
   email: string;
   @Field(() => String)
   imageURL: string;
+  @Field(() => String)
+  password: string;
 }
