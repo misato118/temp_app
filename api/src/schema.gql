@@ -146,6 +146,11 @@ enum ItemCategory {
   TOOL
 }
 
+input LoginRenterInput {
+  password: String!
+  username: String!
+}
+
 type Mutation {
   createCompany(createCompanyInput: CreateCompanyInput!): Company!
   createEmployee(createEmployeeInput: CreateEmployeeInput!): Employee!
@@ -171,6 +176,7 @@ type Query {
   itemInfo(itemId: Int!): Item!
   items(filter: FilterItemInput): [Item!]!
   renterApplications: [RenterApplication!]!
+  renterId(loginRenterInput: LoginRenterInput!): Renter!
   renterInfo(renterId: Int!): Renter!
   renters: [Renter!]!
   reviews: [Review!]!
