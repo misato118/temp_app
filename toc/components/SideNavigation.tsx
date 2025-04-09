@@ -1,15 +1,22 @@
-import { GetRenterInfoDocument } from "@/features/utils/graphql/typeDefs/graphql";
-import { useQuery } from "@apollo/client";
 import { UserIcon, ListBulletIcon, CreditCardIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import useLoginConfirmation from "@/hooks/useLoginConfirmation";
+import Error from "./Error";
 
 const SideNavigation = () => {
     const router = useRouter();
-    // TODO: Obtain dynamic user info after creating a login system
-    const renterId = 1;
-    const { loading, error, data } = useQuery(GetRenterInfoDocument, {
-        variables: { renterId: renterId }
-    });
+    const {
+        data,
+        error,
+        loading,
+        renterId        
+    } = useLoginConfirmation();
+
+    if (error || !data?.renterInfo) {
+        return (
+            <Error />
+        );
+    }
 
     return (
         <nav className="flex flex-col items-center w-64 h-full bg-primary">

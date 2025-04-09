@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 
 const Header = () => {
     const router = useRouter();
-    const renterId = 1; // TODO: Make this dynamic after creating a login system
 
     return (
         <header className="bg-white">
@@ -37,11 +36,15 @@ const Header = () => {
                         <BellIcon className="h-6 w-6" />
                     </a>
                     <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                        {/* TODO: Set a dynamic user after creating a login system */}
                         <UserIcon
                             className="h-6 w-6"
                             onClick={() => {
-                                router.push(`/renters/${renterId}`);
+                                const renterId = localStorage.getItem("renterId");
+
+                                if (renterId) {
+                                    router.push(`/renters/${renterId}`);
+                                }
+                                router.push("/login");
                             }}
                         />
                     </a>

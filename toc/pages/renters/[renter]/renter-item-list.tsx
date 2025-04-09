@@ -1,10 +1,11 @@
 import ApplicationFilter from "@/components/ApplicationFilter";
+import Error from "@/components/Error";
 import RootLayout from "@/components/Layout";
 import SideNavigation from "@/components/SideNavigation";
 import SubmittedRentalForm from "@/components/SubmittedRentalForm";
 import { GetRenterInfoDocument, GetRenterInfoQuery } from "@/features/utils/graphql/typeDefs/graphql";
+import useLoginConfirmation from "@/hooks/useLoginConfirmation";
 import usePagination from "@/hooks/usePagination";
-import { useQuery } from "@apollo/client";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { formatDistance } from "date-fns";
 import { NextRouter } from "next/router";
@@ -16,13 +17,20 @@ type RenterApplicationData = NonNullable<
 
 // feature/add-user-item-list-page is branched from feature/add-user-page
 const RenterItemList = () => {
-    const renterId = 1;
-    const { loading, error, data } = useQuery(GetRenterInfoDocument, {
-        variables: { renterId: renterId }
-    });
+    const {
+        data,
+        error,
+        loading,
+        renterId       
+    } = useLoginConfirmation();
 
     if (loading) return 'Loading...';
-    if (error) return `Error in the main page! ${error.message}`;
+
+    if (error || !data?.renterInfo) {
+        return (
+            <Error />
+        );
+    }
 
     const {
         router,
