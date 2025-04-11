@@ -1,0 +1,15 @@
+*.js
+!jest.config.js
+*.d.ts
+node_modules/
+
+# CDK outputs and context
+cdk.context.json
+cdk.out/
+.cdk.staging
+cdk.json
+
+# Environment variable files
+.env
+.env.*
+.env.local
