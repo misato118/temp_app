@@ -18,6 +18,9 @@ export class Employee {
   @Field(type => String)
   email: string;
 
+  @Field(type => String)
+  password: string;
+
   @Field(type => Date)
   createdAt: Date;
 
