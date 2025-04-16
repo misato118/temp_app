@@ -14,10 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    firstName\n    lastName\n    birthDate\n    email\n    imageURL\n    company {\n      id\n      name\n    }\n  }\n}": typeof types.GetEmployeeIdDocument,
+    "query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    company {\n      id\n      name\n    }\n  }\n}": typeof types.GetEmployeeIdDocument,
 };
 const documents: Documents = {
-    "query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    firstName\n    lastName\n    birthDate\n    email\n    imageURL\n    company {\n      id\n      name\n    }\n  }\n}": types.GetEmployeeIdDocument,
+    "query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    company {\n      id\n      name\n    }\n  }\n}": types.GetEmployeeIdDocument,
 };
 
 /**
@@ -37,7 +37,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    firstName\n    lastName\n    birthDate\n    email\n    imageURL\n    company {\n      id\n      name\n    }\n  }\n}"): (typeof documents)["query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    firstName\n    lastName\n    birthDate\n    email\n    imageURL\n    company {\n      id\n      name\n    }\n  }\n}"];
+export function graphql(source: "query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    company {\n      id\n      name\n    }\n  }\n}"): (typeof documents)["query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    company {\n      id\n      name\n    }\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

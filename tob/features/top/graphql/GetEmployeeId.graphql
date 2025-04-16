@@ -1,11 +1,6 @@
 query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {
     employeeId(loginEmployeeInput: $loginEmployeeInput) {
         id
-        firstName
-        lastName
-        birthDate
-        email
-        imageURL
         company {
             id
             name
