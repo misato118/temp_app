@@ -22,7 +22,7 @@ export const seed = async () => {
       companyId: 1,
       ownerApplication: {
         create: {
-          status: ApplicationStatus.APPLIED,
+          status: ApplicationStatus.PENDING,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -69,9 +69,15 @@ export const seed = async () => {
       companyId: 1,
       ownerApplication: {
         create: {
-          status: ApplicationStatus.APPLIED,
+          status: ApplicationStatus.PENDING,
           createdAt: new Date(),
           updatedAt: new Date(),
+        },
+      },
+      stockStatus: {
+        create: {
+          totalStock: 500,
+          currentStock: 500,
         },
       },
     },
@@ -110,15 +116,15 @@ export const seed = async () => {
       companyId: 2,
       ownerApplication: {
         create: {
-          status: ApplicationStatus.ACCEPTED,
+          status: ApplicationStatus.PENDING,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       },
       stockStatus: {
         create: {
-          totalStock: 300,
-          currentStock: 300,
+          totalStock: 400,
+          currentStock: 400,
         },
       },
     },
@@ -157,15 +163,15 @@ export const seed = async () => {
       companyId: 2,
       ownerApplication: {
         create: {
-          status: ApplicationStatus.APPLIED,
+          status: ApplicationStatus.PENDING,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       },
       stockStatus: {
         create: {
-          totalStock: 300,
-          currentStock: 300,
+          totalStock: 100,
+          currentStock: 100,
         },
       },
     },
@@ -204,15 +210,15 @@ export const seed = async () => {
       companyId: 2,
       ownerApplication: {
         create: {
-          status: ApplicationStatus.APPLIED,
+          status: ApplicationStatus.PENDING,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       },
       stockStatus: {
         create: {
-          totalStock: 300,
-          currentStock: 300,
+          totalStock: 50,
+          currentStock: 50,
         },
       },
     },
@@ -251,15 +257,15 @@ export const seed = async () => {
       companyId: 2,
       ownerApplication: {
         create: {
-          status: ApplicationStatus.APPLIED,
+          status: ApplicationStatus.PENDING,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       },
       stockStatus: {
         create: {
-          totalStock: 300,
-          currentStock: 300,
+          totalStock: 3,
+          currentStock: 3,
         },
       },
     },
@@ -298,15 +304,15 @@ export const seed = async () => {
       companyId: 2,
       ownerApplication: {
         create: {
-          status: ApplicationStatus.APPLIED,
+          status: ApplicationStatus.PENDING,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       },
       stockStatus: {
         create: {
-          totalStock: 300,
-          currentStock: 300,
+          totalStock: 7,
+          currentStock: 7,
         },
       },
     },

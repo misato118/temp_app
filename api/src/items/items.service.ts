@@ -110,7 +110,7 @@ export class ItemsService {
       data: {
         ownerApplication: {
           create: {
-            status: ApplicationStatus.APPLIED,
+            status: ApplicationStatus.PENDING,
             createdAt: new Date(),
             updatedAt: new Date(),
           },

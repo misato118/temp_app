@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateEmployeeInput } from './dto/create-employee.input';
 import { LoginEmployeeInput } from './dto/login-employee.input';
+import { Args, Int } from '@nestjs/graphql';
 
 @Injectable()
 export class EmployeesService {
@@ -40,6 +41,26 @@ export class EmployeesService {
                 }
             }
         });
+    }
+
+    findOneById(@Args('employeeId', { type: () => Int }) employeeId: number) {
+        return this.prisma.employee.findUnique({
+            where: {
+                id: employeeId,
+            },
+            include: {
+                company: {
+                    include: {
+                        items: {
+                            include: {
+                                ownerApplication: true,
+                                stockStatus: true,
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
 
     // Find a renter ID when logging in
