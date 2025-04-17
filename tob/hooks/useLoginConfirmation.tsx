@@ -12,7 +12,7 @@ const useLoginConfirmation = () => {
     }, []);
 
     const employeeId = storedId !== null ? Number(storedId) : 0;
-    const { loading, error, data } = useQuery(GetEmployeeInfoDocument, {
+    const { loading, error, data, refetch } = useQuery(GetEmployeeInfoDocument, {
         variables: { employeeId: employeeId },
         skip: employeeId === null
     });
@@ -21,7 +21,8 @@ const useLoginConfirmation = () => {
         data,
         error,
         loading,
-        employeeId
+        employeeId,
+        refetch
     }
 }
 

@@ -14,7 +14,8 @@ const Home = () => {
         data,
         error,
         loading,
-        employeeId
+        employeeId,
+        refetch
     } = useLoginConfirmation();
 
     if (loading) return "Loading...";
@@ -37,7 +38,10 @@ const Home = () => {
         <div>
             <div className="flex justify-end mb-5">
                 <button className="py-1 btn rounded-full bg-secondary text-white font-normal">Create New Item <PlusIcon className="h-5 w-5 ml-1 float-right" /></button>
-                <button className="py-1 ml-2 btn rounded-full bg-accent text-white font-normal">Refresh <ArrowPathIcon className="h-5 w-5 ml-1 float-right" /></button>
+                <button
+                    className="py-1 ml-2 btn rounded-full bg-accent text-white font-normal"
+                    onClick={() => refetch()}
+                >Refresh <ArrowPathIcon className="h-5 w-5 ml-1 float-right" /></button>
             </div>
             <div className="flex flex-col items-center space-y-6">
                 <div className="card bg-base-100 shadow-xl h-auto max-h-fit w-auto max-w-fit">
