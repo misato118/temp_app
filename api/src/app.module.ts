@@ -11,7 +11,7 @@ import { RenterApplicationsModule } from './renterApplications/renterApplication
 import { ItemCategoriesModule } from './itemCategories/itemCategories.module';
 import { StockStatusesModule } from './stockStatuses/stockStatuses.module';
 import { OwnerApplicationsModule } from './ownerApplications/ownerApplications.module';
-import { CConversationsModule } from './conversations/conversations.module';
+import { ConversationsModule } from './conversations/conversations.module';
 
 @Module({
     imports: [
@@ -29,7 +29,7 @@ import { CConversationsModule } from './conversations/conversations.module';
         ItemCategoriesModule,
         StockStatusesModule,
         OwnerApplicationsModule,
-        CConversationsModule,
+        ConversationsModule,
     ]
 })
 export class AppModule { }

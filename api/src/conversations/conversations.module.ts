@@ -6,4 +6,4 @@ import { PrismaService } from 'src/prisma.service';
 @Module({
   providers: [ConversationsResolver, ConversationsService, PrismaService],
 })
-export class CConversationsModule {}
+export class ConversationsModule {}
