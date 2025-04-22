@@ -18,6 +18,13 @@ const Home = () => {
         refetch
     } = useLoginConfirmation();
 
+    const {
+        router,
+        currentPage,
+        totalPages,
+        paginatedItems
+    } = usePagination(data?.employeeInfo.company.items ?? []);
+
     if (loading) return "Loading...";
 
     if (error || !data?.employeeInfo) {
@@ -27,17 +34,16 @@ const Home = () => {
         );
     }
 
-    const {
-        router,
-        currentPage,
-        totalPages,
-        paginatedItems
-    } = usePagination(data?.employeeInfo.company.items ?? []);
-
     return (
         <div>
             <div className="flex justify-end mb-5">
-                <button className="py-1 btn rounded-full bg-secondary text-white font-normal">Create New Item <PlusIcon className="h-5 w-5 ml-1 float-right" /></button>
+                <button
+                    className="py-1 btn rounded-full bg-secondary text-white font-normal"
+                    onClick={() => router.push({
+                        pathname: "/[company]/[employee]/[item]/draft",
+                        query: { company: data.employeeInfo.company.name, employee: employeeId, item: 0 }
+                    })}
+                >Create New Item <PlusIcon className="h-5 w-5 ml-1 float-right" /></button>
                 <button
                     className="py-1 ml-2 btn rounded-full bg-accent text-white font-normal"
                     onClick={() => refetch()}
@@ -67,10 +73,16 @@ const Home = () => {
                                         <td>{item.name}</td>
                                         <td>{getFormattedDate(item.ownerApplication.updatedAt)}</td>
                                         <td>{item.ownerApplication.status}</td>
-                                        <td>{item.stockStatus.totalStock}</td>
-                                        <td>{item.stockStatus.currentStock}</td>
-                                        <td>{item.ownerApplication.status === ApplicationStatus.Pending
-                                            ? <PencilSquareIcon className="h-5 w-5 text-info cursor-pointer" />
+                                        <td>{item.stockStatus?.totalStock}</td>
+                                        <td>{item.stockStatus?.currentStock}</td>
+                                        <td>{item.ownerApplication.status === ApplicationStatus.Draft
+                                            ? <PencilSquareIcon
+                                                className="h-5 w-5 text-info cursor-pointer"
+                                                onClick={() => router.push({
+                                                    pathname: "/[company]/[employee]/[item]/draft",
+                                                    query: { company: data.employeeInfo.company.name, employee: employeeId, item: item.id }
+                                                })}
+                                            />
                                             : <ClipboardIcon className="h-5 w-5 text-info cursor-pointer" />
                                         }</td>
                                         <td>

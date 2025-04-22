@@ -8,20 +8,28 @@ import { ItemsModule } from './items/items.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { RentersModule } from './renters/renters.module';
 import { RenterApplicationsModule } from './renterApplications/renterApplications.module';
+import { ItemCategoriesModule } from './itemCategories/itemCategories.module';
+import { StockStatusesModule } from './stockStatuses/stockStatuses.module';
+import { OwnerApplicationsModule } from './ownerApplications/ownerApplications.module';
+import { CConversationsModule } from './conversations/conversations.module';
 
 @Module({
-  imports: [
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      sortSchema: true,
-    }),
-    EmployeesModule,
-    CompaniesModule,
-    ItemsModule,
-    ReviewsModule,
-    RentersModule,
-    RenterApplicationsModule,
-  ]
+    imports: [
+        GraphQLModule.forRoot<ApolloDriverConfig>({
+            driver: ApolloDriver,
+            autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+            sortSchema: true,
+        }),
+        EmployeesModule,
+        CompaniesModule,
+        ItemsModule,
+        ReviewsModule,
+        RentersModule,
+        RenterApplicationsModule,
+        ItemCategoriesModule,
+        StockStatusesModule,
+        OwnerApplicationsModule,
+        CConversationsModule,
+    ]
 })
-export class AppModule {}
+export class AppModule { }

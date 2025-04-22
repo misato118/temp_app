@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateFormInput } from 'src/forms/dto/create-form.input';
 import { RenterApplicationStatusType } from 'src/renterApplicationStatusTypes/models/renterApplicationStatusType.model';
+import { Args, Int } from '@nestjs/graphql';
 
 @Injectable()
 export class RenterApplicationsService {
@@ -52,6 +53,15 @@ export class RenterApplicationsService {
                 renter: true,
                 renterApplicationStatuses: true,
             }
+        });
+    }
+
+    deleteMany(@Args('itemId', { type: () => Int }) itemId: number) {
+        // deleteMany to avoid an error when data doesn't exist
+        return this.prisma.renterApplication.deleteMany({
+            where: {
+                id: itemId,
+            },
         });
     }
 
