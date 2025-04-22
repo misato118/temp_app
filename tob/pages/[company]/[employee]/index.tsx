@@ -4,7 +4,7 @@ import SideNavigation from "@/components/SideNavigation";
 import { ApplicationStatus } from "@/features/utils/graphql/typeDefs/graphql";
 import useLoginConfirmation from "@/hooks/useLoginConfirmation";
 import usePagination from "@/hooks/usePagination";
-import { ArrowPathIcon, ClipboardIcon, PencilSquareIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon, ClipboardIcon, HomeIcon, PencilSquareIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { formatDistance } from "date-fns";
 import { NextRouter } from "next/router";
 import { ReactElement } from "react";
@@ -36,6 +36,11 @@ const Home = () => {
 
     return (
         <div>
+            <div className="breadcrumbs text-sm">
+                <ul>
+                    <li><a><HomeIcon className="w-4 h-4" /> Home</a></li>
+                </ul>
+            </div>
             <div className="flex justify-end mb-5">
                 <button
                     className="py-1 btn rounded-full bg-secondary text-white font-normal"

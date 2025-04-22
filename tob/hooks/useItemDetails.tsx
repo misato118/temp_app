@@ -11,13 +11,6 @@ const useItemDetails = () => {
         variables: { itemId: itemId }
     });
     const [activeTab, setActiveTab] = useState("reviews");
-    const [showToast, setShowToast] = useState(false);
-
-    useEffect(() => {
-        if (router.query.showToast === "true") {
-            setShowToast(true);
-        }
-    }, [router.query]);
 
     return {
         loading,
@@ -25,7 +18,7 @@ const useItemDetails = () => {
         data,
         activeTab,
         setActiveTab,
-        showToast
+        router
     }
 }
 
