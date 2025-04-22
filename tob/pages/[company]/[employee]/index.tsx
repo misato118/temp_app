@@ -83,7 +83,13 @@ const Home = () => {
                                                     query: { company: data.employeeInfo.company.name, employee: employeeId, item: item.id }
                                                 })}
                                             />
-                                            : <ClipboardIcon className="h-5 w-5 text-info cursor-pointer" />
+                                            : <ClipboardIcon
+                                                className="h-5 w-5 text-info cursor-pointer"
+                                                onClick={() => router.push({
+                                                    pathname: "/[company]/[employee]/[item]",
+                                                    query: { company: data.employeeInfo.company.name, employee: employeeId, item: item.id }
+                                                })}                                                
+                                            />
                                         }</td>
                                         <td>
                                             <button

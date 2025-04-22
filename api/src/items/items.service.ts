@@ -169,7 +169,8 @@ export class ItemsService {
             include: {
                 company: true,
                 reviews: true,
-                stockStatus: true
+                stockStatus: true,
+                ownerApplication: true
             },
         });
 

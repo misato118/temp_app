@@ -24,6 +24,7 @@ type Documents = {
     "query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    company {\n      id\n      name\n    }\n  }\n}": typeof types.GetEmployeeIdDocument,
     "query GetEmployeeInfo($employeeId: Int!) {\n  employeeInfo(employeeId: $employeeId) {\n    id\n    firstName\n    lastName\n    birthDate\n    email\n    imageURL\n    company {\n      id\n      name\n      items {\n        id\n        name\n        ownerApplication {\n          id\n          status\n          updatedAt\n        }\n        stockStatus {\n          totalStock\n          currentStock\n        }\n      }\n    }\n  }\n}": typeof types.GetEmployeeInfoDocument,
     "query GetItemCategories {\n  itemCategories\n}": typeof types.GetItemCategoriesDocument,
+    "query GetItemInfo($itemId: Int!) {\n  itemInfo(itemId: $itemId) {\n    id\n    name\n    description\n    createdAt\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n    deposit\n    company {\n      name\n      logoURL\n      description\n    }\n    reviews {\n      title\n      contents\n      rating\n    }\n    ownerApplication {\n      status\n    }\n  }\n}": typeof types.GetItemInfoDocument,
     "mutation SaveItemApplication($createItemInput: CreateItemInput!) {\n  updateItem(createItemInput: $createItemInput) {\n    id\n    name\n    feeType\n  }\n}": typeof types.SaveItemApplicationDocument,
     "mutation SubmitItemApplication($createItemInput: CreateItemInput!) {\n  submitItem(createItemInput: $createItemInput) {\n    id\n    name\n    ownerApplication {\n      id\n      status\n      createdAt\n      updatedAt\n    }\n  }\n}": typeof types.SubmitItemApplicationDocument,
 };
@@ -38,6 +39,7 @@ const documents: Documents = {
     "query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    company {\n      id\n      name\n    }\n  }\n}": types.GetEmployeeIdDocument,
     "query GetEmployeeInfo($employeeId: Int!) {\n  employeeInfo(employeeId: $employeeId) {\n    id\n    firstName\n    lastName\n    birthDate\n    email\n    imageURL\n    company {\n      id\n      name\n      items {\n        id\n        name\n        ownerApplication {\n          id\n          status\n          updatedAt\n        }\n        stockStatus {\n          totalStock\n          currentStock\n        }\n      }\n    }\n  }\n}": types.GetEmployeeInfoDocument,
     "query GetItemCategories {\n  itemCategories\n}": types.GetItemCategoriesDocument,
+    "query GetItemInfo($itemId: Int!) {\n  itemInfo(itemId: $itemId) {\n    id\n    name\n    description\n    createdAt\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n    deposit\n    company {\n      name\n      logoURL\n      description\n    }\n    reviews {\n      title\n      contents\n      rating\n    }\n    ownerApplication {\n      status\n    }\n  }\n}": types.GetItemInfoDocument,
     "mutation SaveItemApplication($createItemInput: CreateItemInput!) {\n  updateItem(createItemInput: $createItemInput) {\n    id\n    name\n    feeType\n  }\n}": types.SaveItemApplicationDocument,
     "mutation SubmitItemApplication($createItemInput: CreateItemInput!) {\n  submitItem(createItemInput: $createItemInput) {\n    id\n    name\n    ownerApplication {\n      id\n      status\n      createdAt\n      updatedAt\n    }\n  }\n}": types.SubmitItemApplicationDocument,
 };
@@ -96,6 +98,10 @@ export function graphql(source: "query GetEmployeeInfo($employeeId: Int!) {\n  e
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query GetItemCategories {\n  itemCategories\n}"): (typeof documents)["query GetItemCategories {\n  itemCategories\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetItemInfo($itemId: Int!) {\n  itemInfo(itemId: $itemId) {\n    id\n    name\n    description\n    createdAt\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n    deposit\n    company {\n      name\n      logoURL\n      description\n    }\n    reviews {\n      title\n      contents\n      rating\n    }\n    ownerApplication {\n      status\n    }\n  }\n}"): (typeof documents)["query GetItemInfo($itemId: Int!) {\n  itemInfo(itemId: $itemId) {\n    id\n    name\n    description\n    createdAt\n    category\n    fee\n    feeType\n    maxDuration\n    maxDurationType\n    imageURL\n    deposit\n    company {\n      name\n      logoURL\n      description\n    }\n    reviews {\n      title\n      contents\n      rating\n    }\n    ownerApplication {\n      status\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
