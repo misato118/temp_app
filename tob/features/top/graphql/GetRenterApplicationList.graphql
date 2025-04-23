@@ -1,0 +1,26 @@
+query GetRenterApplicationList($itemId: Int!) {
+    itemInfo(itemId: $itemId) {
+        id
+        name
+        stockStatus {
+            totalStock
+            currentStock
+        }
+        renterApplications {
+            id
+            createdAt
+            renter {
+                id
+                username
+            }
+            form {
+                offeringPrice
+                offeringDuration
+            }
+            renterApplicationStatuses {
+                status
+                updatedAt
+            }
+        }
+    }
+}
