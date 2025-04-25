@@ -2,6 +2,8 @@ query GetRenterApplicationList($itemId: Int!) {
     itemInfo(itemId: $itemId) {
         id
         name
+        feeType
+        maxDurationType
         stockStatus {
             totalStock
             currentStock

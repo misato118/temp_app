@@ -2,6 +2,7 @@ import { Resolver, Args, Query, Mutation, Int } from '@nestjs/graphql';
 import { RenterApplication } from './models/renterApplication.model';
 import { RenterApplicationsService } from './renterApplications.service';
 import { CreateFormInput } from 'src/forms/dto/create-form.input';
+import { SaveAllRenterAppStatusesInput } from './dto/save-all-app-statuses.input';
 
 @Resolver(() => RenterApplication)
 export class RenterApplicationsResolver {
@@ -30,5 +31,16 @@ export class RenterApplicationsResolver {
     async deleteRenterApplications(@Args('itemId', { type: () => Int }) itemId: number) {
         const result = await this.renterApplicationsService.deleteMany(itemId);
         return result.count;
-    }    
+    }
+
+    @Mutation(() => Boolean, {  name: 'saveAllRenterAppStatuses' })
+    async saveAllRenterAppStatuses(@Args('saveAllRenterAppStatusesInput') saveAllRenterAppStatusesInput: SaveAllRenterAppStatusesInput)  {
+        const changes = saveAllRenterAppStatusesInput.appStatusArr;
+
+        for (const change of changes) {
+            await this.renterApplicationsService.changeRenterAppStatus(change);
+        }
+
+        return true;
+    }
 }

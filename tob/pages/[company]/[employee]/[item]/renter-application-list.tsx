@@ -1,34 +1,31 @@
 import Error from "@/components/Error";
 import RootLayout from "@/components/Layout";
 import SideNavigation from "@/components/SideNavigation";
-import { GetRenterApplicationListDocument, GetRenterApplicationListQuery } from "@/features/utils/graphql/typeDefs/graphql";
+import { ChangeRenterAppStatusInput, SaveAllRenterAppStatusesMutation, SaveAllRenterAppStatusesMutationVariables } from "@/features/utils/graphql/typeDefs/graphql";
 import usePagination from "@/hooks/usePagination";
-import { useQuery } from "@apollo/client";
-import { ArrowDownTrayIcon, HomeIcon, ListBulletIcon, TruckIcon } from "@heroicons/react/24/outline";
-import { NextRouter, useRouter } from "next/router";
-import { ReactElement } from "react";
+import { MutationFunction } from "@apollo/client";
+import { ArrowDownTrayIcon, ExclamationCircleIcon, HomeIcon, ListBulletIcon, TruckIcon } from "@heroicons/react/24/outline";
+import { NextRouter } from "next/router";
+import { Dispatch, ReactElement, SetStateAction } from "react";
 import { format } from 'date-fns';
+import StatusModal from "@/components/StatusModal";
+import useRenterAppList, { RenterApplicationStatusColor, RenterAppType } from "@/hooks/useRenterAppList";
 
-type RenterAppType = NonNullable<NonNullable<GetRenterApplicationListQuery["itemInfo"]>["renterApplications"]>[number];
-
-// Color for each application badge
-export const RenterApplicationStatusColor = {
-    APPLIED: "warning",
-    DECLINED: "error",
-    ACCEPTED: "green-500",
-    DELIVERED: "info",
-    RENTED: "secondary",
-    RETURNED: "success",
-    COMPLETED: "neutral-content",
-    UNAVAILABLE: "primary-content"
-} as const;
 
 const RenterApplicationList = () => {
-    const router = useRouter();
-
-    const { loading, error, data } = useQuery(GetRenterApplicationListDocument, {
-        variables: { itemId: Number(router.query.item) }
-    });
+    const {
+        router,
+        isStatusModalOpen,
+        setIsStatusModalOpen,
+        application,
+        setApplication,
+        pendingChanges,
+        setPendingChanges,
+        changeRenterAppStatusMutation,
+        loading,
+        error,
+        data        
+    } = useRenterAppList();
 
     const {
         currentPage,
@@ -55,11 +52,13 @@ const RenterApplicationList = () => {
             <div className="flex justify-end mb-5">
                 <button
                     className="py-1 ml-2 btn rounded-full bg-accent text-white font-normal"
+                    disabled={pendingChanges.length === 0}
+                    onClick={() => saveAllChanges(changeRenterAppStatusMutation, pendingChanges, setPendingChanges)}
                 >Save All Changes <ArrowDownTrayIcon className="h-5 w-5 float-right" /></button>
             </div>
             <div className="flex flex-col justify-center items-center mb-10">
                 <div className="card bg-base-100 shadow-xl flex items-center w-auto max-w-fit p-10">
-                    <h1 className="text-3xl font-bold">{data?.itemInfo?.stockStatus?.currentStock} items left</h1>
+                    <h1 className="text-3xl font-bold mb-3">{data?.itemInfo?.stockStatus?.currentStock} items left</h1>
                     <p>{data?.itemInfo?.name}</p>
                     <p>{data?.itemInfo?.id}</p>
                 </div>
@@ -77,25 +76,37 @@ const RenterApplicationList = () => {
                                     <th>Applied Date</th>
                                     <th>Current Status</th>
                                     <th>Action</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {paginatedItems.map((app, index) => (
-                                    <tr key={app.id + index}>
-                                        <td>{app.renter.id}</td>
-                                        <td>{app.renter.username}</td>
-                                        <td>{app.form?.offeringPrice}</td>
-                                        <td>{app.form?.offeringDuration}</td>
-                                        <td>{format(new Date(app.createdAt), "MMM dd, yyyy")}</td>
-                                        <td className="flex justify-center items-center">
-                                            <div
-                                                className={`badge badge-outline badge-${RenterApplicationStatusColor[getCurrentStatus(app) ?? "UNAVAILABLE"]}`}>
-                                                {getCurrentStatus(app) ?? "N/A"}
-                                            </div>
-                                        </td>
-                                        <td><TruckIcon className="h-5 w-5 text-info" />{}</td>
-                                    </tr>
-                                ))}
+                                {paginatedItems.map((app, index) => {
+                                    const hasPendingChange = pendingChanges.some(
+                                        (change) => change.id === app.id
+                                    );
+
+                                    return (
+                                        <tr key={app.id + index}>
+                                            <td>{app.renter.id}</td>
+                                            <td>{app.renter.username}</td>
+                                            <td>{app.form?.offeringPrice}</td>
+                                            <td>{app.form?.offeringDuration}</td>
+                                            <td>{format(new Date(app.createdAt), "MMM dd, yyyy")}</td>
+                                            <td className="flex justify-center items-center">
+                                                <div
+                                                    className={`badge badge-outline badge-${RenterApplicationStatusColor[getCurrentStatus(app) ?? "UNAVAILABLE"]}`}>
+                                                    {getCurrentStatus(app) ?? "N/A"}
+                                                </div>
+                                            </td>
+                                            <td><TruckIcon className="h-5 w-5 text-info cursor-pointer" onClick={() => { setApplication(app); setIsStatusModalOpen(true) }} /></td>
+                                            <td>
+                                                {hasPendingChange && (
+                                                    <ExclamationCircleIcon className="h-5 w-5" />
+                                                )}
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
                             </tbody>
                         </table>
                     </div>
@@ -118,6 +129,18 @@ const RenterApplicationList = () => {
                     </button>
                 </div>
             </div>
+
+            {isStatusModalOpen && (
+                <StatusModal
+                    setModal={setIsStatusModalOpen}
+                    itemName={data?.itemInfo?.name ?? ""}
+                    itemId={data?.itemInfo?.id}
+                    feeType={data?.itemInfo?.feeType ?? ""}
+                    maxDurationType={data?.itemInfo?.maxDurationType ?? ""}
+                    app={application}
+                    setPendingChanges={setPendingChanges}
+                />
+            )}
         </div>
     );
 }
@@ -164,5 +187,26 @@ function getCurrentStatus(
         return statusArr[arrLength - 1].status;
     } else {
         return undefined;
+    }
+}
+
+async function saveAllChanges(
+    changeRenterAppStatusMutation: MutationFunction<SaveAllRenterAppStatusesMutation, SaveAllRenterAppStatusesMutationVariables>,
+    pendingChanges: ChangeRenterAppStatusInput[],
+    setPendingChanges: Dispatch<SetStateAction<ChangeRenterAppStatusInput[]>>
+) {
+    try {
+        const response = await changeRenterAppStatusMutation({
+            variables: {
+                saveAllRenterAppStatusesInput: {
+                    appStatusArr: pendingChanges
+                }
+            }
+        });
+
+        console.log(response);
+        setPendingChanges([]);
+    } catch (error) {
+        console.log(error)
     }
 }

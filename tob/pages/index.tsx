@@ -1,16 +1,24 @@
-import { type ReactElement } from 'react';
-import RootLayout from '@/components/Layout';
+import RootLayout from "@/components/Layout";
+import LoginForm from "@/components/LoginForm";
+import { ReactElement, useEffect, useState } from "react";
 
-const Home = () => {
+const Login = () => {
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+      setIsClient(true);
+    }, []);
+  
+    if (!isClient) return null;
 
     return (
-        <main className="flex-1 flex flex-col h-full overflow-y-auto">
-            Hello
-        </main>
+        <div className="flex items-center bg-base-200 h-full py-10 overflow-y-auto">
+            <LoginForm />
+        </div>
     );
 }
 
-Home.getLayout = function getLayout(page: ReactElement) {
+Login.getLayout = function getLayout(page: ReactElement) {
     return (
         <RootLayout>
             {page}
@@ -18,4 +26,4 @@ Home.getLayout = function getLayout(page: ReactElement) {
     );
 }
 
-export default Home;
+export default Login;
