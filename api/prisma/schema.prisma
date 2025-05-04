@@ -92,9 +92,10 @@ model OwnerApplication {
 }
 
 enum ApplicationStatus {
-  APPLIED
+  DRAFT
+  PENDING
   DECLINED
-  ACCEPTED
+  PUBLISHED
 }
 
 model StockStatus {

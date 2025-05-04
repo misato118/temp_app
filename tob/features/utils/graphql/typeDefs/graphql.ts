@@ -20,12 +20,14 @@ export type Scalars = {
 
 /** Owner application status for an item */
 export enum ApplicationStatus {
-  /** When an owner application is accepted */
-  Accepted = 'ACCEPTED',
-  /** When an owner applied to publish an item. */
-  Applied = 'APPLIED',
   /** When an owner application is declined. */
-  Declined = 'DECLINED'
+  Declined = 'DECLINED',
+  /** When an owner created an item but has not applied yet. */
+  Draft = 'DRAFT',
+  /** When an owner applied to publish an item. */
+  Pending = 'PENDING',
+  /** When an owner application is accepted and published */
+  Published = 'PUBLISHED'
 }
 
 export type Company = {
@@ -227,6 +229,7 @@ export type Query = {
   companies: Array<Company>;
   companyInfo: Company;
   employeeId: Employee;
+  employeeInfo: Employee;
   employees: Array<Employee>;
   itemByCompany: Company;
   itemInfo: Item;
@@ -246,6 +249,11 @@ export type QueryCompanyInfoArgs = {
 
 export type QueryEmployeeIdArgs = {
   loginEmployeeInput: LoginEmployeeInput;
+};
+
+
+export type QueryEmployeeInfoArgs = {
+  employeeId: Scalars['Int']['input'];
 };
 
 
@@ -356,5 +364,13 @@ export type GetEmployeeIdQueryVariables = Exact<{
 
 export type GetEmployeeIdQuery = { __typename?: 'Query', employeeId: { __typename?: 'Employee', id: number, company: { __typename?: 'Company', id: number, name: string } } };
 
+export type GetEmployeeInfoQueryVariables = Exact<{
+  employeeId: Scalars['Int']['input'];
+}>;
+
+
+export type GetEmployeeInfoQuery = { __typename?: 'Query', employeeInfo: { __typename?: 'Employee', id: number, firstName: string, lastName: string, birthDate: Date, email: string, imageURL?: string | null, company: { __typename?: 'Company', id: number, name: string, items?: Array<{ __typename?: 'Item', id: number, name: string, ownerApplication: { __typename?: 'OwnerApplication', id: number, status: ApplicationStatus, updatedAt: Date }, stockStatus: { __typename?: 'StockStatus', totalStock: number, currentStock: number } }> | null } } };
+
 
 export const GetEmployeeIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetEmployeeId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loginEmployeeInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginEmployeeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"employeeId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginEmployeeInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loginEmployeeInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetEmployeeIdQuery, GetEmployeeIdQueryVariables>;
+export const GetEmployeeInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetEmployeeInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"employeeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"employeeInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"employeeId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"employeeId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"birthDate"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ownerApplication"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"stockStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalStock"}},{"kind":"Field","name":{"kind":"Name","value":"currentStock"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetEmployeeInfoQuery, GetEmployeeInfoQueryVariables>;

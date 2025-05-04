@@ -4,14 +4,17 @@
 
 """Owner application status for an item"""
 enum ApplicationStatus {
-  """When an owner application is accepted"""
-  ACCEPTED
-
-  """When an owner applied to publish an item."""
-  APPLIED
-
   """When an owner application is declined."""
   DECLINED
+
+  """When an owner created an item but has not applied yet."""
+  DRAFT
+
+  """When an owner applied to publish an item."""
+  PENDING
+
+  """When an owner application is accepted and published"""
+  PUBLISHED
 }
 
 type Company {
@@ -179,6 +182,7 @@ type Query {
   companies: [Company!]!
   companyInfo(companyName: String!): Company!
   employeeId(loginEmployeeInput: LoginEmployeeInput!): Employee!
+  employeeInfo(employeeId: Int!): Employee!
   employees: [Employee!]!
   itemByCompany(companyName: String!): Company!
   itemInfo(itemId: Int!): Item!

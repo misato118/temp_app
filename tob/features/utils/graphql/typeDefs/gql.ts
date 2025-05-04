@@ -15,9 +15,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    company {\n      id\n      name\n    }\n  }\n}": typeof types.GetEmployeeIdDocument,
+    "query GetEmployeeInfo($employeeId: Int!) {\n  employeeInfo(employeeId: $employeeId) {\n    id\n    firstName\n    lastName\n    birthDate\n    email\n    imageURL\n    company {\n      id\n      name\n      items {\n        id\n        name\n        ownerApplication {\n          id\n          status\n          updatedAt\n        }\n        stockStatus {\n          totalStock\n          currentStock\n        }\n      }\n    }\n  }\n}": typeof types.GetEmployeeInfoDocument,
 };
 const documents: Documents = {
     "query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    company {\n      id\n      name\n    }\n  }\n}": types.GetEmployeeIdDocument,
+    "query GetEmployeeInfo($employeeId: Int!) {\n  employeeInfo(employeeId: $employeeId) {\n    id\n    firstName\n    lastName\n    birthDate\n    email\n    imageURL\n    company {\n      id\n      name\n      items {\n        id\n        name\n        ownerApplication {\n          id\n          status\n          updatedAt\n        }\n        stockStatus {\n          totalStock\n          currentStock\n        }\n      }\n    }\n  }\n}": types.GetEmployeeInfoDocument,
 };
 
 /**
@@ -38,6 +40,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    company {\n      id\n      name\n    }\n  }\n}"): (typeof documents)["query GetEmployeeId($loginEmployeeInput: LoginEmployeeInput!) {\n  employeeId(loginEmployeeInput: $loginEmployeeInput) {\n    id\n    company {\n      id\n      name\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetEmployeeInfo($employeeId: Int!) {\n  employeeInfo(employeeId: $employeeId) {\n    id\n    firstName\n    lastName\n    birthDate\n    email\n    imageURL\n    company {\n      id\n      name\n      items {\n        id\n        name\n        ownerApplication {\n          id\n          status\n          updatedAt\n        }\n        stockStatus {\n          totalStock\n          currentStock\n        }\n      }\n    }\n  }\n}"): (typeof documents)["query GetEmployeeInfo($employeeId: Int!) {\n  employeeInfo(employeeId: $employeeId) {\n    id\n    firstName\n    lastName\n    birthDate\n    email\n    imageURL\n    company {\n      id\n      name\n      items {\n        id\n        name\n        ownerApplication {\n          id\n          status\n          updatedAt\n        }\n        stockStatus {\n          totalStock\n          currentStock\n        }\n      }\n    }\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
