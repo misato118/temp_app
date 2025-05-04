@@ -1,0 +1,5 @@
+query GetRenterId($loginRenterInput: LoginRenterInput!) {
+    renterId(loginRenterInput: $loginRenterInput) {
+        id
+    }
+}

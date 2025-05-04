@@ -15,7 +15,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
-  DateTime: { input: any; output: any; }
+  DateTime: { input: Date; output: Date; }
 };
 
 /** Owner application status for an item */
@@ -79,11 +79,12 @@ export type CreateItemInput = {
 };
 
 export type CreateRenterInput = {
-  birthDate: Scalars['String']['input'];
+  birthDate?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
   firstName: Scalars['String']['input'];
-  imageURL: Scalars['String']['input'];
+  imageURL?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
+  password: Scalars['String']['input'];
   username: Scalars['String']['input'];
 };
 
@@ -155,6 +156,11 @@ export enum ItemCategory {
   Tool = 'TOOL'
 }
 
+export type LoginRenterInput = {
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createCompany: Company;
@@ -218,6 +224,8 @@ export type Query = {
   itemInfo: Item;
   items: Array<Item>;
   renterApplications: Array<RenterApplication>;
+  renterId: Renter;
+  renterInfo: Renter;
   renters: Array<Renter>;
   reviews: Array<Review>;
 };
@@ -242,15 +250,26 @@ export type QueryItemsArgs = {
   filter?: InputMaybe<FilterItemInput>;
 };
 
+
+export type QueryRenterIdArgs = {
+  loginRenterInput: LoginRenterInput;
+};
+
+
+export type QueryRenterInfoArgs = {
+  renterId: Scalars['Int']['input'];
+};
+
 export type Renter = {
   __typename?: 'Renter';
-  birthDate: Scalars['DateTime']['output'];
+  birthDate?: Maybe<Scalars['DateTime']['output']>;
   createdAt: Scalars['DateTime']['output'];
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
   id: Scalars['Int']['output'];
   imageURL?: Maybe<Scalars['String']['output']>;
   lastName: Scalars['String']['output'];
+  password: Scalars['String']['output'];
   renterApplications: Array<RenterApplication>;
   updatedAt: Scalars['DateTime']['output'];
   username: Scalars['String']['output'];
@@ -317,12 +336,19 @@ export type StockStatus = {
   totalStock: Scalars['Int']['output'];
 };
 
+export type CreateRenterMutationVariables = Exact<{
+  createRenterInput: CreateRenterInput;
+}>;
+
+
+export type CreateRenterMutation = { __typename?: 'Mutation', createRenter: { __typename?: 'Renter', id: number } };
+
 export type CreateRenterApplicationMutationVariables = Exact<{
   createRenterApplicationInput: CreateFormInput;
 }>;
 
 
-export type CreateRenterApplicationMutation = { __typename?: 'Mutation', createRenterApplication: { __typename?: 'RenterApplication', id: number, createdAt: any, form?: { __typename?: 'Form', id: number, offeringPrice: number, offeringDuration: number } | null, renterApplicationStatuses?: Array<{ __typename?: 'RenterApplicationStatus', id: number, status: RenterApplicationStatusType, updatedAt: any }> | null, item?: { __typename?: 'Item', id: number } | null } };
+export type CreateRenterApplicationMutation = { __typename?: 'Mutation', createRenterApplication: { __typename?: 'RenterApplication', id: number, createdAt: Date, form?: { __typename?: 'Form', id: number, offeringPrice: number, offeringDuration: number } | null, renterApplicationStatuses?: Array<{ __typename?: 'RenterApplicationStatus', id: number, status: RenterApplicationStatusType, updatedAt: Date }> | null, item?: { __typename?: 'Item', id: number } | null } };
 
 export type GetAllItemsQueryVariables = Exact<{
   filter?: InputMaybe<FilterItemInput>;
@@ -336,17 +362,34 @@ export type GetCompanyInfoQueryVariables = Exact<{
 }>;
 
 
-export type GetCompanyInfoQuery = { __typename?: 'Query', companyInfo: { __typename?: 'Company', id: number, name: string, description: string, createdAt: any, logoURL?: string | null, items?: Array<{ __typename?: 'Item', id: number, name: string, fee: number, feeType: string, imageURL?: string | null }> | null } };
+export type GetCompanyInfoQuery = { __typename?: 'Query', companyInfo: { __typename?: 'Company', id: number, name: string, description: string, createdAt: Date, logoURL?: string | null, items?: Array<{ __typename?: 'Item', id: number, name: string, fee: number, feeType: string, imageURL?: string | null }> | null } };
 
 export type GetItemInfoQueryVariables = Exact<{
   itemId: Scalars['Int']['input'];
 }>;
 
 
-export type GetItemInfoQuery = { __typename?: 'Query', itemInfo: { __typename?: 'Item', id: number, name: string, description: string, createdAt: any, category: ItemCategory, fee: number, feeType: string, maxDuration: number, maxDurationType: string, imageURL?: string | null, deposit: number, company: { __typename?: 'Company', name: string, logoURL?: string | null, description: string }, reviews: Array<{ __typename?: 'Review', title: string, contents: string, rating: number }> } };
+export type GetItemInfoQuery = { __typename?: 'Query', itemInfo: { __typename?: 'Item', id: number, name: string, description: string, createdAt: Date, category: ItemCategory, fee: number, feeType: string, maxDuration: number, maxDurationType: string, imageURL?: string | null, deposit: number, company: { __typename?: 'Company', name: string, logoURL?: string | null, description: string }, reviews: Array<{ __typename?: 'Review', title: string, contents: string, rating: number }> } };
+
+export type GetRenterIdQueryVariables = Exact<{
+  loginRenterInput: LoginRenterInput;
+}>;
 
 
+export type GetRenterIdQuery = { __typename?: 'Query', renterId: { __typename?: 'Renter', id: number } };
+
+export type GetRenterInfoQueryVariables = Exact<{
+  renterId: Scalars['Int']['input'];
+}>;
+
+
+export type GetRenterInfoQuery = { __typename?: 'Query', renterInfo: { __typename?: 'Renter', id: number, username: string, firstName: string, lastName: string, birthDate?: Date | null, email: string, createdAt: Date, updatedAt: Date, imageURL?: string | null, renterApplications: Array<{ __typename?: 'RenterApplication', id: number, form?: { __typename?: 'Form', id: number, offeringPrice: number, offeringDuration: number } | null, renterApplicationStatuses?: Array<{ __typename?: 'RenterApplicationStatus', id: number, status: RenterApplicationStatusType, updatedAt: Date }> | null, item?: { __typename?: 'Item', id: number, name: string, fee: number, feeType: string, maxDuration: number, maxDurationType: string, company: { __typename?: 'Company', name: string } } | null }> } };
+
+
+export const CreateRenterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateRenter"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createRenterInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateRenterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRenter"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createRenterInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createRenterInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateRenterMutation, CreateRenterMutationVariables>;
 export const CreateRenterApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateRenterApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createRenterApplicationInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateFormInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRenterApplication"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createRenterApplicationInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createRenterApplicationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"form"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"offeringPrice"}},{"kind":"Field","name":{"kind":"Name","value":"offeringDuration"}}]}},{"kind":"Field","name":{"kind":"Name","value":"renterApplicationStatuses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreateRenterApplicationMutation, CreateRenterApplicationMutationVariables>;
 export const GetAllItemsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllItems"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FilterItemInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"feeType"}},{"kind":"Field","name":{"kind":"Name","value":"maxDuration"}},{"kind":"Field","name":{"kind":"Name","value":"maxDurationType"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}}]}}]}}]} as unknown as DocumentNode<GetAllItemsQuery, GetAllItemsQueryVariables>;
 export const GetCompanyInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCompanyInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"companyName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companyInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"companyName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"companyName"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"logoURL"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"feeType"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}}]}}]}}]}}]} as unknown as DocumentNode<GetCompanyInfoQuery, GetCompanyInfoQueryVariables>;
 export const GetItemInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetItemInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"itemId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"itemInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"itemId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"itemId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"feeType"}},{"kind":"Field","name":{"kind":"Name","value":"maxDuration"}},{"kind":"Field","name":{"kind":"Name","value":"maxDurationType"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"deposit"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"logoURL"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reviews"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contents"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}}]}}]}}]}}]} as unknown as DocumentNode<GetItemInfoQuery, GetItemInfoQueryVariables>;
+export const GetRenterIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRenterId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loginRenterInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginRenterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"renterId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginRenterInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loginRenterInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<GetRenterIdQuery, GetRenterIdQueryVariables>;
+export const GetRenterInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRenterInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"renterId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"renterInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"renterId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"renterId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"birthDate"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"renterApplications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"form"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"offeringPrice"}},{"kind":"Field","name":{"kind":"Name","value":"offeringDuration"}}]}},{"kind":"Field","name":{"kind":"Name","value":"renterApplicationStatuses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"feeType"}},{"kind":"Field","name":{"kind":"Name","value":"maxDuration"}},{"kind":"Field","name":{"kind":"Name","value":"maxDurationType"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetRenterInfoQuery, GetRenterInfoQueryVariables>;

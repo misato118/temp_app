@@ -11,6 +11,16 @@ const prisma = new PrismaClient();
 const main = async () => {
   console.log(`Start seeding ...`);
 
+  await prisma.renterApplication.deleteMany();
+  await prisma.renter.deleteMany();
+  await prisma.review.deleteMany();
+  await prisma.item.deleteMany();
+  await prisma.employee.deleteMany();
+  await prisma.company.deleteMany();
+  await prisma.stockStatus.deleteMany();
+  await prisma.form.deleteMany();
+  await prisma.renterApplicationStatus.deleteMany();
+
   await companySeeding();
   await employeeSeeding();
   await itemSeeding();
