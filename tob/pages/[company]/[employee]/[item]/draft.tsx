@@ -17,7 +17,7 @@ import {
 } from "@/features/utils/graphql/typeDefs/graphql";
 import useDraft from "@/hooks/useDraft";
 import { MutationFunction } from "@apollo/client";
-import { ExclamationTriangleIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { ExclamationTriangleIcon, HomeIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { ReactElement } from "react";
 
 const ItemApplicationForm = () => {
@@ -42,55 +42,63 @@ const ItemApplicationForm = () => {
     if (error) return `Error! ${error}`;
 
     return (
-        <div className="bg-base-200 h-full py-10 overflow-y-auto">
-            {deleteConfirmation && (
-                <div className="modal modal-open" role="dialog" ref={modalRef}>
-                    <div className="modal-box px-12 flex flex-col items-center w-full max-w-lg">
-                        <ExclamationTriangleIcon className="w-8 h-8 text-error mb-3" />
-                        <h3 className="text-lg font-bold mb-3">Are you sure?</h3>
-                        <p className="mb-4">This will delete the item forever.</p>
-                        <div className="flex justify-end mt-6">
-                            <button className="btn btn-outline rounded-full mr-1" onClick={() => setDeleteConfirmation(false)}>
-                                Back
-                            </button>
-                            <button
-                                className="py-1 btn rounded-full bg-error ml-1"
-                                onClick={async () => {
-                                    const success = await deleteDraft(
-                                        deleteItem,
-                                        deleteStockStatuses,
-                                        deleteConversations,
-                                        deleteOwnerApplications,
-                                        deleteRenterApplications,
-                                        deleteReviews,
-                                        Number(item));
+        <div>
+            <div className="breadcrumbs text-sm">
+                <ul>
+                    <li><a onClick={() => router.push(`/${router.query.company}/${router.query.employee}`)}><HomeIcon className="w-4 h-4" /> Home</a></li>
+                    <li><a><PencilSquareIcon className="w-4 h-4" /> Draft</a></li>
+                </ul>
+            </div>
+            <div className="bg-base-200 h-full py-10 overflow-y-auto">
+                {deleteConfirmation && (
+                    <div className="modal modal-open" role="dialog" ref={modalRef}>
+                        <div className="modal-box px-12 flex flex-col items-center w-full max-w-lg">
+                            <ExclamationTriangleIcon className="w-8 h-8 text-error mb-3" />
+                            <h3 className="text-lg font-bold mb-3">Are you sure?</h3>
+                            <p className="mb-4">This will delete the item forever.</p>
+                            <div className="flex justify-end mt-6">
+                                <button className="btn btn-outline rounded-full mr-1" onClick={() => setDeleteConfirmation(false)}>
+                                    Back
+                                </button>
+                                <button
+                                    className="py-1 btn rounded-full bg-error ml-1"
+                                    onClick={async () => {
+                                        const success = await deleteDraft(
+                                            deleteItem,
+                                            deleteStockStatuses,
+                                            deleteConversations,
+                                            deleteOwnerApplications,
+                                            deleteRenterApplications,
+                                            deleteReviews,
+                                            Number(item));
 
-                                    if (success) {
-                                        router.push({
-                                            pathname: `/${router.query.company}/${router.query.employee}`,
-                                        });
-                                    } else {
-                                        console.log("Can not delete the item.");
-                                    }
-                                }}>Yes, delete it
-                            </button>
+                                        if (success) {
+                                            router.push({
+                                                pathname: `/${router.query.company}/${router.query.employee}`,
+                                            });
+                                        } else {
+                                            console.log("Can not delete the item.");
+                                        }
+                                    }}>Yes, delete it
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
 
-            <div className="card rounded-lg shadow-lg bg-white px-20 py-10 w-1/2 mx-auto">
-                <div className="card-body">
-                    <div className="flex justify-between">
-                        <div>
-                            <button
-                                className="py-1 btn rounded-full bg-error"
-                                onClick={() => setDeleteConfirmation(true)}
-                            ><TrashIcon className="h-5 w-5 float-left" />Delete</button>
+                <div className="card rounded-lg shadow-lg bg-white px-20 py-10 w-1/2 mx-auto">
+                    <div className="card-body">
+                        <div className="flex justify-between">
+                            <div>
+                                <button
+                                    className="py-1 btn rounded-full bg-error"
+                                    onClick={() => setDeleteConfirmation(true)}
+                                ><TrashIcon className="h-5 w-5 float-left" />Delete</button>
+                            </div>
+                            <div className="badge badge-warning rounded-full">Draft</div>
                         </div>
-                        <div className="badge badge-warning rounded-full">Draft</div>
+                        <ItemForm savedData={data} />
                     </div>
-                    <ItemForm savedData={data} />
                 </div>
             </div>
         </div>
