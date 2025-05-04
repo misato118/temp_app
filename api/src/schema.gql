@@ -41,6 +41,7 @@ input CreateEmployeeInput {
   email: String!
   firstName: String!
   lastName: String!
+  password: String!
 }
 
 input CreateFormInput {
@@ -96,6 +97,7 @@ type Employee {
   id: Int!
   imageURL: String
   lastName: String!
+  password: String!
   updatedAt: DateTime!
 }
 
@@ -146,6 +148,11 @@ enum ItemCategory {
   TOOL
 }
 
+input LoginEmployeeInput {
+  password: String!
+  username: String!
+}
+
 input LoginRenterInput {
   password: String!
   username: String!
@@ -171,6 +178,7 @@ type OwnerApplication {
 type Query {
   companies: [Company!]!
   companyInfo(companyName: String!): Company!
+  employeeId(loginEmployeeInput: LoginEmployeeInput!): Employee!
   employees: [Employee!]!
   itemByCompany(companyName: String!): Company!
   itemInfo(itemId: Int!): Item!
