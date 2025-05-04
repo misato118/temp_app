@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 const usePagination = <T,>(data: T[]) => {
     const router = useRouter();
 
-    const DATA_COUNT_PER_PAGE = 2;
+    const DATA_COUNT_PER_PAGE = 10;
     const currentPage = Number(router.query.page) || 1;
     const totalPages = Math.ceil((data || []).length / DATA_COUNT_PER_PAGE);
 

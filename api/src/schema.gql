@@ -57,7 +57,8 @@ input CreateFormInput {
 input CreateItemInput {
   category: ItemCategory
   company: String!
-  deposit: Int
+  currentStock: Int
+  deposit: Float
   description: String
   fee: Float
   feeType: String
@@ -66,6 +67,7 @@ input CreateItemInput {
   maxDuration: Int
   maxDurationType: String
   name: String
+  totalStock: Int
 }
 
 input CreateRenterInput {
@@ -83,6 +85,12 @@ input CreateReviewInput {
   itemId: Int!
   rating: Int!
   title: String!
+}
+
+input CreateStockStatusInput {
+  currentStock: Int!
+  itemId: Int!
+  totalStock: Int!
 }
 
 """
@@ -119,23 +127,23 @@ type Form {
 }
 
 type Item {
-  category: ItemCategory!
+  category: ItemCategory
   company: Company!
   companyId: Int!
   createdAt: DateTime!
-  deposit: Int!
-  description: String!
-  fee: Float!
-  feeType: String!
+  deposit: Int
+  description: String
+  fee: Float
+  feeType: String
   id: Int!
   imageURL: String
-  maxDuration: Int!
-  maxDurationType: String!
-  name: String!
+  maxDuration: Int
+  maxDurationType: String
+  name: String
   ownerApplication: OwnerApplication!
-  renterApplications: [RenterApplication!]!
-  reviews: [Review!]!
-  stockStatus: StockStatus!
+  renterApplications: [RenterApplication!]
+  reviews: [Review!]
+  stockStatus: StockStatus
   updatedAt: DateTime!
 }
 
@@ -168,7 +176,15 @@ type Mutation {
   createRenter(createRenterInput: CreateRenterInput!): Renter!
   createRenterApplication(createRenterApplicationInput: CreateFormInput!): RenterApplication!
   createReview(createReviewInput: CreateReviewInput!): Item!
+  createStockStatus(createStockStatusInput: CreateStockStatusInput!): Item!
+  deleteConversations(itemId: Int!): Int!
   deleteItem(itemId: Int!): Item!
+  deleteOwnerApplications(itemId: Int!): Int!
+  deleteRenterApplications(itemId: Int!): Int!
+  deleteReviews(itemId: Int!): Int!
+  deleteStockStatuses(itemId: Int!): Int!
+  submitItem(createItemInput: CreateItemInput!): Item!
+  updateItem(createItemInput: CreateItemInput!): Item!
 }
 
 type OwnerApplication {
@@ -185,13 +201,16 @@ type Query {
   employeeInfo(employeeId: Int!): Employee!
   employees: [Employee!]!
   itemByCompany(companyName: String!): Company!
-  itemInfo(itemId: Int!): Item!
+  itemCategories: [ItemCategory!]!
+  itemInfo(itemId: Int!): Item
   items(filter: FilterItemInput): [Item!]!
+  ownerApplication(itemId: Int!): OwnerApplication!
   renterApplications: [RenterApplication!]!
   renterId(loginRenterInput: LoginRenterInput!): Renter!
   renterInfo(renterId: Int!): Renter!
   renters: [Renter!]!
   reviews: [Review!]!
+  stockStatus(itemId: Int!): StockStatus!
 }
 
 type Renter {

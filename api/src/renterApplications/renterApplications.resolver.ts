@@ -25,4 +25,10 @@ export class RenterApplicationsResolver {
     createRenterApplication(@Args('createRenterApplicationInput') createFormInput: CreateFormInput) {
         return this.renterApplicationsService.create(createFormInput);
     }
+
+    @Mutation(() => Int, { name: 'deleteRenterApplications' })
+    async deleteRenterApplications(@Args('itemId', { type: () => Int }) itemId: number) {
+        const result = await this.renterApplicationsService.deleteMany(itemId);
+        return result.count;
+    }    
 }
