@@ -1,10 +1,18 @@
 import { useState, useEffect } from "react";
+import { UseFormSetValue } from "react-hook-form";
 
 const priceArray = ["daily", "monthly", "yearly"];
 const durationArray = ["days", "months", "years"];
 type TimeType = "TYPE" | "DA" | "MONTH" | "YEAR";
 
-const useFilterDropdown = (dataType: string, setValue: any) => {
+type FormValues = {
+    priceType: string;
+    durationType: string;
+    maxPrice: number;
+    maxDuration: number;
+};
+
+const useFilterDropdown = (dataType: string, setValue: UseFormSetValue<FormValues>) => {
     const array = dataType === "PRICE" ? priceArray : durationArray;
     const type = dataType === "PRICE" ? "priceType" : "durationType";
 

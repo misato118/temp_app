@@ -24,7 +24,7 @@ const CompanyInfo: NextPageWithLayout = () => {
         <main className="flex-1 flex flex-col h-full overflow-y-auto bg-base-200 px-40 py-20">
             <div className="flex">
                 <div className="w-1/3 flex justify-center"><OwnerDetailsWithoutButtons companyInfo={data?.companyInfo} /></div>
-                <div className="w-2/3 flex"><CompanyItems items={data?.companyInfo?.items} /></div>
+                <div className="flex justify-stretch"><CompanyItems items={data?.companyInfo?.items} /></div>
           </div>
         </main>
       );

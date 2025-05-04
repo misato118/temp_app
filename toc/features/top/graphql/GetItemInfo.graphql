@@ -17,6 +17,7 @@ query GetItemInfo($itemId: Int!) {
       description
     }
     reviews {
+      id
       title
       contents
       rating

@@ -23,6 +23,13 @@ const RegisterForm = () => {
     const password = watch("password");
 
     const onSubmit: SubmitHandler<Schema> = async (data: Schema) => {
+        const result = schema.safeParse(data);
+
+        if (!result.success) {
+          console.error("Validation failed", result.error.format());
+          return;
+        }
+
         try {
             const response = await createRenterMutation({
                 variables: {

@@ -1,4 +1,5 @@
-import { GetRenterInfoQuery, RenterApplication } from "@/features/utils/graphql/typeDefs/graphql";
+import { GetRenterInfoQuery } from "@/features/utils/graphql/typeDefs/graphql";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 
 // yearly, monthly, daily
@@ -37,7 +38,7 @@ const SubmittedRentalForm = ({ application, onClose }: Props) => {
         <div className="modal modal-open" role="dialog" ref={modalRef}>
             <div className="modal-box px-12 flex flex-col items-center w-full max-w-xl">
                 <h3 className="text-lg font-bold mb-3">Your Rental Application Form</h3>
-                <img src="/sampleImg.png" alt="Item Image" className="w-3/4 h-3/4" /> {/* TODO: Add an actual item image here */}
+                <Image src="/sampleImg.png" alt="Item Image" className="w-3/4 h-3/4" height={50} width={50} /> {/* TODO: Add an actual item image here */}
                 <table className="table w-3/4 mx-auto my-4">
                     <tbody>
                         <tr>

@@ -1,0 +1,3 @@
+query FindRenterApplications($canApplyInput: FindApplicationInput!) {
+    canApply(canApplyInput: $canApplyInput)
+}

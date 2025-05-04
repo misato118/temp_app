@@ -1,5 +1,6 @@
 import { GetItemInfoQuery } from "@/features/utils/graphql/typeDefs/graphql";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 interface CompanyProps {
@@ -13,10 +14,13 @@ const OwnerDetailsWithButtons = ({ company }: CompanyProps) => {
         <div>
             <div className="flex items-center">
                 {/* TODO: Add a company image here instead (e.g., {company.logoURL}) */}
-                <img
+                <Image
                     alt="Owner Image"
                     src="/sampleImg.png"
-                    className="h-12 w-12 rounded-full mr-4" />
+                    className="h-12 w-12 rounded-full mr-4"
+                    width={12}
+                    height={12}
+                    />
                 <p>{company?.name}</p>
             </div>
             <p className="my-3">{company?.description}</p>

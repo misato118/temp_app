@@ -20,7 +20,9 @@ const useLogin = () => {
     useEffect(() => {
         if (data?.renterId.id) {
             localStorage.setItem("renterId", data?.renterId.id.toString());
-            router.push("/");
+
+            const redirectPath = typeof router.query.redirect === "string" ? router.query.redirect : "/";
+            router.push(redirectPath);
         }
     }, [data]);
 

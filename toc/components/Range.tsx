@@ -1,10 +1,19 @@
 import useRange from "@/hooks/useRange";
-import { UseFormSetValue } from "react-hook-form";
+import { UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form";
+import { Schema } from "./Filters";
 
 type DataType = "PRICE" | "DURATION";
 
+interface RangeProps {
+    dataType: DataType;
+    range: number[];
+    register: UseFormRegister<Schema>;
+    setValue: UseFormSetValue<Schema>;
+    watch: UseFormWatch<Schema>;
+}
+
 // This is a range slider component with a max handle
-const Range = ({ dataType, range, register, setValue, watch }: { dataType: DataType, range: number[], register: any, setValue: any, watch: any }) => {
+const Range = ({ dataType, range, register, setValue, watch }: RangeProps) => {
     const { registerName, maxValue } = useRange(range, setValue, watch);
 
     return (
@@ -20,8 +29,8 @@ const Range = ({ dataType, range, register, setValue, watch }: { dataType: DataT
                 step="1" />
 
             <div className="flex w-full justify-between px-2 text-xs">
-                {range.map((num) => (
-                    <span>{num}+</span>
+                {range.map((num, index) => (
+                    <span key={num + index}>{num}+</span>
                 ))}
             </div>
 

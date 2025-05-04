@@ -1,11 +1,20 @@
 import { GetRenterInfoDocument } from "@/features/utils/graphql/typeDefs/graphql";
 import { useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
 
 const useLoginConfirmation = () => {
-    const storedId = localStorage.getItem("renterId");
-    const renterId = storedId !== null ? Number(storedId) : 0;
+    const [renterId, setRenterId] = useState<number | null>(null);
+
+    useEffect(() => {
+        const storedId = localStorage.getItem("renterId");
+        if (storedId !== null) {
+            setRenterId(Number(storedId));
+        }
+    }, []);
+
     const { loading, error, data } = useQuery(GetRenterInfoDocument, {
-        variables: { renterId: renterId }
+        variables: { renterId: renterId ?? 0 },
+        skip: renterId === null
     });
 
     return {
