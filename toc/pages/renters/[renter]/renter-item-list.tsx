@@ -3,7 +3,7 @@ import Error from "@/components/Error";
 import RootLayout from "@/components/Layout";
 import SideNavigation from "@/components/SideNavigation";
 import SubmittedRentalForm from "@/components/SubmittedRentalForm";
-import { GetRenterInfoDocument, GetRenterInfoQuery } from "@/features/utils/graphql/typeDefs/graphql";
+import { GetRenterInfoQuery } from "@/features/utils/graphql/typeDefs/graphql";
 import useLoginConfirmation from "@/hooks/useLoginConfirmation";
 import usePagination from "@/hooks/usePagination";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
@@ -15,7 +15,6 @@ type RenterApplicationData = NonNullable<
   GetRenterInfoQuery["renterInfo"]
 >["renterApplications"][number];
 
-// feature/add-user-item-list-page is branched from feature/add-user-page
 const RenterItemList = () => {
     const {
         data,
@@ -23,14 +22,6 @@ const RenterItemList = () => {
         loading,
         renterId       
     } = useLoginConfirmation();
-
-    if (loading) return 'Loading...';
-
-    if (error || !data?.renterInfo) {
-        return (
-            <Error />
-        );
-    }
 
     const {
         router,
@@ -40,6 +31,14 @@ const RenterItemList = () => {
     } = usePagination(data?.renterInfo.renterApplications ?? [], "application");
 
     const [selectedApplication, setSelectedApplication] = useState<RenterApplicationData | null>(null);
+
+    if (loading) return 'Loading...';
+
+    if (error || !data?.renterInfo) {
+        return (
+            <Error />
+        );
+    }
 
     return (
         <div>
