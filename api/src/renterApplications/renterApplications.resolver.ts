@@ -3,6 +3,7 @@ import { RenterApplication } from './models/renterApplication.model';
 import { RenterApplicationsService } from './renterApplications.service';
 import { CreateFormInput } from 'src/forms/dto/create-form.input';
 import { FindApplicationInput } from './dto/find-application.input';
+import { SaveAllRenterAppStatusesInput } from './dto/save-all-app-statuses.input';
 
 @Resolver(() => RenterApplication)
 export class RenterApplicationsResolver {
@@ -40,5 +41,22 @@ export class RenterApplicationsResolver {
     @Mutation(() => RenterApplication, { name: 'createRenterApplication' })
     createRenterApplication(@Args('createRenterApplicationInput') createFormInput: CreateFormInput) {
         return this.renterApplicationsService.create(createFormInput);
+    }
+
+    @Mutation(() => Int, { name: 'deleteRenterApplications' })
+    async deleteRenterApplications(@Args('itemId', { type: () => Int }) itemId: number) {
+        const result = await this.renterApplicationsService.deleteMany(itemId);
+        return result.count;
+    }
+
+    @Mutation(() => Boolean, {  name: 'saveAllRenterAppStatuses' })
+    async saveAllRenterAppStatuses(@Args('saveAllRenterAppStatusesInput') saveAllRenterAppStatusesInput: SaveAllRenterAppStatusesInput)  {
+        const changes = saveAllRenterAppStatusesInput.appStatusArr;
+
+        for (const change of changes) {
+            await this.renterApplicationsService.changeRenterAppStatus(change);
+        }
+
+        return true;
     }
 }

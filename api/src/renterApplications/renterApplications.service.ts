@@ -4,6 +4,7 @@ import { CreateFormInput } from 'src/forms/dto/create-form.input';
 import { RenterApplicationStatusType } from 'src/renterApplicationStatusTypes/models/renterApplicationStatusType.model';
 import { Args, Int } from '@nestjs/graphql';
 import { FindApplicationInput } from './dto/find-application.input';
+import { ChangeRenterAppStatusInput } from './dto/change-renter-app-status.input';
 
 @Injectable()
 export class RenterApplicationsService {
@@ -68,6 +69,31 @@ export class RenterApplicationsService {
             },
             include: {
                 renterApplicationStatuses: true
+            }
+        });
+    }
+
+    deleteMany(@Args('itemId', { type: () => Int }) itemId: number) {
+        // deleteMany to avoid an error when data doesn't exist
+        return this.prisma.renterApplication.deleteMany({
+            where: {
+                id: itemId,
+            },
+        });
+    }
+
+    changeRenterAppStatus(changeRenterAppStatusInput: ChangeRenterAppStatusInput) {
+        return this.prisma.renterApplication.update({
+            where: {
+                id: changeRenterAppStatusInput.id
+            },
+            data: {
+                renterApplicationStatuses: {
+                    create: {
+                        status: changeRenterAppStatusInput.status,
+                        updatedAt: new Date()
+                    }
+                }
             }
         });
     }
