@@ -33,7 +33,12 @@ const RenterItemList = () => {
     const [selectedApplication, setSelectedApplication] = useState<RenterApplicationData | null>(null);
 
     if (loading) return 'Loading...';
-    if (error) return <Error />;
+
+    if (error || !data?.renterInfo) {
+        return (
+            <Error />
+        );
+    }
 
     return (
         <div>
