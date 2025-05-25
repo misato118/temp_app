@@ -105,10 +105,7 @@ const RegisterForm = () => {
                     type="password"
                     className="input rounded-full"
                     placeholder="Confirm Password"
-                    {...register("confirmPassword", {
-                        required: true,
-                        validate: confirmValue => confirmValue === password || "Passwords do not match"
-                    })}
+                    {...register("confirmPassword", { required: true })}
                 />
                 {errors.confirmPassword && (
                     <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
