@@ -21,8 +21,9 @@ const useLogin = () => {
         if (data?.renterId.id) {
             localStorage.setItem("renterId", data?.renterId.id.toString());
 
-            const redirectPath = typeof router.query.redirect === "string" ? router.query.redirect : "/";
-            router.push(redirectPath);
+            //const redirectPath = typeof router.query.redirect === "string" ? router.query.redirect : "/";
+            //router.push(redirectPath);
+            router.push("/");
         }
     }, [data]);
 

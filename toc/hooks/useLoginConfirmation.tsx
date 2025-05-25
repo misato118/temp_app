@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 
 const useLoginConfirmation = () => {
-    const [renterId, setRenterId] = useState<number | null>(null);
+    const [renterId, setRenterId] = useState<number>(0);
 
     useEffect(() => {
         const storedId = localStorage.getItem("renterId");
@@ -13,8 +13,8 @@ const useLoginConfirmation = () => {
     }, []);
 
     const { loading, error, data } = useQuery(GetRenterInfoDocument, {
-        variables: { renterId: renterId ?? 0 },
-        skip: renterId === null
+        variables: { renterId },
+        skip: renterId === 0
     });
 
     return {
