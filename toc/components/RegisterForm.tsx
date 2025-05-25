@@ -26,8 +26,8 @@ const RegisterForm = () => {
         const result = schema.safeParse(data);
 
         if (!result.success) {
-          console.error("Validation failed", result.error.format());
-          return;
+            console.error("Validation failed", result.error.format());
+            return;
         }
 
         try {
@@ -53,7 +53,7 @@ const RegisterForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}> 
+        <form onSubmit={handleSubmit(onSubmit)}>
             <fieldset className="fieldset">
                 <legend className="fieldset-legend">Username</legend>
                 <input
@@ -106,7 +106,7 @@ const RegisterForm = () => {
                     className="input rounded-full"
                     placeholder="Confirm Password"
                     {...register("confirmPassword", {
-                        required: true, 
+                        required: true,
                         validate: confirmValue => confirmValue === password || "Passwords do not match"
                     })}
                 />
@@ -118,7 +118,7 @@ const RegisterForm = () => {
             <div className="flex justify-center my-4">
                 <button type="submit" className="btn btn-info rounded-full">Register</button>
             </div>
-            
+
             <p>If you already have am account, {" "}
                 <a
                     onClick={() => router.push("/")}
