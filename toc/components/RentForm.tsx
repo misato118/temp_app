@@ -61,6 +61,7 @@ const RentForm = ({ feeType, maxDurationType }: { feeType: string, maxDurationTy
                     <p className="px-2">$</p>
                     <input
                         type="number"
+                        min="0"
                         className="rounded-full pl-1"
                         placeholder="Type here"
                         {...register("offeringPrice", { valueAsNumber: true })}
@@ -78,6 +79,7 @@ const RentForm = ({ feeType, maxDurationType }: { feeType: string, maxDurationTy
                 <h3 className="col-span-2 font-semibold">Rental Duration</h3>
                 <input
                     type="number"
+                    min="0"
                     className="input input-bordered rounded-full mt-2 col-span-4"
                     placeholder="Type here"                   
                     {...register("offeringDuration", { valueAsNumber: true })}

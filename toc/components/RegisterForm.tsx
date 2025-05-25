@@ -29,7 +29,7 @@ const RegisterForm = () => {
         const result = schema.safeParse(data);
 
         if (!result.success) {
-            setMatchesPassword(false);
+            console.error("Validation failed", result.error.format());
             return;
         }
 

@@ -2,6 +2,7 @@ import { Resolver, Args, Query, Mutation, Int } from '@nestjs/graphql';
 import { RenterApplication } from './models/renterApplication.model';
 import { RenterApplicationsService } from './renterApplications.service';
 import { CreateFormInput } from 'src/forms/dto/create-form.input';
+import { FindApplicationInput } from './dto/find-application.input';
 import { SaveAllRenterAppStatusesInput } from './dto/save-all-app-statuses.input';
 
 @Resolver(() => RenterApplication)
