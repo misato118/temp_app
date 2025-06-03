@@ -40,10 +40,10 @@ You can either explore the live deployed version or run the application locally 
 
 ### 🌐 Live Demo
 
-- **Frontend (Renter)**: ADD LINK HERE
-- **Frontend (Company)**: ADD LINK HERE
-- **Frontend (Admin)**: ADD LINK HERE
-- **Backend API (GraphQL Playground)**: ADD LINK HERE
+- **Frontend (Renter)**: In Progress
+- **Frontend (Company)**: In Progress
+- **Frontend (Admin)**: In Progress
+- **Backend API (GraphQL Playground)**: In Progress
 
 ### 🐳 Run Locally with Docker
 
@@ -52,7 +52,17 @@ You can either explore the live deployed version or run the application locally 
 git clone https://github.com/misato118/temp_app.git
 ```
 
-ADD MORE STEPS HERE
+#### 2. **Set Up Environment Variables**
+
+#### 3. **Build and Start All Services with Docker**
+```bash
+docker-compose up --build
+```
+
+#### 4. **Access the Services Once the Containers are Running**
+- **Renter Application**: [http://localhost:11002](http://localhost:11002)
+- **Company Application**: [http://localhost:11001](http://localhost:11001)
+- **Admin Application**: [http://localhost:11003](http://localhost:11003)
 
 ## Usage
 
