@@ -4,15 +4,14 @@ A full-stack web application that allows users to rent and manage items through 
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Tech Stack](#tech-stack)
-4. [Getting Started](#getting-started)
-5. [Usage](#usage)
-6. [Roadmap](#roadmap)
-7. [Acknowledgements](#acknowledgements)
+1. [📝 Overview](#overview)
+2. [🛠️ Tech Stack](#tech-stack)
+3. [🏁 Getting Started](#getting-started)
+4. [💡 Usage](#usage)
+5. [🗺️ Roadmap](#roadmap)
+6. [🤝 Acknowledgements](#acknowledgements)
 
-## Overview
+## 📝 Overview
 
 This is a full-stack item rental platform designed to demonstrate scalable full-stack architecture with multiple user roles: Renters, Companies (item owners), and Admins.
 
@@ -26,7 +25,7 @@ This model not only promotes affordability but also encourages resource sharing,
 
 Through this project, I aimed to provide a practical solution that makes everyday items more accessible to everyone.
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 **Frontend**: React, Next.js, TypeScript, Tailwind CSS, DaisyUI  
 **Backend**: NestJS, GraphQL, Prisma ORM  
@@ -34,56 +33,37 @@ Through this project, I aimed to provide a practical solution that makes everyda
 **DevOps**: Docker, AWS   
 **Others**: React Hook Form, Heroicons
 
-## Getting Started
+## 🏁 Getting Started
 
-You can either explore the live deployed version or run the application locally using Docker.
+You can explore the live deployed version.
 
 ### 🌐 Live Demo
 
-- **Frontend (Renter)**: In Progress
-- **Frontend (Company)**: In Progress
-- **Frontend (Admin)**: In Progress
-- **Backend API (GraphQL Playground)**: In Progress
+- **🧑 Frontend (Renter)**: In Progress
+- **💼 Frontend (Company)**: In Progress
+- **🖥️ Frontend (Admin)**: In Progress
+- **⚙️ Backend API (GraphQL Playground)**: In Progress
 
-### 🐳 Run Locally with Docker
-
-#### 1. **Clone the Repository**
-```bash
-git clone https://github.com/misato118/temp_app.git
-```
-
-#### 2. **Set Up Environment Variables**
-
-#### 3. **Build and Start All Services with Docker**
-```bash
-docker-compose up --build
-```
-
-#### 4. **Access the Services Once the Containers are Running**
-- **Renter Application**: [http://localhost:11002](http://localhost:11002)
-- **Company Application**: [http://localhost:11001](http://localhost:11001)
-- **Admin Application**: [http://localhost:11003](http://localhost:11003)
-
-## Usage
+## 💡 Usage
 
 This project simulates real-world workflows for three user types:
 
-- **Renters**
+- **🧑 Renters**
   - Browse and filter available items
   - Submit rental applications with custom price and duration
   - Estimate delivery fees based on address
   - Leave item reviews after use
 
-- **Companies**
+- **💼 Companies**
   - Submit item listings (subject to admin approval)
   - Manage item availability and inventory
   - Review and respond to rental applications
 
-- **Admins** (in progress)
+- **🖥️ Admins** (in progress)
   - Review and approve submitted item listings
   - Oversee and manage renter/company accounts
 
-## Roadmap
+## 🗺️ Roadmap
 
 - [ ] Add Admin system
   - [ ] Companies list
@@ -92,7 +72,7 @@ This project simulates real-world workflows for three user types:
 
 See the [open issues](https://github.com/misato118/temp_app/issues) for a full list of proposed features and known issues.
 
-## Acknowledgement
+## 🤝 Acknowledgement
 
 This project was built to demonstrate my skills in full-stack web development. I’d like to acknowledge the following official resources and tools that greatly supported the development process:
 
