@@ -4,15 +4,15 @@ A full-stack web application that allows users to rent and manage items through 
 
 ## Table of Contents
 
-1. [📝 Overview](#overview)
-2. [🛠️ Tech Stack](#tech-stack)
-3. [🏁 Getting Started](#getting-started)
-4. [🏗️ System Architecture](#system-architecture)
-5. [💡 Usage](#usage)
-6. [🗺️ Roadmap](#roadmap)
-7. [🤝 Acknowledgements](#acknowledgements)
+1. [📝 Overview](#-overview)
+2. [🛠️ Tech Stack](#-tech-stack)
+3. [🏁 Getting Started](#-getting-started)
+4. [🏗️ System Architecture](#-system-architecture)
+5. [💡 Usage](#-usage)
+6. [🗺️ Roadmap](#-roadmap)
+7. [🤝 Acknowledgements](#-acknowledgements)
 
-## Overview 📝
+## 📝 Overview
 
 This is a full-stack item rental platform designed to demonstrate scalable full-stack architecture with multiple user roles: Renters, Companies (item owners), and Admins.
 
@@ -26,7 +26,7 @@ This model not only promotes affordability but also encourages resource sharing,
 
 Through this project, I aimed to provide a practical solution that makes everyday items more accessible to everyone.
 
-## Tech Stack 🛠️
+## 🛠️ Tech Stack
 
 **Frontend**: React, Next.js, TypeScript, Tailwind CSS, DaisyUI  
 **Backend**: NestJS, GraphQL, Prisma ORM  
@@ -34,7 +34,7 @@ Through this project, I aimed to provide a practical solution that makes everyda
 **DevOps**: Docker, AWS   
 **Others**: React Hook Form, Heroicons
 
-## Getting Started 🏁
+## 🏁Getting Started
 
 You can explore the live deployed version.
 
@@ -45,7 +45,7 @@ You can explore the live deployed version.
 - **🖥️ Frontend (Admin)**: In Progress
 - **⚙️ Backend API (GraphQL Playground)**: In Progress
 
-## System Architecture 🏗️
+## 🏗️ System Architecture
 
 This section provides high-level architectural overviews of both the cloud infrastructure and database schema used in the project:
 
@@ -55,7 +55,7 @@ This section provides high-level architectural overviews of both the cloud infra
 - [🗃️ Database ER Diagram](docs/Database/ER-diagram.md)
     Visual representation of the database schema and relationships between entities.
 
-## Usage 💡
+## 💡 Usage
 
 This project simulates real-world workflows for three user types:
 
@@ -74,7 +74,7 @@ This project simulates real-world workflows for three user types:
   - Review and approve submitted item listings
   - Oversee and manage renter/company accounts
 
-## Roadmap 🗺️
+## 🗺️ Roadmap
 
 - [ ] Add Admin system
   - [ ] Companies list
@@ -83,7 +83,7 @@ This project simulates real-world workflows for three user types:
 
 See the [open issues](https://github.com/misato118/temp_app/issues) for a full list of proposed features and known issues.
 
-## Acknowledgement 🤝
+## 🤝 Acknowledgement
 
 This project was built to demonstrate my skills in full-stack web development. I’d like to acknowledge the following official resources and tools that greatly supported the development process:
 
