@@ -7,9 +7,10 @@ A full-stack web application that allows users to rent and manage items through 
 1. [📝 Overview](#overview)
 2. [🛠️ Tech Stack](#tech-stack)
 3. [🏁 Getting Started](#getting-started)
-4. [💡 Usage](#usage)
-5. [🗺️ Roadmap](#roadmap)
-6. [🤝 Acknowledgements](#acknowledgements)
+4. [🏗️ System Architecture](#system-architecture)
+5. [💡 Usage](#usage)
+6. [🗺️ Roadmap](#roadmap)
+7. [🤝 Acknowledgements](#acknowledgements)
 
 ## 📝 Overview
 
@@ -43,6 +44,16 @@ You can explore the live deployed version.
 - **💼 Frontend (Company)**: In Progress
 - **🖥️ Frontend (Admin)**: In Progress
 - **⚙️ Backend API (GraphQL Playground)**: In Progress
+
+## 🏗️ System Architecture
+
+This section provides high-level architectural overviews of both the cloud infrastructure and database schema used in the project:
+
+- [📡 AWS Infrastructure Diagram](docs/AWS/AWS-infrastructure-diagram.md)
+
+    Outlines the cloud services and network setup used for deployment and scalability.
+- [🗃️ Database ER Diagram](docs/Database/ER-diagram.md)
+    Visual representation of the database schema and relationships between entities.
 
 ## 💡 Usage
 
