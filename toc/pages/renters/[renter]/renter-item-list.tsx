@@ -1,3 +1,4 @@
+import ActionReturn from "@/components/ActionReturn";
 import ApplicationFilter from "@/components/ApplicationFilter";
 import Error from "@/components/Error";
 import RootLayout from "@/components/Layout";
@@ -31,6 +32,7 @@ const RenterItemList = () => {
     } = usePagination(data?.renterInfo.renterApplications ?? [], "application");
 
     const [selectedApplication, setSelectedApplication] = useState<RenterApplicationData | null>(null);
+    const [selectedAction, setSelectedAction] = useState<"Confirm Return" | "N/A" | null>(null);
 
     if (loading) return 'Loading...';
 
@@ -80,11 +82,16 @@ const RenterItemList = () => {
                                                 : "N/A"}
                                         </td>
                                         <td>
-                                            {application.renterApplicationStatuses?.length
-                                                ? getNextAction(
-                                                    application.renterApplicationStatuses[application.renterApplicationStatuses.length - 1].status
-                                                )
-                                                : ""}
+                                            {application.renterApplicationStatuses?.length ? (() => {
+                                                const action = getNextAction(application.renterApplicationStatuses[application.renterApplicationStatuses.length - 1].status);
+                                                return (
+                                                    <a
+                                                        className="cursor-pointer"
+                                                        onClick={() => { setSelectedAction(action); setSelectedApplication(application); }}>
+                                                            {action}
+                                                    </a>
+                                                );
+                                            })() : <p>"N/A"</p>}
                                         </td>
                                         <td><a
                                                 className="cursor-pointer"
@@ -115,10 +122,19 @@ const RenterItemList = () => {
                 </div>
             </div>
 
-            {selectedApplication && (
+            {selectedApplication && !selectedAction && (
                 <SubmittedRentalForm 
                     application={selectedApplication}
                     onClose={() => setSelectedApplication(null)}
+                />
+            )}
+
+            {selectedAction && selectedApplication && (
+                <ActionReturn 
+                    application={selectedApplication}
+                    setSelectedApplication={setSelectedApplication}
+                    action={selectedAction}
+                    onClose={() => setSelectedAction(null)}
                 />
             )}
         </div>
@@ -143,12 +159,13 @@ export default RenterItemList;
 
 function getNextAction(currentStatus: string | null | undefined) {
     if (currentStatus === "RENTED") {
-        return "Cannot return / Returned";
-    } else if (currentStatus === "RETURNED" || currentStatus === "COMPLETED") {
-        return "Review";
-    }
+        return "Confirm Return";
+    } //else if (currentStatus === "RETURNED" || currentStatus === "COMPLETED") {
+        //return "Review";
+    //}
+    // TODO: Add a review system here
 
-    return "";
+    return "N/A";
 }
 
 function getFormattedDate(

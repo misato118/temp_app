@@ -5,6 +5,7 @@ import AcceptedStatusAction from "./AcceptedStatusAction";
 import ReturnedStatusAction from "./ReturnedStatusAction";
 import { RenterAppType } from "@/hooks/useRenterAppList";
 import useStatusModal, { StatusModalProps } from "@/hooks/useStatusModal";
+import DeliveredStatusAction from "./DeliveredStatusAction";
 
 type RenterAppStatusType = {
     __typename?: "RenterApplicationStatus";
@@ -93,7 +94,11 @@ function getNextStep(
         return (
             <AcceptedStatusAction setModal={setModal} app={app} setPendingChanges={setPendingChanges} />
         );
-    } else if (currStatus === RenterApplicationStatusType.Delivered || currStatus === RenterApplicationStatusType.Rented) {
+    } else if (currStatus === RenterApplicationStatusType.Delivered) {
+        return (
+            <DeliveredStatusAction setModal={setModal} app={app} setPendingChanges={setPendingChanges} />
+        )
+    } else if (currStatus === RenterApplicationStatusType.Rented) {
         return (
             <div className="flex flex-col justify-center items-center">
                 <p className="font-bold">N/A</p>

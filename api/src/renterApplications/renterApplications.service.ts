@@ -96,6 +96,13 @@ export class RenterApplicationsService {
         });
     }
 
+    async saveAllRenterAppStatuses(appStatusArr: ChangeRenterAppStatusInput[]): Promise<boolean> {
+        for (const change of appStatusArr) {
+            await this.changeRenterAppStatus(change);
+        }
+        return true;
+    }
+
     /*
     findOneById(@Args('applicationId', { type: () => Int }) applicationId: number) {
       return this.prisma.renterApplication.findUnique({

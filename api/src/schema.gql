@@ -175,6 +175,7 @@ input LoginRenterInput {
 }
 
 type Mutation {
+  changeRenterAppStatus(changeRenterAppStatusInput: ChangeRenterAppStatusInput!): Boolean!
   createCompany(createCompanyInput: CreateCompanyInput!): Company!
   createEmployee(createEmployeeInput: CreateEmployeeInput!): Employee!
   createItem(createItemInput: CreateItemInput!): Company!
