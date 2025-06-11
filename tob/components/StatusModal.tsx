@@ -80,7 +80,9 @@ function getNextStep(
         return (
             <AppliedStatusAction setModal={setModal} app={app} setPendingChanges={setPendingChanges} />
         );
-    } else if (currStatus === RenterApplicationStatusType.Declined) {
+    }
+    
+    if (currStatus === RenterApplicationStatusType.Declined) {
         return (
             <div className="flex flex-col justify-center items-center">
                 <p className="font-bold">N/A</p>
@@ -90,15 +92,21 @@ function getNextStep(
                 </button>
             </div>
         );
-    } else if (currStatus === RenterApplicationStatusType.Accepted) {
+    }
+    
+    if (currStatus === RenterApplicationStatusType.Accepted) {
         return (
             <AcceptedStatusAction setModal={setModal} app={app} setPendingChanges={setPendingChanges} />
         );
-    } else if (currStatus === RenterApplicationStatusType.Delivered) {
+    }
+    
+    if (currStatus === RenterApplicationStatusType.Delivered) {
         return (
             <DeliveredStatusAction setModal={setModal} app={app} setPendingChanges={setPendingChanges} />
         )
-    } else if (currStatus === RenterApplicationStatusType.Rented) {
+    }
+    
+    if (currStatus === RenterApplicationStatusType.Rented) {
         return (
             <div className="flex flex-col justify-center items-center">
                 <p className="font-bold">N/A</p>
@@ -108,11 +116,15 @@ function getNextStep(
                 </button>
             </div>
         );
-    } else if (currStatus === RenterApplicationStatusType.Returned) {
+    }
+    
+    if (currStatus === RenterApplicationStatusType.Returned) {
         return (
             <ReturnedStatusAction setModal={setModal} app={app} setPendingChanges={setPendingChanges} />
         );
-    } else if (currStatus === RenterApplicationStatusType.Completed) {
+    }
+    
+    if (currStatus === RenterApplicationStatusType.Completed) {
         return (
             <div>
                 <p className="font-bold mb-5">This Item Application has been Completed</p>
@@ -121,9 +133,9 @@ function getNextStep(
                 </button>
             </div>
         );
-    } else {
-        return <p className="font-bold">Error</p>;
     }
+    
+    return <p className="font-bold">Error</p>;
 }
 
 function getStep(
@@ -133,15 +145,15 @@ function getStep(
 ) {
     if (matchedApplication) {
         return true; // Check the status
+    }
+    
+    if (appStatusType === RenterApplicationStatusType.Declined) {
+        return null; // Skip the status
     } else {
-        if (appStatusType === RenterApplicationStatusType.Declined) {
-            return null; // Skip the status
-        } else {
-            if (isDeclined && appStatusType === RenterApplicationStatusType.Accepted) {
-                return null // Skip the status
-            } else {
-                return false; // Uncheck the status
-            }
+        if (isDeclined && appStatusType === RenterApplicationStatusType.Accepted) {
+            return null // Skip the status
         }
+        
+        return false; // Uncheck the status
     }
 }

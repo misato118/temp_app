@@ -42,7 +42,7 @@ function getTypeValue(
         return "YEAR";
     } else if (value.includes("month")) {
         return "MONTH";
-    } else {
-        return "DA";
     }
+    
+    return "DA";
 }
