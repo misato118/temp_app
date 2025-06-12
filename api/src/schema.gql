@@ -17,6 +17,11 @@ enum ApplicationStatus {
   PUBLISHED
 }
 
+input ChangeRenterAppStatusInput {
+  id: Int!
+  status: RenterApplicationStatusType!
+}
+
 type Company {
   createdAt: DateTime!
   description: String!
@@ -170,6 +175,7 @@ input LoginRenterInput {
 }
 
 type Mutation {
+  changeRenterAppStatus(changeRenterAppStatusInput: ChangeRenterAppStatusInput!): Boolean!
   createCompany(createCompanyInput: CreateCompanyInput!): Company!
   createEmployee(createEmployeeInput: CreateEmployeeInput!): Employee!
   createItem(createItemInput: CreateItemInput!): Company!
@@ -183,6 +189,7 @@ type Mutation {
   deleteRenterApplications(itemId: Int!): Int!
   deleteReviews(itemId: Int!): Int!
   deleteStockStatuses(itemId: Int!): Int!
+  saveAllRenterAppStatuses(saveAllRenterAppStatusesInput: SaveAllRenterAppStatusesInput!): Boolean!
   submitItem(createItemInput: CreateItemInput!): Item!
   updateItem(createItemInput: CreateItemInput!): Item!
 }
@@ -280,6 +287,10 @@ type Review {
   rating: Int!
   title: String!
   updatedAt: DateTime!
+}
+
+input SaveAllRenterAppStatusesInput {
+  appStatusArr: [ChangeRenterAppStatusInput!]!
 }
 
 type StockStatus {

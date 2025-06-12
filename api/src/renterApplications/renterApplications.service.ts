@@ -3,6 +3,8 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateFormInput } from 'src/forms/dto/create-form.input';
 import { RenterApplicationStatusType } from 'src/renterApplicationStatusTypes/models/renterApplicationStatusType.model';
 import { Args, Int } from '@nestjs/graphql';
+import { FindApplicationInput } from './dto/find-application.input';
+import { ChangeRenterAppStatusInput } from './dto/change-renter-app-status.input';
 
 @Injectable()
 export class RenterApplicationsService {
@@ -56,6 +58,19 @@ export class RenterApplicationsService {
         });
     }
 
+    // Find a renter application applied by a renter
+    findOneByRenterId(findApplicationInput: FindApplicationInput) {
+        return this.prisma.renterApplication.findMany({
+            where: {
+                renterId: findApplicationInput.renterId,
+                itemId: findApplicationInput.renterApplicationId
+            },
+            include: {
+                renterApplicationStatuses: true
+            }
+        });
+    }
+
     deleteMany(@Args('itemId', { type: () => Int }) itemId: number) {
         // deleteMany to avoid an error when data doesn't exist
         return this.prisma.renterApplication.deleteMany({
@@ -63,6 +78,29 @@ export class RenterApplicationsService {
                 id: itemId,
             },
         });
+    }
+
+    changeRenterAppStatus(changeRenterAppStatusInput: ChangeRenterAppStatusInput) {
+        return this.prisma.renterApplication.update({
+            where: {
+                id: changeRenterAppStatusInput.id
+            },
+            data: {
+                renterApplicationStatuses: {
+                    create: {
+                        status: changeRenterAppStatusInput.status,
+                        updatedAt: new Date()
+                    }
+                }
+            }
+        });
+    }
+
+    async saveAllRenterAppStatuses(appStatusArr: ChangeRenterAppStatusInput[]): Promise<boolean> {
+        for (const change of appStatusArr) {
+            await this.changeRenterAppStatus(change);
+        }
+        return true;
     }
 
     /*

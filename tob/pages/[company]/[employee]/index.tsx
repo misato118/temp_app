@@ -100,6 +100,7 @@ const Home = () => {
                                             <button
                                                 disabled={item.ownerApplication.status !== ApplicationStatus.Published}
                                                 className="py-1 btn rounded-full bg-accent font-normal cursor-pointer"
+                                                onClick={() => router.push(`/${router.query.company}/${router.query.employee}/${item.id}/renter-application-list`)}
                                             >Renter Applications
                                             </button>
                                         </td>

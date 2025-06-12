@@ -2,6 +2,9 @@ import { Resolver, Args, Query, Mutation, Int } from '@nestjs/graphql';
 import { RenterApplication } from './models/renterApplication.model';
 import { RenterApplicationsService } from './renterApplications.service';
 import { CreateFormInput } from 'src/forms/dto/create-form.input';
+import { FindApplicationInput } from './dto/find-application.input';
+import { SaveAllRenterAppStatusesInput } from './dto/save-all-app-statuses.input';
+import { ChangeRenterAppStatusInput } from './dto/change-renter-app-status.input';
 
 @Resolver(() => RenterApplication)
 export class RenterApplicationsResolver {
@@ -30,5 +33,16 @@ export class RenterApplicationsResolver {
     async deleteRenterApplications(@Args('itemId', { type: () => Int }) itemId: number) {
         const result = await this.renterApplicationsService.deleteMany(itemId);
         return result.count;
-    }    
+    }
+
+    @Mutation(() => Boolean, {  name: 'changeRenterAppStatus' })
+    async changeRenterAppStatus(@Args('changeRenterAppStatusInput') changeRenterAppStatusInput: ChangeRenterAppStatusInput)  {
+        await this.renterApplicationsService.changeRenterAppStatus(changeRenterAppStatusInput);
+        return true;
+    }
+
+    @Mutation(() => Boolean, {  name: 'saveAllRenterAppStatuses' })
+    async saveAllRenterAppStatuses(@Args('saveAllRenterAppStatusesInput') { appStatusArr }: SaveAllRenterAppStatusesInput)  {
+        return this.renterApplicationsService.saveAllRenterAppStatuses(appStatusArr);
+    }
 }

@@ -1,4 +1,4 @@
-import { UserIcon, ListBulletIcon, CreditCardIcon } from "@heroicons/react/24/outline";
+import { UserIcon, ListBulletIcon, CreditCardIcon, ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import useLoginConfirmation from "@/hooks/useLoginConfirmation";
 import Error from "./Error";
@@ -56,6 +56,20 @@ const SideNavigation = () => {
                     >
                         <CreditCardIcon className="w-8 h-8" />
                         <span>Billing & Payments</span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li
+                        className="flex justify-center space-x-2 py-5 cursor-pointer"
+                        onClick={() => {
+                            localStorage.removeItem("renterId");
+                            router.push(`/login`);
+                        }}
+                    >
+                        <span className="text-white">Logout</span>
+                        <ArrowLeftStartOnRectangleIcon className="w-8 h-8 text-accent" />
                     </li>
                 </ul>
             </div>

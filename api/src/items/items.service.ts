@@ -170,7 +170,14 @@ export class ItemsService {
                 company: true,
                 reviews: true,
                 stockStatus: true,
-                ownerApplication: true
+                ownerApplication: true,
+                renterApplications: {
+                    include: {
+                        renter: true,
+                        renterApplicationStatuses: true,
+                        form: true,
+                    }
+                }
             },
         });
 
