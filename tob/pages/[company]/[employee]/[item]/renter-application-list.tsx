@@ -9,8 +9,7 @@ import { NextRouter } from "next/router";
 import { Dispatch, ReactElement, SetStateAction } from "react";
 import { format } from 'date-fns';
 import StatusModal from "@/components/StatusModal";
-import useRenterAppList, { RenterApplicationStatusColor, RenterAppType } from "@/hooks/useRenterAppList";
-
+import useRenterAppList, { RenterAppType } from "@/hooks/useRenterAppList";
 
 const RenterApplicationList = () => {
     const {
@@ -94,7 +93,7 @@ const RenterApplicationList = () => {
                                             <td>{format(new Date(app.createdAt), "MMM dd, yyyy")}</td>
                                             <td className="flex justify-center items-center">
                                                 <div
-                                                    className={`badge badge-outline badge-${RenterApplicationStatusColor[getCurrentStatus(app) ?? "UNAVAILABLE"]}`}>
+                                                    className={`badge badge-outline border-${getCurrentStatus(app) ?? "UNAVAILABLE"} text-${getCurrentStatus(app) ?? "UNAVAILABLE"}`}>
                                                     {getCurrentStatus(app) ?? "N/A"}
                                                 </div>
                                             </td>
@@ -185,9 +184,9 @@ function getCurrentStatus(
     
     if (arrLength && statusArr) {
         return statusArr[arrLength - 1].status;
-    } else {
-        return undefined;
     }
+    
+    return undefined;
 }
 
 async function saveAllChanges(

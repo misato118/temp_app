@@ -5,19 +5,6 @@ import { useState } from "react";
 
 export type RenterAppType = NonNullable<NonNullable<GetRenterApplicationListQuery["itemInfo"]>["renterApplications"]>[number];
 
-// Color for each application badge
-export const RenterApplicationStatusColor = {
-    APPLIED: "warning",
-    DECLINED: "error",
-    ACCEPTED: "green-500",
-    DELIVERED: "info",
-    RENTED: "secondary",
-    RETURNED: "success",
-    COMPLETED: "neutral-content",
-    UNAVAILABLE: "primary-content"
-} as const;
-
-
 const useRenterAppList = () => {
     const router = useRouter();
     const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
@@ -28,7 +15,6 @@ const useRenterAppList = () => {
     const { loading, error, data } = useQuery(GetRenterApplicationListDocument, {
         variables: { itemId: Number(router.query.item) }
     });
-
 
     return {
         router,
