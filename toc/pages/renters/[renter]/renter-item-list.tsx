@@ -70,10 +70,13 @@ const RenterItemList = () => {
                                         <td>{application.item?.id}</td>
                                         <td>{application.item?.name}</td>
                                         <td>{application.item?.company.name}</td>
-                                        <td>
-                                            {application.renterApplicationStatuses?.length
-                                                ? getFormattedDate(application.renterApplicationStatuses)?.status
-                                                : "N/A"}
+                                        <td className="flex justify-center items-center">
+                                            <div
+                                                className={`badge badge-outline border-${getFormattedDate(application.renterApplicationStatuses)?.status ?? "UNAVAILABLE"} text-${getFormattedDate(application.renterApplicationStatuses)?.status ?? "UNAVAILABLE"}`}>
+                                                {application.renterApplicationStatuses?.length
+                                                    ? getFormattedDate(application.renterApplicationStatuses)?.status
+                                                    : "N/A"}
+                                            </div>
                                         </td>
                                         <td>Return by</td>
                                         <td>
