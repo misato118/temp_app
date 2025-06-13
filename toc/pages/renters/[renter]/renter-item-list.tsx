@@ -102,7 +102,7 @@ const RenterItemList = () => {
                                                             {action}
                                                     </a>
                                                 );
-                                            })() : <p>"N/A"</p>}
+                                            })() : <p>N/A</p>}
                                         </td>
                                         <td><a
                                                 className="cursor-pointer"

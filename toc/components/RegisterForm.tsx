@@ -23,7 +23,6 @@ const RegisterForm = () => {
     const router = useRouter();
     const { register, handleSubmit } = useForm<Schema>();
     const [createRenterMutation] = useMutation(CreateRenterDocument);
-    const [matchesPassword, setMatchesPassword] = useState<true | false>(true);
 
     const onSubmit: SubmitHandler<Schema> = async (data: Schema) => {
         const result = schema.safeParse(data);
@@ -110,9 +109,6 @@ const RegisterForm = () => {
                     placeholder="Confirm Password"
                     {...register("confirmPassword", { required: true })}
                 />
-                {!matchesPassword && (
-                    <p className="text-red-500 text-sm">Passwords do not match</p>
-                )}
             </fieldset>
 
             <div className="flex justify-center my-4">

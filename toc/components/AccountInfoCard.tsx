@@ -6,13 +6,6 @@ interface AccountInfoCardProps {
 }
 
 const AccountInfoCard = ({ data }: AccountInfoCardProps) => {
-    const date = new Date(data?.renterInfo?.createdAt ?? "");
-    const formattedDate = date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    });
-
     return (
         <div className="card bg-base-100 shadow-xl w-2/5 h-auto max-h-fit w-auto max-w-fit">
             <div className="card-body p-5">
