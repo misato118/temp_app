@@ -2,18 +2,15 @@ import { ChangeRenterAppStatusDocument, GetRenterInfoQuery, RenterApplicationSta
 import { useMutation } from "@apollo/client";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
 
 type RenterApplicationData = NonNullable<
     GetRenterInfoQuery["renterInfo"]
 >["renterApplications"][number];
 
-const schema = z.object({
-    id: z.number(), // renter application ID
-    status: z.nativeEnum(RenterApplicationStatusType)
-});
-
-export type Schema = z.infer<typeof schema>
+export type Schema = {
+    id: number;
+    status: RenterApplicationStatusType;
+};
 
 const useActionReturn = (onClose: () => void, setSelectedApplication: Dispatch<SetStateAction<RenterApplicationData | null>>) => {
     const modalRef = useRef<HTMLDivElement>(null);

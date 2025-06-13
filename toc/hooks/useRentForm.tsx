@@ -30,6 +30,13 @@ const useRentForm = (renterId: number) => {
     const [createRenterApplicationMutation] = useMutation(CreateRenterApplicationDocument);
 
     const onSubmit: SubmitHandler<Schema> = async (data: Schema) => {
+        const result = schema.safeParse(data);
+
+        if (!result.success) {
+            console.error("Validation failed", result.error.format());
+            return;
+        }
+
         try {
             const response = await createRenterApplicationMutation({
                 variables: {
