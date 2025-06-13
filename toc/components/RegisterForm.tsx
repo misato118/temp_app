@@ -1,7 +1,6 @@
 import { CreateRenterDocument } from "@/features/utils/graphql/typeDefs/graphql";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 

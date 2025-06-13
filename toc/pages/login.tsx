@@ -20,7 +20,7 @@ const Login = () => {
                 query: { renterId: renterId }
             });
         }
-    }, []);
+    }, [router]);
 
     return (
         <div className="flex items-center bg-base-200 h-full py-10 overflow-y-auto">
