@@ -12,6 +12,7 @@ import { ItemCategoriesModule } from './itemCategories/itemCategories.module';
 import { StockStatusesModule } from './stockStatuses/stockStatuses.module';
 import { OwnerApplicationsModule } from './ownerApplications/ownerApplications.module';
 import { ConversationsModule } from './conversations/conversations.module';
+import { AppController } from './app.controller';
 
 @Module({
     imports: [
@@ -30,6 +31,7 @@ import { ConversationsModule } from './conversations/conversations.module';
         StockStatusesModule,
         OwnerApplicationsModule,
         ConversationsModule,
-    ]
+    ],
+    controllers: [AppController],
 })
 export class AppModule { }
