@@ -13,6 +13,7 @@ import { StockStatusesModule } from './stockStatuses/stockStatuses.module';
 import { OwnerApplicationsModule } from './ownerApplications/ownerApplications.module';
 import { ConversationsModule } from './conversations/conversations.module';
 import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
     imports: [
@@ -33,5 +34,6 @@ import { AppController } from './app.controller';
         ConversationsModule,
     ],
     controllers: [AppController],
+    providers: [AppService],
 })
 export class AppModule { }
