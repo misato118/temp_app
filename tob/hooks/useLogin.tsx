@@ -27,9 +27,15 @@ const useLogin = () => {
                 query: { company: companyPath, employee: data?.employeeId.id }
             });
         }
-    }, [data]);
+    }, [data, router]);
 
     const onSubmit: SubmitHandler<Schema> = async (formData: Schema) => {
+        const result = schema.safeParse(formData);
+        if (!result.success) {
+            console.log(result.error.format());
+            return;
+        }
+
         getEmployeeId({
             variables: {
                 loginEmployeeInput: {

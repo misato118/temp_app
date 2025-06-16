@@ -22,6 +22,12 @@ const useReturnedStatusAction = (
     }, [setValue]);
 
     const onSubmit: SubmitHandler<Schema> = async (data: Schema) => {
+        const result = schema.safeParse(data);
+        if (!result.success) {
+            console.log(result.error.format());
+            return;
+        }
+        
         setPendingChanges((prev) => [
             ...prev.filter((change) => change.id !== app?.id),
             { id: app?.id ?? 0, status: data.status }

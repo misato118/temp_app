@@ -11,7 +11,7 @@ const ItemCategoriesDropdown = ({ savedValue, setValue }: { savedValue: ItemCate
 
     useEffect(() => {
         getItemCategories();
-    }, []);
+    }, [getItemCategories]);
 
     if (error) console.error("GraphQL error:", error);
 
@@ -43,7 +43,7 @@ function checkAndCloseDropDown(
     setCategoryType: UseFormSetValue<Schema>,
     setCategoryVal: React.Dispatch<React.SetStateAction<ItemCategory | undefined>>
 ) {
-    let targetEl = e.currentTarget;
+    const targetEl = e.currentTarget;
     if (targetEl && targetEl.matches(':focus')) {
         setCategoryType("category", val);
         setCategoryVal(val);

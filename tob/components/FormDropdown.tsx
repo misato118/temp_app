@@ -1,4 +1,6 @@
 import useFormDropdown from "@/hooks/useFormDropdown";
+import { Schema } from "@/hooks/useItemForm";
+import { UseFormSetValue } from "react-hook-form";
 
 type DataType = "FEE" | "MAXDURATION";
 type TimeType = "DA" | "MONTH" | "YEAR";
@@ -16,7 +18,7 @@ enum DurationTime {
 }
 
 // Dropdown for price/duration
-const FormDropdown = ({ savedValue, dataType, setValue }: { savedValue: string | null | undefined, dataType: DataType, setValue: any }) => {
+const FormDropdown = ({ savedValue, dataType, setValue }: { savedValue: string | null | undefined, dataType: DataType, setValue: UseFormSetValue<Schema> }) => {
     const {
         timeType,
         type,
@@ -46,7 +48,7 @@ function checkAndCloseDropDown(
     val: TimeType,
     setCategoryType: React.Dispatch<React.SetStateAction<TimeType>>
 ) {
-    let targetEl = e.currentTarget;
+    const targetEl = e.currentTarget;
     if (targetEl && targetEl.matches(':focus')) {
         setCategoryType(val);
         setTimeout(function () {

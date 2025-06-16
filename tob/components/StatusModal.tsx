@@ -1,4 +1,4 @@
-import { ChangeRenterAppStatusInput, RenterApplicationStatus, RenterApplicationStatusType } from "@/features/utils/graphql/typeDefs/graphql";
+import { ChangeRenterAppStatusInput, RenterApplicationStatusType } from "@/features/utils/graphql/typeDefs/graphql";
 import { format } from 'date-fns';
 import AppliedStatusAction from "./AppliedStatusAction";
 import AcceptedStatusAction from "./AcceptedStatusAction";
@@ -54,8 +54,8 @@ const StatusModal: React.FC<StatusModalProps> = ({ setModal, itemName, itemId, f
                     <p className="text-center">{itemId}</p>
                 </div>
                 <div className="mb-5">
-                    <p><span className="text-sm">{app?.renter?.username}'s Offering Price:</span> ${app?.form?.offeringPrice} {feeType}</p>
-                    <p><span className="text-sm">{app?.renter?.username}'s Offering Duration:</span> {app?.form?.offeringDuration} {maxDurationType}</p>
+                    <p><span className="text-sm">{app?.renter?.username}&apos;s Offering Price:</span> ${app?.form?.offeringPrice} {feeType}</p>
+                    <p><span className="text-sm">{app?.renter?.username}&apos;s Offering Duration:</span> {app?.form?.offeringDuration} {maxDurationType}</p>
                 </div>
 
                 <p className="text-sm">Your Next Step is:</p>
@@ -141,7 +141,7 @@ function getNextStep(
 function getStep(
     matchedApplication: RenterAppStatusType | undefined,
     appStatusType: RenterApplicationStatusType,
-    isDeclined: Boolean,
+    isDeclined: boolean,
 ) {
     if (matchedApplication) {
         return true; // Check the status

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { UseFormSetValue } from "react-hook-form";
+import { Schema } from "./useItemForm";
 
 const feeArray = ["day", "month", "year"];
 const maxDurationArray = ["days", "months", "years"];
 type TimeType = "DA" | "MONTH" | "YEAR";
 
-const useFormDropdown = (savedValue: string | null | undefined, dataType: string, setValue: any) => {
+const useFormDropdown = (savedValue: string | null | undefined, dataType: string, setValue: UseFormSetValue<Schema>) => {
     const array = dataType === "FEE" ? feeArray : maxDurationArray;
     const type = dataType === "FEE" ? "feeType" : "maxDurationType";
 
@@ -24,7 +26,7 @@ const useFormDropdown = (savedValue: string | null | undefined, dataType: string
                 setValue(type, array[0]);
             }
         }
-    }, [timeType, setValue, type]);
+    }, [timeType, setValue, type, array, initialValue]);
 
     return {
         timeType,

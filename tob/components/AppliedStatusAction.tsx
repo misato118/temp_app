@@ -46,7 +46,7 @@ function checkAndCloseDropDown(
     val: DecitionType,
     setDecision: React.Dispatch<React.SetStateAction<DecitionType>>
 ) {
-    let targetEl = e.currentTarget;
+    const targetEl = e.currentTarget;
     if (targetEl && targetEl.matches(':focus')) {
         setDecision(val);
         setTimeout(function () {

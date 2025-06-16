@@ -2,13 +2,13 @@ import { UserIcon, ListBulletIcon, ArrowLeftStartOnRectangleIcon } from "@heroic
 import { useRouter } from "next/router";
 import useLoginConfirmation from "@/hooks/useLoginConfirmation";
 import Error from "./Error";
+import Image from "next/image";
 
 const SideNavigation = () => {
     const router = useRouter();
     const {
         data,
         error,
-        loading,
         employeeId        
     } = useLoginConfirmation();
 
@@ -25,7 +25,7 @@ const SideNavigation = () => {
             </div>
             {/* Substitute this image with {renter.imageURL}*/}
             <div className="mb-4 flex justify-center items-center">
-                <img src="/sampleImg.png" alt="Renter Image" className="rounded-full w-32 h-32" />
+                <Image src="/sampleImg.png" alt="Renter Image" className="rounded-full w-32 h-32" />
             </div>
             <div className="text-center">
                 <h2 className="font-bold text-white">{data?.employeeInfo?.firstName} {data?.employeeInfo?.lastName}</h2>

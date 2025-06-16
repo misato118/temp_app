@@ -55,6 +55,12 @@ const useItemForm = ({ savedData }: ApplicationFormProps) => {
     );
 
     const onSubmit: SubmitHandler<Schema> = async (data: Schema) => {
+        const result = schema.safeParse(data);
+        if (!result.success) {
+            console.log(result.error.format());
+            return;
+        }
+
         try {
             const response = await runMutation({
                 variables: {

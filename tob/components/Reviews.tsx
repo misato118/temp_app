@@ -13,8 +13,8 @@ interface ReviewsProps {
 const Reviews = (props: ReviewsProps) => {
     return (
         <main>
-            {props.reviews?.length ? (props.reviews?.map((review) => (
-                <div>
+            {props.reviews?.length ? (props.reviews?.map((review, index) => (
+                <div key={review.title + index}>
                     <div className="flex items-center">
                         <div className="h-10 w-10 mr-2"><UserCircleIcon /></div>
                         <p className="font-bold">User</p>

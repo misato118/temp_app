@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { GetItemInfoDocument } from '@/features/utils/graphql/typeDefs/graphql';
