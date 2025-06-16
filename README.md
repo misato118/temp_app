@@ -40,10 +40,11 @@ You can explore the live deployed version.
 
 ### 🌐 Live Demo
 
-- **🧑 Frontend (Renter)**: In Progress
-- **💼 Frontend (Company)**: In Progress
+- **🧑 Frontend (Renter)**: http://15.156.197.82:3000
+- **💼 Frontend (Company)**: http://3.96.207.41:3000
 - **🖥️ Frontend (Admin)**: In Progress
-- **⚙️ Backend API (GraphQL Playground)**: In Progress
+- **⚙️ Backend API (GraphQL Playground)**: 
+http://itemre-alb16-s1njhbvhhvee-1849151201.ca-central-1.elb.amazonaws.com/graphql
 
 ## System Architecture
 
@@ -79,7 +80,7 @@ This project simulates real-world workflows for three user types:
 - [ ] Add Admin system
   - [ ] Companies list
   - [ ] Renters list
-- [ ] Change the application logo
+- [x] Change the application logo
 
 See the [open issues](https://github.com/misato118/temp_app/issues) for a full list of proposed features and known issues.
 
