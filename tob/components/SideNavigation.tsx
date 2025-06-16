@@ -25,7 +25,7 @@ const SideNavigation = () => {
             </div>
             {/* Substitute this image with {renter.imageURL}*/}
             <div className="mb-4 flex justify-center items-center">
-                <Image src="/sampleImg.png" alt="Renter Image" className="rounded-full w-32 h-32" />
+                <Image src="/UserIcon.png" alt="Renter Image" className="rounded-full w-32 h-32" height={32} width={32} />
             </div>
             <div className="text-center">
                 <h2 className="font-bold text-white">{data?.employeeInfo?.firstName} {data?.employeeInfo?.lastName}</h2>
@@ -36,7 +36,7 @@ const SideNavigation = () => {
                     <li
                         className="flex justify-center space-x-2 py-5 hover:bg-base-300 hover:text-black cursor-pointer"
                         onClick={() => {
-                            router.push(`/renters/${employeeId}`);
+                            router.push(`/${data?.employeeInfo?.company}/${employeeId}/about`);
                         }}
                     >
                         <UserIcon className="w-8 h-8" />
